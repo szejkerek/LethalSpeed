@@ -23,12 +23,12 @@ public class FadeAfterTouched : MonoBehaviour
 
     IEnumerator FadeOutAndDisappear()
     {
-        yield return new WaitForSeconds(fadeTime);
+        yield return Helpers.GetWait(fadeTime);
         gameObject.SetActive(false);
 
         if (shouldReappear)
         {
-            yield return new WaitForSeconds(reappearTime);
+            yield return Helpers.GetWait(reappearTime);
 
             gameObject.SetActive(true);
             isFading = false;
