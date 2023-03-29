@@ -5,5 +5,5 @@ public enum SceneIndexes
 {
     PersistentScene = 0,
     Menu = 1,
-    TestScene = 2
+    MovementScene = 2
 }

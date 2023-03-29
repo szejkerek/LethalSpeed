@@ -24,7 +24,7 @@ public class SceneLoader : Singleton<SceneLoader>
         loadingScreen.gameObject.SetActive(true);
 
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Menu));
-        scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.TestScene, LoadSceneMode.Additive));
+        scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MovementScene, LoadSceneMode.Additive));
 
         StartCoroutine(GetSceneLoadProgress());
     }
