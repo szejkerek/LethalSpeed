@@ -11,20 +11,20 @@ public class SceneLoader : Singleton<SceneLoader>
 {
     public GameObject loadingScreen;
     public Slider progressBar;
-
-    private void Awake()
+    protected override void Awake()
     {
-        SceneManager.LoadSceneAsync((int)SceneIndexes.MENU, LoadSceneMode.Single);
+        base.Awake();
+        //SceneManager.LoadSceneAsync((int)SceneIndexes.MENU, LoadSceneMode.Single);
     }
 
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
 
     public void LoadGame()
     {
-        loadingScreen.gameObject.SetActive(true);
+        //loadingScreen.gameObject.SetActive(true);
 
-        scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MENU));
-        scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MAP, LoadSceneMode.Additive));
+        scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Menu));
+        scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.TestScene, LoadSceneMode.Additive));
 
         StartCoroutine(GetSceneLoadProgress());
     }
@@ -39,6 +39,6 @@ public class SceneLoader : Singleton<SceneLoader>
             }
         }
 
-        loadingScreen.gameObject.SetActive(false);
+       //loadingScreen.gameObject.SetActive(false);
     }
 }
