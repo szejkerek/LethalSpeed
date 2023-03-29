@@ -9,18 +9,17 @@ using UnityEngine.UI;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
-    public Slider ProgressBar;
+    public GameObject loadingScreen;
+    public Slider progressBar;
 
-    // Start is called before the first frame update
     private void Awake()
     {
-        
+        SceneManager.LoadSceneAsync((int)SceneIndexes.MENU, LoadSceneMode.Additive);
     }
 
-    // Update is called once per frame
     private void LoadGame()
     {
-        
-        //SceneManager.LoadSceneAsync(PersistentSingleton)
+        SceneManager.UnloadScene((int)SceneIndexes.MENU);
+        SceneManager.LoadSceneAsync((int)SceneIndexes.MAP, LoadSceneMode.Additive);
     }
 }
