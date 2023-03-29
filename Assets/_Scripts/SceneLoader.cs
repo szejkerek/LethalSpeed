@@ -46,13 +46,13 @@ public class SceneLoader : Singleton<SceneLoader>
 
                 totalSceneProgress = (totalSceneProgress / scenesLoading.Count);
 
-                progressBar.value = totalSceneProgress;
+                progressBar.value = Mathf.Clamp01(totalSceneProgress / .9f);
+
+                Debug.Log($"{totalSceneProgress} dupa {progressBar.value}");
 
                 yield return null;
             }
         }
-
-        progressBar.value = 1;
 
         yield return new WaitForSeconds(2);
 
