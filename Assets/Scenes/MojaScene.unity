@@ -694,6 +694,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2298716937047625572, guid: 777adbb66c386b042a06da23c08daf26, type: 3}
+      propertyPath: groundFriction
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2298716937047625572, guid: 777adbb66c386b042a06da23c08daf26, type: 3}
+      propertyPath: maxGroundSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2298716937047625572, guid: 777adbb66c386b042a06da23c08daf26, type: 3}
+      propertyPath: groundAcceleration
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2298716937047625574, guid: 777adbb66c386b042a06da23c08daf26, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -736,6 +748,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2298716937047625574, guid: 777adbb66c386b042a06da23c08daf26, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2298716938500500006, guid: 777adbb66c386b042a06da23c08daf26, type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

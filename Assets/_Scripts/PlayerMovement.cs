@@ -10,10 +10,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Player properties")]
     [SerializeField] private CharacterController controller;
-    [SerializeField] private float movementSpeed;
     [SerializeField] private float groundAcceleration;
-    [SerializeField] private float jumpForce;
+    [SerializeField] private float groundFriction;
     [SerializeField] private float maxGroundSpeed;
+    [SerializeField] private float jumpForce;
     [SerializeField] private float gravityForce;
 
     private bool isGrounded;
@@ -35,8 +35,11 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2.0f;
         }
         
-        GroundMove();
-        // ApplyFriction();
+        if(isGrounded)
+        {
+            GroundMove();
+            ApplyFriction();
+        }
 
         velocity.y += gravityForce * Time.deltaTime;
 
@@ -50,15 +53,14 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        Vector3 frictionForce = new Vector3(-velocity.x * 0.5f, 0.0f, -velocity.z * 0.5f);
+        Vector3 frictionForce = new Vector3(-velocity.x, 0.0f, -velocity.z) * groundFriction;
 
-        velocity += frictionForce;
+        velocity += frictionForce * Time.deltaTime;
     }
 
     private void GroundMove()
     {
         Vector3 wishDir = Vector3.zero;
-        Vector3 move = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -95,6 +97,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        velocity += wishDir * movementSpeed * Time.deltaTime;
+        Vector3 move = wishDir * groundAcceleration * Time.deltaTime;
+
+        if((move + velocity).magnitude <= maxGroundSpeed)
+        {
+            velocity += move;
+        }
     }
 }
