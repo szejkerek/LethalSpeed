@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/PersistentScene.unity
     guid: 3e3ce1a5cfdbf444880d97d9fca7730c
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/DeveloperTesting/Menu.unity
     guid: e07ea2ed3d842dc47935f89dca3aae61
   - enabled: 1
     path: Assets/Scenes/TestScene.unity
