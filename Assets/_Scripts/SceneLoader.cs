@@ -14,14 +14,14 @@ public class SceneLoader : Singleton<SceneLoader>
     protected override void Awake()
     {
         base.Awake();
-        //SceneManager.LoadSceneAsync((int)SceneIndexes.MENU, LoadSceneMode.Single);
+        //SceneManager.LoadSceneAsync((int)SceneIndexes.Menu, LoadSceneMode.Additive);
     }
 
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
 
     public void LoadGame()
     {
-        //loadingScreen.gameObject.SetActive(true);
+        loadingScreen.gameObject.SetActive(true);
 
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Menu));
         scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.TestScene, LoadSceneMode.Additive));
@@ -29,16 +29,33 @@ public class SceneLoader : Singleton<SceneLoader>
         StartCoroutine(GetSceneLoadProgress());
     }
 
+    private float totalSceneProgress;
     public IEnumerator GetSceneLoadProgress()
     {
         for ( int i = 0; i < scenesLoading.Count; i++)
         {
+
             while (!scenesLoading[i].isDone)
             {
+                totalSceneProgress = 0;
+
+                foreach (AsyncOperation operation in scenesLoading)
+                {
+                    totalSceneProgress += operation.progress;
+                }
+
+                totalSceneProgress = (totalSceneProgress / scenesLoading.Count);
+
+                progressBar.value = totalSceneProgress;
+
                 yield return null;
             }
         }
 
-       //loadingScreen.gameObject.SetActive(false);
+        progressBar.value = 1;
+
+        yield return new WaitForSeconds(2);
+
+        loadingScreen.gameObject.SetActive(false);
     }
 }
