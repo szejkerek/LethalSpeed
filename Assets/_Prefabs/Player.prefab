@@ -68,7 +68,8 @@ MonoBehaviour:
   controller: {fileID: 2298716937047625575}
   groundAcceleration: 100
   groundFriction: 5
-  maxGroundSpeed: 20
+  maxGroundSpeed: 15
+  airAcceleration: 10
   jumpForce: 2
   gravityForce: -20
 --- !u!1 &2298716938500500002
