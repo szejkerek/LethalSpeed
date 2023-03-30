@@ -1,162 +1,121 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Vector3 velocity;
-    private Vector3 acceleration;
+    [Header("Ground movement")]
+    [SerializeField] private float _maxGroundSpeed;
+    [SerializeField] private float _groundAcceleration;
+    [SerializeField] private float _groundFriction;
 
-    [Header("Player properties")]
-    [SerializeField] private CharacterController controller;
-    [SerializeField] private float groundAcceleration;
-    [SerializeField] private float groundFriction;
-    [SerializeField] private float maxGroundSpeed;
-    [SerializeField] private float airAcceleration;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float gravityForce;
+    [Header("Air movement")]
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _airAcceleration;
+    [SerializeField] private float _gravityForce;
 
-    private bool isGrounded;
-    private bool isJumpQueued = false;
+    [Header("Ground check stuff")]
+    [SerializeField] private float _playerHeight;
+    [SerializeField] private LayerMask _groundMask;
 
-    // Start is called before the first frame update
+    [Header("Key bindings")]
+    [SerializeField] private KeyCode _jumpKey;
+
+    [Space]
+    public Transform orientation;
+
+    [Space]
+    public TextMeshProUGUI velocityText;
+
+    Rigidbody _rb;
+
+    bool _isGrounded;
+    bool _canJump;
+    float _jumpCooldown;
+
+    Vector3 _wishDir;
+    float _horizontalInput;
+    float _verticalInput;
+
     void Start()
     {
-        
+        _rb = GetComponent<Rigidbody>();
+        _rb.freezeRotation = true;
+
+        _canJump = true;
+        _jumpCooldown = 0.4f;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        isGrounded = controller.isGrounded;
+        _isGrounded = Physics.CheckSphere(transform.position, 0.25f, _groundMask);
 
-        if(isGrounded && velocity.y < 0.0f)
-        {
-            velocity.y = -2.0f;
-        }
-        
-        if(isGrounded)
-        {
-            GroundMove();
-            ApplyFriction();
-        }
-        else
-        {
-            AirMove();
-        }
+        GetInput();
+        ClipSpeed();
+        ApplyFriction();
+    }
 
-        velocity.y += gravityForce * Time.deltaTime;
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
 
-        controller.Move(velocity * Time.deltaTime);
+    private void GetInput()
+    {
+        _horizontalInput = Input.GetAxisRaw("Horizontal");
+        _verticalInput   = Input.GetAxisRaw("Vertical");
+
+        if(Input.GetKey(_jumpKey) && _canJump && _isGrounded)
+        {
+            _canJump = false;
+            
+            Jump();
+            Invoke(nameof(ResetJump), _jumpCooldown);
+        }
     }
 
     private void ApplyFriction()
     {
-        if(velocity.magnitude == 0.0f)
-        {
-            return;
-        }
-
-        Vector3 frictionForce = new Vector3(-velocity.x, 0.0f, -velocity.z) * groundFriction;
-
-        velocity += frictionForce * Time.deltaTime;
+        _rb.drag = _isGrounded ? _groundFriction : 0.0f;
     }
 
-    private void GroundMove()
+    private void ClipSpeed()
     {
-        Vector3 wishDir = Vector3.zero;
+        Vector3 flatVelocity = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z);
 
-        if (Input.GetKey(KeyCode.W))
+        if (flatVelocity.magnitude > _maxGroundSpeed)
         {
-            wishDir += this.transform.forward;
+            Vector3 newSpeed = flatVelocity.normalized * _maxGroundSpeed;
+
+            _rb.velocity = new Vector3(newSpeed.x, _rb.velocity.y, newSpeed.z);
         }
 
-        if (Input.GetKey(KeyCode.D))
+        velocityText.text = $"Velocity: {flatVelocity.magnitude:0.##}ups";
+    }
+
+    private void MovePlayer()
+    {
+        _wishDir = orientation.forward * _verticalInput + orientation.right * _horizontalInput;
+
+        float accelerationFactor = _isGrounded ? _groundAcceleration : _airAcceleration;
+
+        _rb.AddForce(_wishDir.normalized * _maxGroundSpeed * accelerationFactor, ForceMode.Force);
+        
+        if(!_isGrounded)
         {
-            wishDir += this.transform.right;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            wishDir -= this.transform.forward;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            wishDir -= this.transform.right;
-        }
-
-        wishDir.Normalize();
-
-        if(Input.GetButtonDown("Jump") || isJumpQueued)
-        {
-            if(isGrounded)
-            {
-                velocity.y = Mathf.Sqrt(jumpForce * -2.0f * gravityForce);
-                isJumpQueued = false;
-            }
-            else
-            {
-                isJumpQueued = true;
-            }
-        }
-
-        Vector3 move = wishDir * groundAcceleration * Time.deltaTime;
-
-        velocity += move;
-
-        if(velocity.magnitude <= maxGroundSpeed)
-        {
-            velocity += move;
-        }
-        else
-        {
-            velocity.Normalize();
-            velocity *= maxGroundSpeed;
+            _rb.AddForce(Vector3.down * _gravityForce, ForceMode.Force);
         }
     }
 
-    private void AirMove()
+    private void Jump()
     {
-        Vector3 wishDir = Vector3.zero;
+        _rb.velocity = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z);
+        _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
+    }
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            wishDir += this.transform.forward;
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            wishDir += this.transform.right;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            wishDir -= this.transform.forward;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            wishDir -= this.transform.right;
-        }
-
-        wishDir.Normalize();
-
-        Vector3 move = wishDir * airAcceleration * Time.deltaTime;
-
-        velocity += (1.0f - Vector3.Dot(velocity.normalized, wishDir)) * move;
-
-        if (velocity.magnitude <= maxGroundSpeed)
-        {
-            velocity += move;
-        }
-        else
-        {
-            velocity.Normalize();
-            velocity *= maxGroundSpeed;
-        }
+    private void ResetJump()
+    {
+        _canJump = true;
     }
 }
