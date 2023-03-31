@@ -4,11 +4,31 @@ using UnityEngine;
 
 public static class Helpers
 {
-    /// Helpers/Extensions
-    /// 
-    /// Sample usage:
-    /// transform.DestroyChildren();
-    public static void DestroyChildern(this Transform t)
+    private static Camera _camera;
+    public static Camera Camera
+    {
+        get
+        {
+            if(_camera == null)
+            {
+                _camera = Camera.main;
+            }
+            return _camera;
+        }
+    }
+
+    private static readonly Dictionary<float, WaitForSeconds> WaitDictionary = new Dictionary<float, WaitForSeconds>();
+    public static WaitForSeconds GetWait(float time)
+    {
+        if(WaitDictionary.TryGetValue(time, out WaitForSeconds wait))
+        {
+            return wait;
+        }
+        WaitDictionary[time] = new WaitForSeconds(time);
+        return WaitDictionary[time];
+    }
+
+    public static void DestroyChildren(this Transform t)
     {
         foreach (Transform child in t)
         {
