@@ -45,9 +45,9 @@ public class SceneLoader : Singleton<SceneLoader>
                     totalSceneProgress += Mathf.Clamp(.0f, .9f, operation.progress);
                 }
 
-                totalSceneProgress = (totalSceneProgress / scenesLoading.Count);
+                totalSceneProgress = (totalSceneProgress / scenesLoading.Count) / .9f;
 
-                progressBar.value = totalSceneProgress / .9f;
+                progressBar.value = totalSceneProgress;
 
                 progressInfoText.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
 
