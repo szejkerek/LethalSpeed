@@ -1,74 +1,71 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using DG.Tweening;
-
 
 public class SceneLoader : Singleton<SceneLoader>
 {
-    public GameObject loadingScreen;
-    public Slider progressBar;
-    public TextMeshProUGUI progressInfoText;
-    public TextMeshProUGUI tipText;
-    public CanvasGroup alphaCanvas;
-    public string[] tips;
+    [Header("UI")]
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private TMP_Text progressInfoText;
+    [SerializeField] private TMP_Text tipText;
+
+    [Header("Loading screen data")]
+    [SerializeField] private LoadinScreenTipsData tipsData;
+
+    private int tipCount;
+    private List<string> tips;
+    private Slider progressBar;
+    private float totalSceneProgress;
+    private CanvasGroup tipTextCanvasGroup;
+    private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
+
     protected override void Awake()
     {
         base.Awake();
-        //SceneManager.LoadSceneAsync((int)SceneIndexes.Menu, LoadSceneMode.Additive);
+        progressBar = loadingScreen.GetComponentInChildren<Slider>();
+        tipTextCanvasGroup = tipText.GetComponent<CanvasGroup>();
+        tips = tipsData.TipsList;
     }
-
-    private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
 
     public void LoadGame()
     {
         loadingScreen.gameObject.SetActive(true);
-
         StartCoroutine(GenerateTips());
-
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Menu));
         scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MovementScene, LoadSceneMode.Additive));
-
         StartCoroutine(GetSceneLoadProgress());
     }
 
-    private int tipCount;
-    public IEnumerator GenerateTips()
+    private IEnumerator GenerateTips()
     {
-        tipCount = Random.Range(0, tips.Length);
+        tipCount = Random.Range(0, tips.Count);
         tipText.text = tips[tipCount];
 
         while(loadingScreen.activeInHierarchy)
         {
             yield return new WaitForSeconds(3f);
-
-            alphaCanvas.DOFade(0, .5f);
-
+            tipTextCanvasGroup.DOFade(0, .5f);
             yield return new WaitForSeconds(.5f);
-
             tipCount++;
 
-            if (tipCount >= tips.Length)
+            if (tipCount >= tips.Count)
             {
                 tipCount = 0;
             }
 
             tipText.text = tips[tipCount];
-
-            alphaCanvas.DOFade(1, .5f);
+            tipTextCanvasGroup.DOFade(1, .5f);
         }
-
     }
 
-    private float totalSceneProgress;
-    public IEnumerator GetSceneLoadProgress()
+    private IEnumerator GetSceneLoadProgress()
     {
         for ( int i = 0; i < scenesLoading.Count; i++)
         {
-
             while (!scenesLoading[i].isDone)
             {
                 totalSceneProgress = 0;
@@ -79,19 +76,13 @@ public class SceneLoader : Singleton<SceneLoader>
                 }
 
                 totalSceneProgress = (totalSceneProgress / scenesLoading.Count) / .9f;
-
                 progressBar.value = totalSceneProgress;
-
                 progressInfoText.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
-
-                Debug.Log($"{totalSceneProgress} dupa {progressBar.value}");
-
                 yield return null;
             }
         }
 
         yield return new WaitForSeconds(10);
-
         loadingScreen.gameObject.SetActive(false);
     }
 }
