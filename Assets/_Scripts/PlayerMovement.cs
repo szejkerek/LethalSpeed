@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         _isGrounded = Physics.CheckSphere(transform.position, 0.25f, _groundMask);
-        _isStuckCrouched = Physics.CheckSphere(transform.position + Vector3.up * _playerHeight, 0.25f, _groundMask) && transform.localScale.y == _crouchScaleY;
+        _isStuckCrouched = Physics.Raycast(transform.position, Vector3.up, _playerHeight * 0.8f, _groundMask) && transform.localScale.y == _crouchScaleY;
         _justLanded = _isGrounded && _wasGroundedLastFrame;
 
         UpdateMoveMode();
@@ -182,7 +182,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsOnSlope() && _rb.velocity.magnitude > _maxGroundSpeed)
         {
             _rb.velocity = _rb.velocity.normalized * _maxGroundSpeed;
-            velocityText.text = $"{_prefix} velocity: {_rb.velocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y}";
+            velocityText.text = $"{_prefix} velocity: {_rb.velocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y:0.##}";
 
             return;
         }
@@ -197,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
             _rb.velocity = new Vector3(newSpeed.x, _rb.velocity.y, newSpeed.z);
         }
 
-        velocityText.text = $"{_prefix} velocity: {_rb.velocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y}";
+        velocityText.text = $"{_prefix} velocity: {flatVelocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y:0.##}";
     }
 
 
