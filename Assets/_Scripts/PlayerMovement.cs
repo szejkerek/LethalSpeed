@@ -38,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sliding")]
     [SerializeField] private float _slidingSpeed;
     [SerializeField] private float _slidingAcceleration;
-    [SerializeField] private float _slidingTriggerVelocityY;
     [SerializeField] private float _maxSlidingTimeInSeconds;
     [SerializeField] private float _slideJumpForce;
     private float _slidingTime;
@@ -147,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if(_moveMode != MoveMode.Sliding && Input.GetKey(_crouchKey) && _justLanded && 
-            Vector3.ProjectOnPlane(_rb.velocity, Vector3.up).magnitude != 0.0f && _rb.velocity.y < _slidingTriggerVelocityY)
+            Vector3.ProjectOnPlane(_rb.velocity, Vector3.up).magnitude != 0.0f)
         {
             _moveMode = MoveMode.Sliding;
             StartSliding();
