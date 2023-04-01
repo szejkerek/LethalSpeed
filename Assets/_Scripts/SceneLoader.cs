@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using DG.Tweening;
 
 
 public class SceneLoader : Singleton<SceneLoader>
@@ -12,6 +12,9 @@ public class SceneLoader : Singleton<SceneLoader>
     public GameObject loadingScreen;
     public Slider progressBar;
     public TextMeshProUGUI progressInfoText;
+    public TextMeshProUGUI tipText;
+    public CanvasGroup alphaCanvas;
+    public string[] tips;
     protected override void Awake()
     {
         base.Awake();
@@ -24,10 +27,40 @@ public class SceneLoader : Singleton<SceneLoader>
     {
         loadingScreen.gameObject.SetActive(true);
 
+        StartCoroutine(GenerateTips());
+
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Menu));
         scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MovementScene, LoadSceneMode.Additive));
 
         StartCoroutine(GetSceneLoadProgress());
+    }
+
+    private int tipCount;
+    public IEnumerator GenerateTips()
+    {
+        tipCount = Random.Range(0, tips.Length);
+        tipText.text = tips[tipCount];
+
+        while(loadingScreen.activeInHierarchy)
+        {
+            yield return new WaitForSeconds(3f);
+
+            alphaCanvas.DOFade(0, .5f);
+
+            yield return new WaitForSeconds(.5f);
+
+            tipCount++;
+
+            if (tipCount >= tips.Length)
+            {
+                tipCount = 0;
+            }
+
+            tipText.text = tips[tipCount];
+
+            alphaCanvas.DOFade(1, .5f);
+        }
+
     }
 
     private float totalSceneProgress;
@@ -57,7 +90,7 @@ public class SceneLoader : Singleton<SceneLoader>
             }
         }
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(10);
 
         loadingScreen.gameObject.SetActive(false);
     }
