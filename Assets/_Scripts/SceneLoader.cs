@@ -11,6 +11,7 @@ public class SceneLoader : Singleton<SceneLoader>
 {
     public GameObject loadingScreen;
     public Slider progressBar;
+    public TextMeshProUGUI progressInfoText;
     protected override void Awake()
     {
         base.Awake();
@@ -41,12 +42,14 @@ public class SceneLoader : Singleton<SceneLoader>
 
                 foreach (AsyncOperation operation in scenesLoading)
                 {
-                    totalSceneProgress += operation.progress;
+                    totalSceneProgress += Mathf.Clamp(.0f, .9f, operation.progress);
                 }
 
                 totalSceneProgress = (totalSceneProgress / scenesLoading.Count);
 
-                progressBar.value = Mathf.Clamp01(totalSceneProgress / .9f);
+                progressBar.value = totalSceneProgress / .9f;
+
+                progressInfoText.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
 
                 Debug.Log($"{totalSceneProgress} dupa {progressBar.value}");
 
