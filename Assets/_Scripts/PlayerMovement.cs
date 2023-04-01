@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _slidingAcceleration;
     [SerializeField] private float _slidingTriggerVelocityY;
     [SerializeField] private float _maxSlidingTimeInSeconds;
+    [SerializeField] private float _slideJumpForce;
     private float _slidingTime;
     private bool _justLanded;
 
@@ -88,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _isGrounded = Physics.CheckSphere(transform.position, 0.25f, _groundMask);
         _isStuckCrouched = Physics.Raycast(transform.position, Vector3.up, _playerHeight * 0.8f, _groundMask) && transform.localScale.y == _crouchScaleY;
-        _justLanded = _isGrounded && _wasGroundedLastFrame;
+        _justLanded = _isGrounded && !_wasGroundedLastFrame;
 
         UpdateMoveMode();
         GetInput();
@@ -160,8 +161,18 @@ public class PlayerMovement : MonoBehaviour
             _slidingTime >= _maxSlidingTimeInSeconds) && !_isStuckCrouched)
         {
             _moveMode = MoveMode.Normal;
-            _slidingTime = 0.0f;
             EndSliding();
+
+            _prefix = "Normal";
+
+            return;
+        }
+
+        if(_moveMode == MoveMode.Sliding && Input.GetKeyDown(_jumpKey) && !_isStuckCrouched)
+        {
+            _moveMode = MoveMode.Normal;
+            EndSliding();
+            Jump(_jumpForce * _slideJumpForce);
 
             _prefix = "Normal";
 
@@ -215,12 +226,7 @@ public class PlayerMovement : MonoBehaviour
         // Check for jump move
         if (_isGrounded && _canJump && Input.GetKey(_jumpKey))
         {
-            _canJump = false;
-
-            _rb.velocity = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z);
-            _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
-
-            Invoke(nameof(ResetJump), _jumpCooldown);
+            Jump(_jumpForce);
         }
         
         if (IsOnSlope())
@@ -307,11 +313,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void EndSliding()
     {
+        _slidingTime = 0.0f;
         EndCrouching();
     }
 
     #endregion
 
+
+    private void Jump(float jumpForce)
+    {
+        _canJump = false;
+
+        _rb.velocity = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z);
+        _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+
+        Invoke(nameof(ResetJump), _jumpCooldown);
+    }
 
     private void ResetJump()
     {
