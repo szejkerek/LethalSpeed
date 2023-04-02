@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private bool    _wasGroundedLastFrame;
     private bool    _canJump;
     private float   _jumpCooldown;
+    private float   _startJumpingSpeed;
 
     [Header("Crouching")]
     [SerializeField] private float _crouchSpeed;
@@ -82,6 +83,11 @@ public class PlayerMovement : MonoBehaviour
         _prefix = "Normal";
 
         _originalScaleY = transform.localScale.y;
+    }
+
+    void OnDestroy()
+    {
+        CancelInvoke(nameof(ResetJump));
     }
 
     void Update()
@@ -172,6 +178,7 @@ public class PlayerMovement : MonoBehaviour
             _moveMode = MoveMode.Normal;
             EndSliding();
             Jump(_jumpForce * _slideJumpForce);
+            _startJumpingSpeed = _rb.velocity.magnitude;
 
             _prefix = "Normal";
 
@@ -188,6 +195,15 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ClipSpeed()
     {
+        Vector3 flatVelocity = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z);
+
+        if (!_isGrounded)
+        {
+            velocityText.text = $"{_prefix} velocity: {flatVelocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y:0.##}";
+
+            return;
+        }
+
         // Slope movement corection
         if (IsOnSlope() && _rb.velocity.magnitude > _maxGroundSpeed)
         {
@@ -198,10 +214,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Ground / air movement correction
-        Vector3 flatVelocity = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z);
-
+        // float overspeed = Mathf.Abs(flatVelocity.magnitude - _maxGroundSpeed);
+        
         if (flatVelocity.magnitude > _maxGroundSpeed)
         {
+            //float diff = flatVelocity.magnitude - _maxGroundSpeed;
+            //float deaccel = 0.2f;
+            //float drop = diff < deaccel ? diff : deaccel;
+            //Vector3 newSpeed = flatVelocity.normalized * (flatVelocity.magnitude - drop * Time.deltaTime);
+
             Vector3 newSpeed = flatVelocity.normalized * _maxGroundSpeed;
 
             _rb.velocity = new Vector3(newSpeed.x, _rb.velocity.y, newSpeed.z);
@@ -226,6 +247,7 @@ public class PlayerMovement : MonoBehaviour
         if (_isGrounded && _canJump && Input.GetKey(_jumpKey))
         {
             Jump(_jumpForce);
+            _startJumpingSpeed = _rb.velocity.magnitude;
         }
         
         if (IsOnSlope())
@@ -237,6 +259,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _rb.useGravity = true;
+
+        if (!_isGrounded && Vector3.ProjectOnPlane(_rb.velocity, Vector3.up).magnitude > _maxGroundSpeed)
+        {
+            _rb.AddForce(_wishDir.normalized * _maxGroundSpeed * _airAcceleration, ForceMode.Force);
+            _rb.AddForce(Vector3.down * _gravityForce, ForceMode.Force);
+            _rb.velocity = new Vector3(_rb.velocity.x, 0.0f, _rb.velocity.z).normalized * _startJumpingSpeed + Vector3.up * _rb.velocity.y;
+
+            return;
+        }
 
         float acceleration = _isGrounded ? _groundAcceleration : _airAcceleration;
 
@@ -287,7 +318,13 @@ public class PlayerMovement : MonoBehaviour
     {
         ClipSpeed();
 
-        _slidingTime += Time.deltaTime;
+        bool onSlope = IsOnSlope();
+
+        if(!onSlope || onSlope && _rb.velocity.y > -0.1f)
+        {
+            _slidingTime += Time.deltaTime;
+        }
+
         _rb.drag = _isGrounded ? _groundFriction : 0.0f;
     }
 
