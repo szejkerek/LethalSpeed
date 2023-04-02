@@ -225,19 +225,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxGroundSpeed: 15
-  _movementSpeed: 0
+  _movementSpeed: 15
   _groundAcceleration: 10
   _groundFriction: 5
   _jumpForce: 12
   _airAcceleration: 1
   _gravityForce: 20
-  _crouchSpeed: 0
-  _crouchScaleY: 0
-  _maxSlopeAngle: 0
-  _slidingSpeed: 0
-  _slidingAcceleration: 0
-  _slidingTriggerVelocityY: 0
-  _maxSlidingTimeInSeconds: 0
+  _crouchSpeed: 10
+  _crouchScaleY: 0.5
+  _maxSlopeAngle: 30
+  _slidingSpeed: 25
+  _slidingAcceleration: 5
+  _maxSlidingTimeInSeconds: 2
+  _slideJumpForce: 2
   _playerHeight: 2
   _groundMask:
     serializedVersion: 2
