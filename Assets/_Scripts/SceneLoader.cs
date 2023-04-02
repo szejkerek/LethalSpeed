@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
@@ -14,12 +15,9 @@ public class SceneLoader : Singleton<SceneLoader>
     [SerializeField] private TMP_Text tipText;
 
     [Header("Loading screen data")]
-    [SerializeField] private LoadinScreenTipsData tipsData;
+    [SerializeField] private List<LoadinScreenTipsData> tipsData;
 
-    private int tipCount;
-    private List<string> tips;
     private Slider progressBar;
-    private float totalSceneProgress;
     private CanvasGroup tipTextCanvasGroup;
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
 
@@ -28,7 +26,6 @@ public class SceneLoader : Singleton<SceneLoader>
         base.Awake();
         progressBar = loadingScreen.GetComponentInChildren<Slider>();
         tipTextCanvasGroup = tipText.GetComponent<CanvasGroup>();
-        tips = tipsData.TipsList;
     }
 
     public void LoadGame()
@@ -42,28 +39,62 @@ public class SceneLoader : Singleton<SceneLoader>
 
     private IEnumerator GenerateTips()
     {
-        tipCount = Random.Range(0, tips.Count);
-        tipText.text = tips[tipCount];
-
-        while(loadingScreen.activeInHierarchy)
+        try
         {
+            CheckTipsDataCorrectness();
+        }
+        catch(Exception ex)
+        {
+            Debug.LogWarning(ex.Message);
+            yield break;
+        }
+
+        tipTextCanvasGroup.alpha = 0f;
+        while (loadingScreen.activeInHierarchy)
+        {
+            tipTextCanvasGroup.DOFade(1, .5f);
+            tipText.text = GetTip();
             yield return new WaitForSeconds(3f);
             tipTextCanvasGroup.DOFade(0, .5f);
             yield return new WaitForSeconds(.5f);
-            tipCount++;
-
-            if (tipCount >= tips.Count)
-            {
-                tipCount = 0;
-            }
-
-            tipText.text = tips[tipCount];
-            tipTextCanvasGroup.DOFade(1, .5f);
         }
+    }
+
+    private void CheckTipsDataCorrectness()
+    {
+        if (tipsData.Count == 0)
+        {
+            throw new System.Exception("TipsData is empty.");
+        }
+
+        foreach (LoadinScreenTipsData tipsList in tipsData)
+        {
+            if (tipsList == null)
+            {
+                throw new System.Exception("One of tipsData tipsList is null.");
+            }
+            else if (tipsList.TipsList.Count == 0)
+            {
+                throw new System.Exception("One of tipsData tipsList is empty.");
+            }
+        }
+    }
+
+    private string GetTip()
+    {
+        int tipsDataIndex;
+        int tipsListIndex;
+
+        tipsDataIndex = UnityEngine.Random.Range(0, tipsData.Count);
+        tipsListIndex = UnityEngine.Random.Range(0, tipsData[tipsDataIndex].TipsList.Count);
+
+        return tipsData[tipsDataIndex].TipsList[tipsListIndex];
     }
 
     private IEnumerator GetSceneLoadProgress()
     {
+        float totalSceneProgress;
+
         for ( int i = 0; i < scenesLoading.Count; i++)
         {
             while (!scenesLoading[i].isDone)
