@@ -10,16 +10,16 @@ using System;
 public class SceneLoader : Singleton<SceneLoader>
 {
     [Header("UI")]
-    [SerializeField] private GameObject loadingScreen;
-    [SerializeField] private TMP_Text progressInfoText;
-    [SerializeField] private TMP_Text tipText;
+    [SerializeField] private GameObject loadingScreen; //loading screen object
+    [SerializeField] private TMP_Text progressInfoText; //text field with current progress info
+    [SerializeField] private TMP_Text tipText; //text field with tips
 
     [Header("Loading screen data")]
-    [SerializeField] private List<LoadinScreenTipsData> tipsData;
+    [SerializeField] private List<LoadinScreenTipsData> tipsData; //tips data pool
 
-    private Slider progressBar;
-    private CanvasGroup tipTextCanvasGroup;
-    private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
+    private Slider progressBar; //progress bar object
+    private CanvasGroup tipTextCanvasGroup; //text field canvas group to manage fading
+    private List<AsyncOperation> scenesLoading = new List<AsyncOperation>(); //list of currently loading and unloading scenes
 
     protected override void Awake()
     {
@@ -28,6 +28,7 @@ public class SceneLoader : Singleton<SceneLoader>
         tipTextCanvasGroup = tipText.GetComponent<CanvasGroup>();
     }
 
+    //Load new scene with loading screen interval
     public void LoadGame()
     {
         loadingScreen.gameObject.SetActive(true);
@@ -37,6 +38,7 @@ public class SceneLoader : Singleton<SceneLoader>
         StartCoroutine(GetSceneLoadProgress());
     }
 
+    //Generate random tips from data pool every few seconds
     private IEnumerator GenerateTips()
     {
         try
@@ -60,6 +62,7 @@ public class SceneLoader : Singleton<SceneLoader>
         }
     }
 
+    //Check correctens of passed tips data
     private void CheckTipsDataCorrectness()
     {
         if (tipsData.Count == 0)
@@ -80,6 +83,7 @@ public class SceneLoader : Singleton<SceneLoader>
         }
     }
 
+    //Return one random tip from data pool
     private string GetTip()
     {
         int tipsDataIndex;
@@ -91,6 +95,7 @@ public class SceneLoader : Singleton<SceneLoader>
         return tipsData[tipsDataIndex].TipsList[tipsListIndex];
     }
 
+    //Based on loading scene progress calculate progress bar value
     private IEnumerator GetSceneLoadProgress()
     {
         float totalSceneProgress;
