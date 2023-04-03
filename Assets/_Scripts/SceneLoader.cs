@@ -10,22 +10,22 @@ using System;
 public class SceneLoader : Singleton<SceneLoader>
 {
     [Header("UI")]
-    [SerializeField] private GameObject loadingScreen; //loading screen object
-    [SerializeField] private TMP_Text progressInfoText; //text field with current progress info
-    [SerializeField] private TMP_Text tipText; //text field with tips
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private TMP_Text progressInfoTextField;
+    [SerializeField] private TMP_Text tipTextField;
 
     [Header("Loading screen data")]
-    [SerializeField] private List<LoadinScreenTipsData> tipsData; //tips data pool
+    [SerializeField] private List<LoadinScreenTipsData> tipsDataPool; //tips data pool
 
     private Slider progressBar; //progress bar object
-    private CanvasGroup tipTextCanvasGroup; //text field canvas group to manage fading
+    private CanvasGroup tipTextFieldCanvasGroup; //text field canvas group to manage fading
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>(); //list of currently loading and unloading scenes
 
     protected override void Awake()
     {
         base.Awake();
         progressBar = loadingScreen.GetComponentInChildren<Slider>();
-        tipTextCanvasGroup = tipText.GetComponent<CanvasGroup>();
+        tipTextFieldCanvasGroup = tipTextField.GetComponent<CanvasGroup>();
     }
 
     //Load new scene with loading screen interval
@@ -41,46 +41,46 @@ public class SceneLoader : Singleton<SceneLoader>
     //Generate random tips from data pool every few seconds
     private IEnumerator GenerateTips()
     {
-        try
+        if (!IsTipsDataPoolCorrect())
         {
-            CheckTipsDataCorrectness();
-        }
-        catch(Exception ex)
-        {
-            Debug.LogWarning(ex.Message);
             yield break;
         }
 
-        tipTextCanvasGroup.alpha = 0f;
+        tipTextFieldCanvasGroup.alpha = 0f;
         while (loadingScreen.activeInHierarchy)
         {
-            tipTextCanvasGroup.DOFade(1, .5f);
-            tipText.text = GetTip();
+            tipTextFieldCanvasGroup.DOFade(1, .5f);
+            tipTextField.text = GetTip();
             yield return new WaitForSeconds(3f);
-            tipTextCanvasGroup.DOFade(0, .5f);
+            tipTextFieldCanvasGroup.DOFade(0, .5f);
             yield return new WaitForSeconds(.5f);
         }
     }
 
-    //Check correctens of passed tips data
-    private void CheckTipsDataCorrectness()
+    //Check correctens of passed tips data pool
+    private bool IsTipsDataPoolCorrect()
     {
-        if (tipsData.Count == 0)
+        if (tipsDataPool.Count == 0)
         {
-            throw new System.Exception("TipsData is empty.");
+            Debug.LogWarning("TipsData is empty.");
+            return false;
         }
 
-        foreach (LoadinScreenTipsData tipsList in tipsData)
+        foreach (LoadinScreenTipsData tipsList in tipsDataPool)
         {
             if (tipsList == null)
             {
-                throw new System.Exception("One of tipsData tipsList is null.");
+                Debug.LogWarning("One of tipsData tipsList is null.");
+                return false;
             }
             else if (tipsList.TipsList.Count == 0)
             {
-                throw new System.Exception("One of tipsData tipsList is empty.");
+                Debug.LogWarning("One of tipsData tipsList is empty.");
+                return false;
             }
         }
+
+        return true;
     }
 
     //Return one random tip from data pool
@@ -89,10 +89,10 @@ public class SceneLoader : Singleton<SceneLoader>
         int tipsDataIndex;
         int tipsListIndex;
 
-        tipsDataIndex = UnityEngine.Random.Range(0, tipsData.Count);
-        tipsListIndex = UnityEngine.Random.Range(0, tipsData[tipsDataIndex].TipsList.Count);
+        tipsDataIndex = UnityEngine.Random.Range(0, tipsDataPool.Count);
+        tipsListIndex = UnityEngine.Random.Range(0, tipsDataPool[tipsDataIndex].TipsList.Count);
 
-        return tipsData[tipsDataIndex].TipsList[tipsListIndex];
+        return tipsDataPool[tipsDataIndex].TipsList[tipsListIndex];
     }
 
     //Based on loading scene progress calculate progress bar value
@@ -113,7 +113,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
                 totalSceneProgress = (totalSceneProgress / scenesLoading.Count) / .9f;
                 progressBar.value = totalSceneProgress;
-                progressInfoText.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
+                progressInfoTextField.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
                 yield return null;
             }
         }

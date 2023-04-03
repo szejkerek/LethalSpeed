@@ -438,7 +438,9 @@ MonoBehaviour:
   loadingScreen: {fileID: 2067087471779570064}
   progressInfoText: {fileID: 27585520}
   tipText: {fileID: 390144615}
-  tipsData: {fileID: 11400000, guid: 5a5786eb13030cf468a972d054d87dd3, type: 2}
+  tipsData:
+  - {fileID: 11400000, guid: 5a5786eb13030cf468a972d054d87dd3, type: 2}
+  - {fileID: 11400000, guid: f2e52feb701f09c4db37d3cde0a15142, type: 2}
 --- !u!4 &890395670
 Transform:
   m_ObjectHideFlags: 0
