@@ -3,11 +3,11 @@ using UnityEngine;
 public class AirState : MovementState
 {
     private PlayerMovement _pm;
-    private float _startingVelocity;
+    private float _initialVelocity;
 
     public AirState(float startingVelocity)
     {
-        _startingVelocity = startingVelocity;
+        _initialVelocity = startingVelocity;
     }
 
     public void Begin(PlayerMovement pm)
@@ -30,11 +30,11 @@ public class AirState : MovementState
             _pm.transform.localScale = new Vector3(_pm.transform.localScale.x, _pm.OriginalScaleY, _pm.transform.localScale.z);
         }
 
-        if(_startingVelocity > _pm.MaxSpeed)
+        if(_initialVelocity > _pm.MaxSpeed)
         {
-            float currectVelocity = new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z).magnitude;
+            float currectVelocity = _pm.FlatVelocity.magnitude;
 
-            _startingVelocity = currectVelocity < _pm.MaxSpeed ? _pm.MaxSpeed : currectVelocity;
+            _initialVelocity = currectVelocity < _pm.MaxSpeed ? _pm.MaxSpeed : currectVelocity;
         }
 
         CheckForModeChange();
@@ -55,7 +55,7 @@ public class AirState : MovementState
     {
         if(_pm.JustLanded && Input.GetKey(_pm.CrouchKey))
         {
-            _pm.ChangeMovementState(new SlidingState());
+            _pm.ChangeMovementState(new SlidingState(_pm.FlatVelocity.magnitude));
 
             return;
         }
@@ -70,21 +70,19 @@ public class AirState : MovementState
 
     private void ClipAirSpeed()
     {
-        Vector3 flatVel = new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z);
-        
-        if (_startingVelocity > _pm.MaxSpeed)
+        if (_initialVelocity > _pm.MaxSpeed)
         {
-            Vector3 newSpeed = flatVel.normalized * Mathf.Min(_startingVelocity, flatVel.magnitude);
+            Vector3 newSpeed = _pm.FlatVelocity.normalized * Mathf.Min(_initialVelocity, _pm.FlatVelocity.magnitude);
 
-            _pm.Rigidbody.velocity = new Vector3(newSpeed.x, _pm.Rigidbody.velocity.y, newSpeed.z);
+            _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
-        else if (flatVel.magnitude > _pm.MaxSpeed)
+        else if (_pm.FlatVelocity.magnitude > _pm.MaxSpeed)
         {
-            Vector3 newSpeed = flatVel.normalized * _pm.MaxSpeed;
+            Vector3 newSpeed = _pm.FlatVelocity.normalized * _pm.MaxSpeed;
 
-            _pm.Rigidbody.velocity = new Vector3(newSpeed.x, _pm.Rigidbody.velocity.y, newSpeed.z);
+            _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
 
-        _pm.velocityText.text = $"Air velocity: {flatVel.magnitude:0.##}ups - Y vel: {_pm.Rigidbody.velocity.y:0.##}";
+        _pm.velocityText.text = $"Air velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
     }
 }
