@@ -104,9 +104,9 @@ public class SlidingState : MovementState
             return;
         }
 
-        if(Input.GetKeyUp(_pm.CrouchKey) && !_pm.IsStuckCrouching)
+        if(Input.GetKeyUp(_pm.CrouchKey))
         {
-            _pm.ChangeMovementState(new RunningState());
+            _pm.ChangeMovementState(_pm.IsStuckCrouching ? new CrouchingState() : new RunningState());
 
             return;
         }
