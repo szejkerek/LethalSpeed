@@ -2219,7 +2219,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23954
+  m_Name: pb_Mesh23692
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2950,7 +2950,7 @@ PrefabInstance:
       objectReference: {fileID: 890659983}
     - target: {fileID: 7655477996213989623, guid: 2b4119f802eb37544a4798c9411e1782, type: 3}
       propertyPath: _airAcceleration
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7655477996213989623, guid: 2b4119f802eb37544a4798c9411e1782, type: 3}
       propertyPath: _groundAcceleration
@@ -2970,7 +2970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7655477996354903981, guid: 2b4119f802eb37544a4798c9411e1782, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7655477996354903981, guid: 2b4119f802eb37544a4798c9411e1782, type: 3}
       propertyPath: m_LocalPosition.z
