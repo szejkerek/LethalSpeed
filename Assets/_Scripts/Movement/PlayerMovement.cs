@@ -11,11 +11,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _maxSpeed;
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _groundAcceleration;
+    [SerializeField] private float _groundDeacceleration;
     [SerializeField] private float _groundFriction;
 
     public float MaxSpeed { get { return _maxSpeed; } set { _maxSpeed = value; } }
     public float MovementSpeed { get { return _movementSpeed; } set { _movementSpeed = value; } }
     public float GroundAcceleration { get { return _groundAcceleration; } }
+    public float GroundDeacceleration { get { return _groundDeacceleration; } }
     public float GroundFriction { get { return _groundFriction; } }
 
 
@@ -92,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rb;
 
     public Rigidbody Rigidbody { get { return _rb; } }
+    public Vector3 Velocity { get { return _rb.velocity; } set { _rb.velocity = value; } }
+    public Vector3 FlatVelocity { get { return Vector3.ProjectOnPlane(_rb.velocity, Vector3.up); } }
 
     private MovementState _movementState;
 
