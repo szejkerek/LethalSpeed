@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class SlidingState : MovementState
@@ -74,7 +75,7 @@ public class SlidingState : MovementState
     {
         if (!Input.GetKey(_pm.CrouchKey))
         {
-            _pm.transform.localScale = new Vector3(_pm.transform.localScale.x, _pm.OriginalScaleY, _pm.transform.localScale.z);
+            _pm.transform.DOScaleY(_pm.OriginalScaleY, 0.25f);
         }
     }
 
@@ -103,7 +104,7 @@ public class SlidingState : MovementState
             return;
         }
 
-        if(Input.GetKeyUp(_pm.CrouchKey))
+        if(Input.GetKeyUp(_pm.CrouchKey) && !_pm.IsStuckCrouching)
         {
             _pm.ChangeMovementState(new RunningState());
 
