@@ -238,13 +238,21 @@ MonoBehaviour:
   _slidingSpeed: 20
   _slidingAcceleration: 10
   _maxSlidingTimeInSeconds: 1
-  _slideJumpForce: 2
+  _slideJumpForce: 1.25
+  _wallrunSpeed: 25
+  _wallrunAcceleration: 8
+  _maxWallruninngTimeInSeconds: 3
+  _wallrunJumpForce: 12
   _playerHeight: 2
   _groundMask:
     serializedVersion: 2
     m_Bits: 64
+  _wallMask:
+    serializedVersion: 2
+    m_Bits: 128
   _jumpKey: 32
   _crouchKey: 306
+  pc: {fileID: 7655477996838774010}
   orientation: {fileID: 7655477995968348113}
   velocityText: {fileID: 0}
 --- !u!1 &7655477996354903978
@@ -290,6 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7655477996716240840}
   - component: {fileID: 7655477996716240843}
+  - component: {fileID: 3282088957994462306}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -314,6 +323,19 @@ Transform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7655477996716240843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655477996716240841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41fee1ec758fad4dbb45d38a7d44990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPosition: {fileID: 7655477995279876118}
+--- !u!114 &3282088957994462306
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -426,3 +448,4 @@ MonoBehaviour:
   _sensX: 400
   _sensY: 400
   orientation: {fileID: 7655477995968348113}
+  camHolder: {fileID: 7655477996716240840}
