@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class AirState : MovementState
@@ -23,11 +24,11 @@ public class AirState : MovementState
 
         if(Input.GetKeyDown(_pm.CrouchKey))
         {
-            _pm.transform.localScale = new Vector3(_pm.transform.localScale.x, _pm.CrouchScaleY, _pm.transform.localScale.z);
+            _pm.transform.DOScaleY(_pm.CrouchScaleY, 0.25f);
         }
         else if(Input.GetKeyUp(_pm.CrouchKey))
         {
-            _pm.transform.localScale = new Vector3(_pm.transform.localScale.x, _pm.OriginalScaleY, _pm.transform.localScale.z);
+            _pm.transform.DOScaleY(_pm.OriginalScaleY, 0.25f);
         }
 
         if(_initialVelocity > _pm.MaxSpeed)
@@ -63,6 +64,24 @@ public class AirState : MovementState
         if (_pm.IsGrounded && !_pm.WasGrounded)
         {
             _pm.ChangeMovementState(new RunningState());
+
+            return;
+        }
+
+        RaycastHit wallRayHit;
+
+        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, _pm.orientation.right, out wallRayHit, 0.8f, _pm.WallMask)
+            && !Input.GetKey(_pm.CrouchKey) && Input.GetKeyDown(_pm.JumpKey))
+        {
+            _pm.ChangeMovementState(new WallrunningState(wallRayHit.normal, _pm.Velocity.magnitude));
+
+            return;
+        }
+        
+        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, -_pm.orientation.right, out wallRayHit, 0.8f, _pm.WallMask)
+            && !Input.GetKey(_pm.CrouchKey) && Input.GetKeyDown(_pm.JumpKey))
+        {
+            _pm.ChangeMovementState(new WallrunningState(wallRayHit.normal, _pm.Velocity.magnitude));
 
             return;
         }
