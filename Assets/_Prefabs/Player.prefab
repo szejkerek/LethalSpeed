@@ -227,6 +227,7 @@ MonoBehaviour:
   _maxSpeed: 15
   _movementSpeed: 15
   _groundAcceleration: 10
+  _groundDeacceleration: 100
   _groundFriction: 5
   _jumpForce: 12
   _airAcceleration: 1
@@ -234,8 +235,8 @@ MonoBehaviour:
   _crouchSpeed: 10
   _crouchScaleY: 0.5
   _maxSlopeAngle: 35
-  _slidingSpeed: 25
-  _slidingAcceleration: 5
+  _slidingSpeed: 20
+  _slidingAcceleration: 10
   _maxSlidingTimeInSeconds: 1
   _slideJumpForce: 2
   _playerHeight: 2
