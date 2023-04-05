@@ -243,6 +243,8 @@ MonoBehaviour:
   _wallrunAcceleration: 8
   _maxWallruninngTimeInSeconds: 3
   _wallrunJumpForce: 12
+  _dashForce: 80
+  _dashCooldown: 0.2
   _playerHeight: 2
   _groundMask:
     serializedVersion: 2
@@ -252,6 +254,7 @@ MonoBehaviour:
     m_Bits: 128
   _jumpKey: 32
   _crouchKey: 306
+  _dashKey: 304
   pc: {fileID: 7655477996838774010}
   orientation: {fileID: 7655477995968348113}
   velocityText: {fileID: 0}
