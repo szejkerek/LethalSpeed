@@ -85,6 +85,14 @@ public class AirState : MovementState
 
             return;
         }
+
+        if(Input.GetKeyDown(KeyCode.LeftShift) && _pm.CanDash)
+        {
+            _pm.JustDashed();
+            _pm.ChangeMovementState(new DashingState());
+
+            return;
+        }
     }
 
     private void ClipAirSpeed()
