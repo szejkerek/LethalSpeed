@@ -22,7 +22,10 @@ public class RunningState : MovementState
     {
         if (_pm.IsOnSlope(out _slopeRayHit))
         {
-            _pm.Rigidbody.AddForce(Vector3.ProjectOnPlane(normalizedWishDir, _slopeRayHit.normal).normalized * _pm.MaxSpeed * _pm.GroundAcceleration, ForceMode.Force);
+            _pm.Rigidbody.AddForce(
+                Vector3.ProjectOnPlane(normalizedWishDir, _slopeRayHit.normal).normalized * _pm.MaxSpeed * _pm.GroundAcceleration, 
+                ForceMode.Force
+            );
             _pm.Rigidbody.useGravity = false;
 
             return;
@@ -41,16 +44,16 @@ public class RunningState : MovementState
     {
         if (Input.GetKey(_pm.JumpKey))
         {
-            _pm.Rigidbody.velocity = new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z);
+            _pm.Velocity = _pm.FlatVelocity;
             _pm.Rigidbody.AddForce(Vector3.up * _pm.JumpForce, ForceMode.Impulse);
-            _pm.ChangeMovementState(new AirState(new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z).magnitude));
+            _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
 
             return;
         }
 
         if (!_pm.IsGrounded && _pm.WasGrounded)
         {
-            _pm.ChangeMovementState(new AirState(new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z).magnitude));
+            _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
 
             return;
         }
@@ -65,23 +68,22 @@ public class RunningState : MovementState
 
     private void ClipGroundSpeed()
     {
-        if (_pm.IsOnSlope(out _slopeRayHit) && _pm.Rigidbody.velocity.magnitude > _pm.MaxSpeed)
+        if (_pm.IsOnSlope(out _slopeRayHit) && _pm.Velocity.magnitude > _pm.MaxSpeed)
         {
-            _pm.Rigidbody.velocity = _pm.Rigidbody.velocity.normalized * _pm.MaxSpeed;
-            _pm.velocityText.text = $"Slope velocity: {_pm.Rigidbody.velocity.magnitude:0.##}ups - Y vel: {_pm.Rigidbody.velocity.y:0.##}";
+            _pm.Velocity = _pm.Velocity.normalized * _pm.MaxSpeed;
+            _pm.velocityText.text = $"Slope velocity: {_pm.Velocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
 
             return;
         }
 
-        Vector3 flatVel = new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z);
-
-        if(flatVel.magnitude > _pm.MaxSpeed)
+        if(_pm.FlatVelocity.magnitude > _pm.MaxSpeed)
         {
-            Vector3 newSpeed = flatVel.normalized * _pm.MaxSpeed;
+            float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 3.0f ? _pm.GroundDeacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+            Vector3 newSpeed = _pm.FlatVelocity.normalized * (_pm.FlatVelocity.magnitude - drop);
 
-            _pm.Rigidbody.velocity = new Vector3(newSpeed.x, _pm.Rigidbody.velocity.y, newSpeed.z);
+            _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
 
-        _pm.velocityText.text = $"Ground velocity: {flatVel.magnitude:0.##}ups - Y vel: {_pm.Rigidbody.velocity.y:0.##}";
+        _pm.velocityText.text = $"Ground velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
     }
 }
