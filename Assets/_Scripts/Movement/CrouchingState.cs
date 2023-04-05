@@ -36,14 +36,14 @@ public class CrouchingState : MovementState
         {
             _pm.Rigidbody.velocity = new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z);
             _pm.Rigidbody.AddForce(Vector3.up * _pm.JumpForce, ForceMode.Impulse);
-            _pm.ChangeMovementState(new AirState());
+            _pm.ChangeMovementState(new AirState(new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z).magnitude));
 
             return;
         }
 
         if (!_pm.IsGrounded && _pm.WasGrounded)
         {
-            _pm.ChangeMovementState(new AirState());
+            _pm.ChangeMovementState(new AirState(new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z).magnitude));
 
             return;
         }
