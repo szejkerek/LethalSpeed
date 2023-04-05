@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     public float CrouchSpeed { get { return _crouchSpeed; } }
     public float CrouchScaleY { get {  return _crouchScaleY; } }
     public float OriginalScaleY { get { return _originalScaleY; } }
-    public bool IsStuchCrouching { get { return _isStuckCrouched; } }
+    public bool IsStuckCrouching { get { return _isStuckCrouched; } }
 
 
     [Header("Slope movement")]
@@ -69,12 +69,25 @@ public class PlayerMovement : MonoBehaviour
     public float SlideJumpForce { get { return _slideJumpForce; } }
     public bool JustLanded { get { return _justLanded; } }
 
+    [Header("Wallrunning")]
+    [SerializeField] private float _wallrunSpeed;
+    [SerializeField] private float _wallrunAcceleration;
+    [SerializeField] private float _maxWallruninngTimeInSeconds;
+    [SerializeField] private float _wallrunJumpForce;
 
-    [Header("Ground check stuff")]
+    public float WallrunSpeed { get { return _wallrunSpeed; } }
+    public float WallrunAcceleration { get { return _wallrunAcceleration; } }
+    public float MaxWallrunTimeInSeconds { get { return _maxWallruninngTimeInSeconds; } }
+    public float WallrunJumpForce { get { return _wallrunJumpForce; } }
+
+
+    [Header("Ground / wall check stuff")]
     [SerializeField] private float _playerHeight;
     [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private LayerMask _wallMask;
 
     public float PlayerHeight { get { return _playerHeight; } }
+    public LayerMask WallMask { get { return _wallMask; } }
 
 
     [Header("Key bindings")]
@@ -84,6 +97,9 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode JumpKey { get { return _jumpKey; } }
     public KeyCode CrouchKey { get { return _crouchKey; } }
 
+
+    [Space]
+    public PlayerCam pc;
 
     [Space]
     public Transform orientation;
