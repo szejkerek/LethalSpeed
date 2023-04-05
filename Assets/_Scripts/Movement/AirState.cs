@@ -3,6 +3,12 @@ using UnityEngine;
 public class AirState : MovementState
 {
     private PlayerMovement _pm;
+    private float _startingVelocity;
+
+    public AirState(float startingVelocity)
+    {
+        _startingVelocity = startingVelocity;
+    }
 
     public void Begin(PlayerMovement pm)
     {
@@ -14,6 +20,23 @@ public class AirState : MovementState
     public void Update()
     {
         ClipAirSpeed();
+
+        if(Input.GetKeyDown(_pm.CrouchKey))
+        {
+            _pm.transform.localScale = new Vector3(_pm.transform.localScale.x, _pm.CrouchScaleY, _pm.transform.localScale.z);
+        }
+        else if(Input.GetKeyUp(_pm.CrouchKey))
+        {
+            _pm.transform.localScale = new Vector3(_pm.transform.localScale.x, _pm.OriginalScaleY, _pm.transform.localScale.z);
+        }
+
+        if(_startingVelocity > _pm.MaxSpeed)
+        {
+            float currectVelocity = new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z).magnitude;
+
+            _startingVelocity = currectVelocity < _pm.MaxSpeed ? _pm.MaxSpeed : currectVelocity;
+        }
+
         CheckForModeChange();
     }
 
@@ -30,17 +53,32 @@ public class AirState : MovementState
 
     public void CheckForModeChange()
     {
+        if(_pm.JustLanded && Input.GetKey(_pm.CrouchKey))
+        {
+            _pm.ChangeMovementState(new SlidingState());
+
+            return;
+        }
+
         if (_pm.IsGrounded && !_pm.WasGrounded)
         {
             _pm.ChangeMovementState(new RunningState());
+
+            return;
         }
     }
 
     private void ClipAirSpeed()
     {
         Vector3 flatVel = new Vector3(_pm.Rigidbody.velocity.x, 0.0f, _pm.Rigidbody.velocity.z);
+        
+        if (_startingVelocity > _pm.MaxSpeed)
+        {
+            Vector3 newSpeed = flatVel.normalized * Mathf.Min(_startingVelocity, flatVel.magnitude);
 
-        if (flatVel.magnitude > _pm.MaxSpeed)
+            _pm.Rigidbody.velocity = new Vector3(newSpeed.x, _pm.Rigidbody.velocity.y, newSpeed.z);
+        }
+        else if (flatVel.magnitude > _pm.MaxSpeed)
         {
             Vector3 newSpeed = flatVel.normalized * _pm.MaxSpeed;
 
