@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/DeveloperTesting/Menu.unity
     guid: e07ea2ed3d842dc47935f89dca3aae61
   - enabled: 1
-    path: Assets/Scenes/TestScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/DeveloperTesting/MovementScene.unity
+    guid: 7e3de16a82bc5044b835a9d5e2cdd178
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}
