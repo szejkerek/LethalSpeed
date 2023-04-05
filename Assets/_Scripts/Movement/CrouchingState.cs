@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class CrouchingState : MovementState
 {
@@ -10,7 +11,7 @@ public class CrouchingState : MovementState
         _pm.MaxSpeed = pm.CrouchSpeed;
         _pm.Rigidbody.drag = _pm.GroundFriction;
 
-        _pm.transform.localScale = new Vector3(_pm.transform.localScale.x, _pm.CrouchScaleY, _pm.transform.localScale.z);
+        _pm.transform.DOScaleY(_pm.CrouchScaleY, 0.25f);
         _pm.transform.position += Vector3.down * _pm.PlayerHeight * _pm.CrouchScaleY * 0.1f;
     }
 
@@ -27,7 +28,7 @@ public class CrouchingState : MovementState
 
     public void End()
     {
-        _pm.transform.localScale = new Vector3(_pm.transform.localScale.x, _pm.OriginalScaleY, _pm.transform.localScale.z);
+        _pm.transform.DOScaleY(_pm.OriginalScaleY, 0.25f);
     }
 
     public void CheckForModeChange()
@@ -48,7 +49,7 @@ public class CrouchingState : MovementState
             return;
         }
 
-        if(!Input.GetKey(_pm.CrouchKey) && !_pm.IsStuchCrouching)
+        if(!Input.GetKey(_pm.CrouchKey) && !_pm.IsStuckCrouching)
         {
             _pm.ChangeMovementState(new RunningState());
 
@@ -60,7 +61,8 @@ public class CrouchingState : MovementState
     {
         if (_pm.FlatVelocity.magnitude > _pm.MaxSpeed)
         {
-            Vector3 newSpeed = _pm.FlatVelocity.normalized * _pm.MaxSpeed;
+            float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 3.0f ? _pm.GroundDeacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+            Vector3 newSpeed = _pm.FlatVelocity.normalized * (_pm.FlatVelocity.magnitude - drop);
 
             _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
