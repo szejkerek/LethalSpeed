@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -80,6 +81,15 @@ public class PlayerMovement : MonoBehaviour
     public float MaxWallrunTimeInSeconds { get { return _maxWallruninngTimeInSeconds; } }
     public float WallrunJumpForce { get { return _wallrunJumpForce; } }
 
+    [Header("Dashing")]
+    [SerializeField] private float _dashForce;
+    [SerializeField] private float _dashCooldown;
+    private bool _canDash;
+
+    public float DashForce { get { return _dashForce; } }
+    public float DashCooldown { get { return _dashCooldown; } }
+    public bool CanDash { get { return _canDash; } set { _canDash = value; } }
+
 
     [Header("Ground / wall check stuff")]
     [SerializeField] private float _playerHeight;
@@ -93,9 +103,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Key bindings")]
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _crouchKey = KeyCode.LeftControl;
+    [SerializeField] private KeyCode _dashKey = KeyCode.LeftShift;
 
     public KeyCode JumpKey { get { return _jumpKey; } }
     public KeyCode CrouchKey { get { return _crouchKey; } }
+    public KeyCode DashKey { get { return _dashKey; } }
 
 
     [Space]
@@ -131,6 +143,9 @@ public class PlayerMovement : MonoBehaviour
         _movementState.Begin(this);
 
         _originalScaleY = transform.localScale.y;
+
+        _canDash = true;
+        _dashCooldown = 1.0f;
     }
 
     void Update()
@@ -143,11 +158,43 @@ public class PlayerMovement : MonoBehaviour
 
         _movementState.Update();
         _wasGroundedLastFrame = _isGrounded;
+
+        if(_justLanded && !_canDash)
+        {
+            Invoke(nameof(ResetDash), _dashCooldown);
+        }
     }
 
     void FixedUpdate()
     {
         _movementState.Move(_wishDir.normalized);
+    }
+
+    public bool IsOnSlope(out RaycastHit slopeRayHit)
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeRayHit, 0.2f))
+        {
+            float slopeAngle = Vector3.Angle(Vector3.up, slopeRayHit.normal);
+
+            return slopeAngle < _maxSlopeAngle && slopeAngle != 0.0;
+        }
+
+        return false;
+    }
+
+    public void JustDashed()
+    {
+        _canDash = false;
+
+        if(_isGrounded)
+        {
+            Invoke(nameof(ResetDash), _dashCooldown);
+        }
+    }
+
+    private void ResetDash()
+    {
+        _canDash = true;
     }
 
     private void GetInput()
@@ -156,17 +203,5 @@ public class PlayerMovement : MonoBehaviour
         _verticalInput = Input.GetAxisRaw("Vertical");
         
         _wishDir = orientation.forward * _verticalInput + orientation.right * _horizontalInput;
-    }
-
-    public bool IsOnSlope(out RaycastHit slopeRayHit)
-    {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeRayHit, 0.2f))
-        {
-            float slopeAngle = Vector3.Angle(Vector3.up, slopeRayHit.normal);
-    
-            return slopeAngle < _maxSlopeAngle && slopeAngle != 0.0;
-        }
-    
-        return false;
     }
 }
