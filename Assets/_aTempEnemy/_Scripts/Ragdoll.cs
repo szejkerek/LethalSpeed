@@ -4,9 +4,6 @@ public class Ragdoll : MonoBehaviour
 {
     Rigidbody[] _rigidbodies;
     Animator _animator;
-
-    public Rigidbody[] Rigidbodies => _rigidbodies;
-
     void Awake()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
