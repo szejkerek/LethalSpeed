@@ -18,7 +18,7 @@ public class SlidingState : MovementState
     {
         _pm = pm;
         _pm.MaxSpeed = pm.SlidingSpeed;
-        _pm.Rigidbody.drag = _pm.GroundFriction;
+        _pm.Rigidbody.drag = 0.0f;
 
         _slidingTime = _pm.MaxSlidingTimeInSeconds;
     }
@@ -33,16 +33,10 @@ public class SlidingState : MovementState
             float currectVelocity = _pm.FlatVelocity.magnitude;
 
             _initialSpeed = currectVelocity < _pm.MaxSpeed ? _pm.MaxSpeed : currectVelocity;
-            _pm.Rigidbody.drag = 0.0f;
         }
         else if(!_pm.IsOnSlope(out _slopeRayHit) && _wasOnSlope && _pm.FlatVelocity.magnitude > _pm.MaxSpeed)
         {
             _initialSpeed = _pm.FlatVelocity.magnitude;
-            _pm.Rigidbody.drag = 0.0f;
-        }
-        else
-        {
-            _pm.Rigidbody.drag = _pm.GroundFriction;
         }
 
         _wasOnSlope = _pm.IsOnSlope(out _slopeRayHit);
@@ -60,7 +54,6 @@ public class SlidingState : MovementState
                 * (1.0f + slopeUpAngle / _pm.MaxSlopeAngle),
                 ForceMode.Force
             );
-            _pm.Rigidbody.drag = 0.0f;
             _pm.Rigidbody.useGravity = false;
 
             _slidingTime = _pm.MaxSlidingTimeInSeconds;
@@ -68,8 +61,7 @@ public class SlidingState : MovementState
             return;
         }
 
-        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.MaxSpeed * _pm.SlidingAcceleration, ForceMode.Force);
-        _pm.Rigidbody.drag = _pm.GroundFriction;
+        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.SlidingAcceleration * _pm.SlidingSpeed / 2.0f, ForceMode.Force);
         _pm.Rigidbody.useGravity = true;
     }
 
@@ -79,6 +71,8 @@ public class SlidingState : MovementState
         {
             _pm.transform.DOScaleY(_pm.OriginalScaleY, 0.25f);
         }
+
+        _pm.Rigidbody.useGravity = true;
     }
 
     public void CheckForModeChange()
@@ -126,7 +120,7 @@ public class SlidingState : MovementState
         if(_initialSpeed > _pm.MaxSpeed)
         {
             float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 1.0f ? 
-                _pm.GroundDeacceleration * Time.deltaTime / 5000.0f : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+                _pm.GroundDeacceleration * Time.deltaTime / 50.0f : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
 
             Vector3 newSpeed = _pm.FlatVelocity.normalized * Mathf.Min(_initialSpeed, _pm.FlatVelocity.magnitude - drop);
 
