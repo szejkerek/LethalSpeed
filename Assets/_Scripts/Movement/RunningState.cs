@@ -26,13 +26,11 @@ public class RunningState : MovementState
                 Vector3.ProjectOnPlane(normalizedWishDir, _slopeRayHit.normal).normalized * _pm.MaxSpeed * _pm.GroundAcceleration, 
                 ForceMode.Force
             );
-            _pm.Rigidbody.useGravity = false;
 
             return;
         }
 
         _pm.Rigidbody.AddForce(normalizedWishDir * _pm.MaxSpeed * _pm.GroundAcceleration, ForceMode.Force);
-        _pm.Rigidbody.useGravity = true;
     }
 
     public void End()
