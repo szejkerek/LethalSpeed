@@ -13,14 +13,15 @@ public abstract class EnemyAIState
     }
 
     public abstract void EnterState();
-    public abstract void UpdateStateInternally();
-    public abstract void ExitState();
-    public abstract void CheckSwitchState();
     public void UpdateState()
     {
         CheckSwitchState();
-        UpdateState();
+        UpdateStateInternally();
     }
+    public abstract void UpdateStateInternally();
+    public abstract void ExitState();
+    public abstract void CheckSwitchState();
+
     protected void SwitchState(EnemyAIState newState) 
     {
         ExitState();

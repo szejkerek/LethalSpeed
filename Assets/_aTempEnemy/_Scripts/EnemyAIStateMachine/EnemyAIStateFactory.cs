@@ -5,7 +5,7 @@ public class EnemyAIStateFactory
 
     public EnemyAIStateFactory(EnemyAIStateMachine context)
     {
-        context = _context;
+        _context = context;
     }
 
     public EnemyAIState Idle() { return new EnemyAIIdleState(_context, this); }
