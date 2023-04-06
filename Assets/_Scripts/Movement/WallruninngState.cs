@@ -124,7 +124,7 @@ public class WallrunningState : MovementState
         if (_initialSpeed > _pm.MaxSpeed)
         {
             float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 1.0f ? 
-                _pm.GroundDeacceleration * Time.deltaTime / 500.0f : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+                _pm.GroundDeacceleration * Time.deltaTime / 50.0f : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
 
             Vector3 newSpeed = _pm.FlatVelocity.normalized * Mathf.Min(_initialSpeed, _pm.FlatVelocity.magnitude - drop);
 
