@@ -5,6 +5,7 @@ public class AirState : MovementState
 {
     private PlayerMovement _pm;
     private float _initialVelocity;
+    private float _jumpCommandBuffer;
 
     public AirState(float startingVelocity)
     {
@@ -20,6 +21,8 @@ public class AirState : MovementState
 
     public void Update()
     {
+        _jumpCommandBuffer -= Time.deltaTime;
+
         ClipAirSpeed();
 
         if(Input.GetKeyDown(_pm.CrouchKey))
@@ -36,6 +39,11 @@ public class AirState : MovementState
             float currectVelocity = _pm.FlatVelocity.magnitude;
 
             _initialVelocity = currectVelocity < _pm.MaxSpeed ? _pm.MaxSpeed : currectVelocity;
+        }
+
+        if(Input.GetKeyDown(_pm.JumpKey))
+        {
+            _jumpCommandBuffer = 0.5f;
         }
 
         CheckForModeChange();
@@ -71,7 +79,7 @@ public class AirState : MovementState
         RaycastHit wallRayHit;
 
         if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, _pm.orientation.right, out wallRayHit, 0.8f, _pm.WallMask)
-            && !Input.GetKey(_pm.CrouchKey) && Input.GetKeyDown(_pm.JumpKey))
+            && !Input.GetKey(_pm.CrouchKey) && (Input.GetKeyDown(_pm.JumpKey) || _jumpCommandBuffer >= 0.0f))
         {
             _pm.ChangeMovementState(new WallrunningState(wallRayHit.normal, _pm.Velocity.magnitude));
 
@@ -79,10 +87,10 @@ public class AirState : MovementState
         }
         
         if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, -_pm.orientation.right, out wallRayHit, 0.8f, _pm.WallMask)
-            && !Input.GetKey(_pm.CrouchKey) && Input.GetKeyDown(_pm.JumpKey))
+            && !Input.GetKey(_pm.CrouchKey) && (Input.GetKeyDown(_pm.JumpKey) || _jumpCommandBuffer >= 0.0f))
         {
             _pm.ChangeMovementState(new WallrunningState(wallRayHit.normal, _pm.Velocity.magnitude));
-
+            
             return;
         }
 
