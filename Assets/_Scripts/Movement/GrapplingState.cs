@@ -10,9 +10,6 @@ public class GrapplingState : MovementState
     private bool _preGrapple;
 
     private float _startGrapplingDelay;
-    private float _grapplingTime;
-
-    float _initialGrappleVelocity;
 
     public void Begin(PlayerMovement pm)
     {
@@ -50,16 +47,12 @@ public class GrapplingState : MovementState
         if(_startGrapplingDelay <= 0.0f && _preGrapple)
         {
             StartGrappling();
-            _initialGrappleVelocity = _pm.Velocity.magnitude;
-            _grapplingTime = 0.0f;
 
             return;
         }
 
         if(!_preGrapple)
         {
-            _grapplingTime += Time.deltaTime;
-
             CheckForModeChange();
         }
         else if(_pm.JustLanded)
@@ -84,9 +77,9 @@ public class GrapplingState : MovementState
 
     public void CheckForModeChange()
     {
-        if(!Input.GetKey(_pm.GrappleKey) || !_preGrapple && 
-            (_grapplingTime >= _pm.MaxGrappleTime || _initialGrappleVelocity != _pm.Velocity.magnitude))
+        if(!_preGrapple && (_grappleTargetPoint - _pm.transform.position).magnitude < 5.0f)
         {
+            _pm.Velocity = _pm.Velocity.normalized * _pm.MovementSpeed;
             StopGrappling();
 
             return;
@@ -97,12 +90,10 @@ public class GrapplingState : MovementState
     {
         _preGrapple = false;
 
-        Vector3 grappleDir = (_grappleTargetPoint - _pm.transform.position);
-
         _pm.Velocity = Vector3.zero;
-        _pm.Velocity = grappleDir.magnitude < 20.0f ? grappleDir.normalized * 20.0f : grappleDir;
         _pm.Rigidbody.useGravity = false;
         _pm.Rigidbody.drag = 0.0f;
+        _pm.Rigidbody.AddForce((_grappleTargetPoint - _pm.transform.position).normalized * _pm.GrappleForce, ForceMode.Impulse);
     }
 
     private void StopGrappling()
@@ -111,6 +102,7 @@ public class GrapplingState : MovementState
         _lr.enabled = false;
 
         _pm.Rigidbody.useGravity = true;
+        _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundFriction : 0.0f;
         _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.FlatVelocity.magnitude));
     }
 }
