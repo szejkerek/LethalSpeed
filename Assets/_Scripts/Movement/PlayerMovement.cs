@@ -96,14 +96,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("Grappling")]
     [SerializeField] private float _grapplingMaxDistance;
     [SerializeField] private float _grappleDelay;
-    [SerializeField] private float _maxGrappleTime;
+    [SerializeField] private float _grappleForce;
     [SerializeField] private LayerMask _grappleMask;
     [SerializeField] private LineRenderer _lr;
     [SerializeField] private Transform _grappleGunTip;
 
     public float GrapplingMaxDistance { get { return _grapplingMaxDistance; } }
     public float GrapplingDelay { get {  return _grappleDelay; } }
-    public float MaxGrappleTime { get { return _maxGrappleTime; } }
+    public float GrappleForce { get { return _grappleForce; } }
     public LayerMask GrappleMask { get { return _grappleMask; } }
     public LineRenderer Lr { get { return _lr; } }
     public Transform GrappleTip { get {  return _grappleGunTip; } }
