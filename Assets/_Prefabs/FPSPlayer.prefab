@@ -186,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7975385521685648151}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 4, z: 10}
+  m_LocalPosition: {x: -65, y: 25, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -239,22 +239,32 @@ MonoBehaviour:
   _slidingAcceleration: 10
   _maxSlidingTimeInSeconds: 1
   _slideJumpForce: 1.25
+  _slideScaleY: 0.75
   _wallrunSpeed: 25
   _wallrunAcceleration: 8
   _maxWallruninngTimeInSeconds: 3
   _wallrunJumpForce: 12
+  _wallMask:
+    serializedVersion: 2
+    m_Bits: 128
   _dashForce: 80
   _dashCooldown: 0.2
+  _grapplingMaxDistance: 100
+  _grappleDelay: 0.25
+  _maxGrappleTime: 1
+  _grappleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  _lr: {fileID: 0}
+  _grappleGunTip: {fileID: 0}
   _playerHeight: 2
   _groundMask:
     serializedVersion: 2
     m_Bits: 64
-  _wallMask:
-    serializedVersion: 2
-    m_Bits: 128
   _jumpKey: 32
   _crouchKey: 306
   _dashKey: 304
+  _grappleKey: 324
   pc: {fileID: 0}
   orientation: {fileID: 7975385519971890260}
   velocityText: {fileID: 0}
