@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -72,16 +68,20 @@ public class PlayerMovement : MonoBehaviour
     public float SlideScaleY { get { return _slideScaleY; } }
     public bool JustLanded { get { return _justLanded; } }
 
+
     [Header("Wallrunning")]
     [SerializeField] private float _wallrunSpeed;
     [SerializeField] private float _wallrunAcceleration;
     [SerializeField] private float _maxWallruninngTimeInSeconds;
     [SerializeField] private float _wallrunJumpForce;
+    [SerializeField] private LayerMask _wallMask;
 
     public float WallrunSpeed { get { return _wallrunSpeed; } }
     public float WallrunAcceleration { get { return _wallrunAcceleration; } }
     public float MaxWallrunTimeInSeconds { get { return _maxWallruninngTimeInSeconds; } }
     public float WallrunJumpForce { get { return _wallrunJumpForce; } }
+    public LayerMask WallMask { get { return _wallMask; } }
+
 
     [Header("Dashing")]
     [SerializeField] private float _dashForce;
@@ -93,23 +93,39 @@ public class PlayerMovement : MonoBehaviour
     public bool CanDash { get { return _canDash; } set { _canDash = value; } }
 
 
-    [Header("Ground / wall check stuff")]
+    [Header("Grappling")]
+    [SerializeField] private float _grapplingMaxDistance;
+    [SerializeField] private float _grappleDelay;
+    [SerializeField] private float _maxGrappleTime;
+    [SerializeField] private LayerMask _grappleMask;
+    [SerializeField] private LineRenderer _lr;
+    [SerializeField] private Transform _grappleGunTip;
+
+    public float GrapplingMaxDistance { get { return _grapplingMaxDistance; } }
+    public float GrapplingDelay { get {  return _grappleDelay; } }
+    public float MaxGrappleTime { get { return _maxGrappleTime; } }
+    public LayerMask GrappleMask { get { return _grappleMask; } }
+    public LineRenderer Lr { get { return _lr; } }
+    public Transform GrappleTip { get {  return _grappleGunTip; } }
+
+
+    [Header("Ground check stuff")]
     [SerializeField] private float _playerHeight;
     [SerializeField] private LayerMask _groundMask;
-    [SerializeField] private LayerMask _wallMask;
 
     public float PlayerHeight { get { return _playerHeight; } }
-    public LayerMask WallMask { get { return _wallMask; } }
 
 
     [Header("Key bindings")]
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _crouchKey = KeyCode.LeftControl;
     [SerializeField] private KeyCode _dashKey = KeyCode.LeftShift;
+    [SerializeField] private KeyCode _grappleKey = KeyCode.Mouse1;
 
     public KeyCode JumpKey { get { return _jumpKey; } }
     public KeyCode CrouchKey { get { return _crouchKey; } }
     public KeyCode DashKey { get { return _dashKey; } }
+    public KeyCode GrappleKey { get { return _grappleKey; } }
 
 
     [Space]
