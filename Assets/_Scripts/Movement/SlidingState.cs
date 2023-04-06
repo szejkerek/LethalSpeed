@@ -56,10 +56,11 @@ public class SlidingState : MovementState
             float slopeUpAngle = Vector3.Angle(Vector3.up, _slopeRayHit.normal);
 
             _pm.Rigidbody.AddForce(
-                Vector3.ProjectOnPlane(normalizedWishDir, _slopeRayHit.normal).normalized * _pm.MaxSpeed * _pm.SlidingAcceleration 
+                Vector3.ProjectOnPlane(normalizedWishDir, _slopeRayHit.normal).normalized * _pm.SlidingAcceleration
                 * (1.0f + slopeUpAngle / _pm.MaxSlopeAngle),
                 ForceMode.Force
             );
+            _pm.Rigidbody.drag = 0.0f;
             _pm.Rigidbody.useGravity = false;
 
             _slidingTime = _pm.MaxSlidingTimeInSeconds;
@@ -68,6 +69,7 @@ public class SlidingState : MovementState
         }
 
         _pm.Rigidbody.AddForce(normalizedWishDir * _pm.MaxSpeed * _pm.SlidingAcceleration, ForceMode.Force);
+        _pm.Rigidbody.drag = _pm.GroundFriction;
         _pm.Rigidbody.useGravity = true;
     }
 
