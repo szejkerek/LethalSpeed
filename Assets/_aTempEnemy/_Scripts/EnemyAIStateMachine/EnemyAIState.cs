@@ -21,10 +21,9 @@ public abstract class EnemyAIState
     public abstract void UpdateStateInternally();
     public abstract void ExitState();
     public abstract void CheckSwitchState();
-
-    protected void SwitchState(EnemyAIState newState) 
+    public void SwitchState(EnemyAIState newState) 
     {
-        ExitState();
+        _context.CurrentState.ExitState();
         newState.EnterState();
         _context.CurrentState = newState;
     }

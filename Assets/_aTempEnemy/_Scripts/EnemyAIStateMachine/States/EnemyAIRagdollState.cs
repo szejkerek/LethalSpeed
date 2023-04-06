@@ -5,23 +5,27 @@ using UnityEngine;
 public class EnemyAIRagdollState : EnemyAIState
 {
     public EnemyAIRagdollState(EnemyAIStateMachine context, EnemyAIStateFactory factory) : base(context, factory) { }
-    public override void CheckSwitchState()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public override void ExitState()
-    {
-        throw new System.NotImplementedException();
+        _context.Ragdoll.SetRagdoll();
+        _context.Mesh.updateWhenOffscreen = true;
+        _context.NavMeshAgent.isStopped = true;
+        _context.NavMeshAgent.ResetPath();
     }
 
     public override void UpdateStateInternally()
     {
-        throw new System.NotImplementedException();
+        return;
+    }
+
+    public override void ExitState()
+    {
+        return;
+    }
+
+    public override void CheckSwitchState()
+    {
+        return;
     }
 }

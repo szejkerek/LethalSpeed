@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EnemyAISeekPlayerState : EnemyAIState
 {
@@ -10,7 +9,6 @@ public class EnemyAISeekPlayerState : EnemyAIState
 
     public override void EnterState()
     {
-        Debug.Log("Seek player stated entered");
     }
     public override void UpdateStateInternally()
     {
@@ -24,7 +22,5 @@ public class EnemyAISeekPlayerState : EnemyAIState
     }
     public override void CheckSwitchState()
     {
-        Debug.Log("State Checked");
     }
-
 }

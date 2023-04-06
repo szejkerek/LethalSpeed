@@ -15,7 +15,7 @@ public class DeveloperOptions : MonoBehaviour
         foreach (Enemy enemy in enemies)
         {
             Debug.Log($"{enemy.gameObject.name} was killed!");
-            enemy.TakeDamage();
+            enemy.Die();
         }
     }
 

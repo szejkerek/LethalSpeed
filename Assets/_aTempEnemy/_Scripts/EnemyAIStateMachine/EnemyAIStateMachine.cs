@@ -5,21 +5,30 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Ragdoll))]
 public class EnemyAIStateMachine : MonoBehaviour
 {
     Player _player;
     NavMeshAgent _navMeshAgent;
     Animator _animator;
+    Ragdoll _ragdoll;
+    Enemy _enemy;
+    SkinnedMeshRenderer _mesh;
     public Player Player => _player;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public Animator Animator => _animator;
+    public Ragdoll Ragdoll => _ragdoll;
+    public Enemy Enemy => _enemy;
+    public SkinnedMeshRenderer Mesh => _mesh;
 
     private void Awake()
     {
         _player = FindObjectOfType<Player>();
+        _mesh = GetComponentInChildren<SkinnedMeshRenderer>();
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        _ragdoll = GetComponent<Ragdoll>();
     }
 
     #region State Machine
