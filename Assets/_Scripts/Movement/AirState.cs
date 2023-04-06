@@ -27,7 +27,7 @@ public class AirState : MovementState
 
         if(Input.GetKeyDown(_pm.CrouchKey))
         {
-            _pm.transform.DOScaleY(_pm.CrouchScaleY, 0.25f);
+            _pm.transform.DOScaleY(_pm.SlideScaleY, 0.25f);
         }
         else if(Input.GetKeyUp(_pm.CrouchKey))
         {

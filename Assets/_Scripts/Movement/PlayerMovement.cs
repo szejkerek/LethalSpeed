@@ -62,12 +62,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _slidingAcceleration;
     [SerializeField] private float _maxSlidingTimeInSeconds;
     [SerializeField] private float _slideJumpForce;
+    [SerializeField] private float _slideScaleY;
     private bool _justLanded;
 
     public float SlidingSpeed { get { return _slidingSpeed; } }
     public float SlidingAcceleration { get {  return _slidingAcceleration; } }
     public float MaxSlidingTimeInSeconds { get { return _maxSlidingTimeInSeconds; } }
     public float SlideJumpForce { get { return _slideJumpForce; } }
+    public float SlideScaleY { get { return _slideScaleY; } }
     public bool JustLanded { get { return _justLanded; } }
 
     [Header("Wallrunning")]
@@ -151,7 +153,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         _isGrounded = Physics.CheckSphere(transform.position, 0.25f, _groundMask);
-        _isStuckCrouched = Physics.Raycast(transform.position, Vector3.up, _playerHeight * 0.8f, _groundMask) && transform.localScale.y == _crouchScaleY;
+        _isStuckCrouched = Physics.Raycast(transform.position, Vector3.up, _playerHeight * 0.8f, _groundMask) 
+            && (transform.localScale.y == _crouchScaleY || transform.localScale.y == _slideScaleY);
         _justLanded = _isGrounded && !_wasGroundedLastFrame;
 
         GetInput();
