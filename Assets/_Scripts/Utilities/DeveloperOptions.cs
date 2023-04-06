@@ -8,10 +8,15 @@ public class DeveloperOptions : MonoBehaviour
 //Keep all dev options here to be able to create builds
 #if UNITY_EDITOR
 
-    [MenuItem(_developerFolder + "Player/Teleport to spawnpoint")]
-    public static void TeleportToSpawnPoint()
+    [MenuItem(_developerFolder + "Enemy/Kill all enemies")]
+    public static void KillAllEnemies()
     {
-        Debug.Log("Random Msg");
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemies)
+        {
+            Debug.Log($"{enemy.gameObject.name} was killed!");
+            enemy.TakeDamage();
+        }
     }
 
 #endif
