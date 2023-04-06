@@ -65,10 +65,17 @@ public class RunningState : MovementState
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _pm.CanDash)
+        if (Input.GetKeyDown(_pm.DashKey) && _pm.CanDash)
         {
             _pm.JustDashed();
             _pm.ChangeMovementState(new DashingState());
+
+            return;
+        }
+
+        if(Input.GetKeyDown(_pm.GrappleKey))
+        {
+            _pm.ChangeMovementState(new GrapplingState());
 
             return;
         }
