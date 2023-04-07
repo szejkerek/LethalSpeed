@@ -71,7 +71,7 @@ public class RunningState : MovementState
             return;
         }
 
-        if(Input.GetKeyDown(_pm.GrappleKey))
+        if(Input.GetKeyDown(_pm.HookKey))
         {
             _pm.ChangeMovementState(new GrapplingState());
 
