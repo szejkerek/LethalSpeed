@@ -109,6 +109,14 @@ public class PlayerMovement : MonoBehaviour
     public Transform GrappleTip { get {  return _grappleGunTip; } }
 
 
+    [Header("Swinging")]
+    [SerializeField] private float _maxSwingingDistance;
+    [SerializeField] private LayerMask _swingMask;
+
+    public float MaxSwingingDistance { get { return _maxSwingingDistance; } }
+    public LayerMask SwingMask { get { return _swingMask; } }
+
+
     [Header("Ground check stuff")]
     [SerializeField] private float _playerHeight;
     [SerializeField] private LayerMask _groundMask;
@@ -120,12 +128,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _crouchKey = KeyCode.LeftControl;
     [SerializeField] private KeyCode _dashKey = KeyCode.LeftShift;
-    [SerializeField] private KeyCode _grappleKey = KeyCode.Mouse1;
+    [SerializeField] private KeyCode _hookKey = KeyCode.Mouse1;
 
     public KeyCode JumpKey { get { return _jumpKey; } }
     public KeyCode CrouchKey { get { return _crouchKey; } }
     public KeyCode DashKey { get { return _dashKey; } }
-    public KeyCode GrappleKey { get { return _grappleKey; } }
+    public KeyCode HookKey { get { return _hookKey; } }
 
 
     [Space]
