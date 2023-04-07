@@ -61,9 +61,12 @@ public class Trap : MonoBehaviour
         {
             _state = TrapState.Activating;
         }
-        else if (_state == TrapState.Active && other.tag == "Player")
+        else if (_state == TrapState.Active)
         {
-            Debug.Log("deduwa");
+            if (other.TryGetComponent<Player>(out Player player)) 
+            { 
+                
+            }
         }
     }
 
