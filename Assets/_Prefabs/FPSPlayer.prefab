@@ -230,7 +230,7 @@ MonoBehaviour:
   _groundDeacceleration: 100
   _groundFriction: 5
   _jumpForce: 12
-  _airAcceleration: 1
+  _airAcceleration: 3
   _gravityForce: 20
   _crouchSpeed: 10
   _crouchScaleY: 0.5
@@ -247,16 +247,20 @@ MonoBehaviour:
   _wallMask:
     serializedVersion: 2
     m_Bits: 128
-  _dashForce: 80
+  _dashForce: 100
   _dashCooldown: 0.2
   _grapplingMaxDistance: 100
-  _grappleDelay: 0.25
-  _maxGrappleTime: 1
+  _grappleDelay: 0.2
+  _grappleForce: 3
   _grappleMask:
     serializedVersion: 2
     m_Bits: 256
   _lr: {fileID: 0}
   _grappleGunTip: {fileID: 0}
+  _maxSwingingDistance: 100
+  _swingMask:
+    serializedVersion: 2
+    m_Bits: 512
   _playerHeight: 2
   _groundMask:
     serializedVersion: 2
@@ -264,7 +268,7 @@ MonoBehaviour:
   _jumpKey: 32
   _crouchKey: 306
   _dashKey: 304
-  _grappleKey: 324
+  _hookKey: 324
   pc: {fileID: 0}
   orientation: {fileID: 7975385519971890260}
   velocityText: {fileID: 0}
