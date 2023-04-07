@@ -4,22 +4,25 @@ using DG.Tweening;
 public class PlayerCam : MonoBehaviour
 {
     [Header("Camera settings")]
+    [Range(0, 800)]
     [SerializeField] private float _sensX;
+
+    [Range(0, 800)]
     [SerializeField] private float _sensY;
 
     [Space]
-    public Transform orientation;
     public Transform camHolder;
 
     private Camera _camera;
+    private Transform orientation;
 
     private float _xRot;
     private float _yRot;
- 
-    void Start()
+
+    private void Awake()
     {
         _camera = GetComponent<Camera>();
-
+        orientation = FindObjectOfType<Player>().Orientation;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

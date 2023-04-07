@@ -63,9 +63,8 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode CrouchKey => _crouchKey;
     public KeyCode DashKey => _dashKey;
     public KeyCode HookKey => _hookKey;
-    
 
-    [Space]
+    [HideInInspector]
     public PlayerCam pc;
 
     [Space]
@@ -110,6 +109,9 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        pc = FindObjectOfType<PlayerCam>();
+        _grappleProps.HookLineRenderer = pc.GetComponentInChildren<LineRenderer>();
+        _grappleProps.HookGunTip = _grappleProps.HookLineRenderer.transform.GetChild(0).transform;
     }
 
     void Start()
