@@ -9,6 +9,7 @@ public class EnemyAISeekPlayerState : EnemyAIState
 
     public override void EnterState()
     {
+        
     }
     public override void UpdateStateInternally()
     {
