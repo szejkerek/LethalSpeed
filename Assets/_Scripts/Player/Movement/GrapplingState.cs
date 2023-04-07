@@ -7,8 +7,9 @@ public struct GrappleProperties
     public float GrappleDelay;
     public float GrappleForce;
     public LayerMask GrappleSurfaceMask;
-    public LineRenderer HookLineRenderer;
-    public Transform HookGunTip;
+
+    [HideInInspector] public LineRenderer HookLineRenderer;
+    [HideInInspector] public Transform HookGunTip;
 }
 
 public class GrapplingState : MovementState

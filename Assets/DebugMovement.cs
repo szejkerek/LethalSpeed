@@ -4,29 +4,51 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 public class DebugMovement : MonoBehaviour
 {
-#if UNITY_EDITOR
-    [SerializeField] private TextMeshProUGUI _debugText;
+    [SerializeField] private TextMeshProUGUI _movementDebugText;
+    [SerializeField] private TextMeshProUGUI _keyBinds;
 
     private PlayerMovement _pm;
-
-    public bool displayDebugInfo = true;
-
     void Awake()
     {
         _pm = GetComponent<PlayerMovement>();
+        _keyBinds.gameObject.SetActive(true);
+
+#if UNITY_EDITOR
+        _movementDebugText.gameObject.SetActive(true);
+#endif
+    }
+
+    void Start()
+    {
+        PopulateKeyBindsInfoText();
     }
 
     void Update()
     {
-        if(_debugText is null || !displayDebugInfo)
+        PopulateDebugText();
+    }
+
+    void PopulateDebugText()
+    {
+        if (_movementDebugText is null)
         {
             return;
         }
-
-        _debugText.text = $"State: {_pm.CurrentMovementState.GetStateName()}\n";
-        _debugText.text += $"Velocity: {_pm.Velocity.magnitude}\n";
-        _debugText.text += $"Y velocity: {_pm.Velocity.y}\n";
-        _debugText.text += $"XZ velocity: {_pm.FlatVelocity.magnitude}\n";
+        _movementDebugText.text = $"State: {_pm.CurrentMovementState.GetStateName()}\n";
+        _movementDebugText.text += $"Velocity: {_pm.Velocity.magnitude}\n";
+        _movementDebugText.text += $"Y velocity: {_pm.Velocity.y}\n";
+        _movementDebugText.text += $"XZ velocity: {_pm.FlatVelocity.magnitude}\n";
     }
-#endif
+
+    void PopulateKeyBindsInfoText()
+    {
+        if (_keyBinds is null)
+        {
+            return;
+        }
+        _keyBinds.text =  $"Jump key: {_pm.JumpKey}\n";
+        _keyBinds.text += $"Crouch key: {_pm.CrouchKey}\n";
+        _keyBinds.text += $"Dash key: {_pm.DashKey}\n";
+        _keyBinds.text += $"Hook key: {_pm.HookKey}\n";
+    }
 }
