@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform orientation;
 
     [Space]
-    public TextMeshProUGUI velocityText;
+    //public TextMeshProUGUI velocityText;
 
     Rigidbody _rb;
 
@@ -199,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!_isGrounded)
         {
-            velocityText.text = $"{_prefix} velocity: {flatVelocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y:0.##}";
+            //velocityText.text = $"{_prefix} velocity: {flatVelocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y:0.##}";
 
             return;
         }
@@ -208,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsOnSlope() && _rb.velocity.magnitude > _maxGroundSpeed)
         {
             _rb.velocity = _rb.velocity.normalized * _maxGroundSpeed;
-            velocityText.text = $"{_prefix} velocity: {_rb.velocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y:0.##}";
+           // velocityText.text = $"{_prefix} velocity: {_rb.velocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y:0.##}";
 
             return;
         }
@@ -228,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
             _rb.velocity = new Vector3(newSpeed.x, _rb.velocity.y, newSpeed.z);
         }
 
-        velocityText.text = $"{_prefix} velocity: {flatVelocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y:0.##}";
+        //velocityText.text = $"{_prefix} velocity: {flatVelocity.magnitude:0.##}ups - Y vel: {_rb.velocity.y:0.##}";
     }
 
 
