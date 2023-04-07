@@ -102,9 +102,16 @@ public class AirState : MovementState
             return;
         }
 
-        if (Input.GetKeyDown(_pm.GrappleKey))
+        if (Input.GetKeyDown(_pm.HookKey) && Physics.Raycast(_pm.pc.transform.position, _pm.pc.transform.forward, _pm.GrapplingMaxDistance, _pm.GrappleMask))
         {
             _pm.ChangeMovementState(new GrapplingState());
+
+            return;
+        }
+
+        if (Input.GetKeyDown(_pm.HookKey) && Physics.Raycast(_pm.pc.transform.position, _pm.pc.transform.forward, _pm.GrapplingMaxDistance, _pm.SwingMask))
+        {
+            _pm.ChangeMovementState(new SwingingState(_pm.Velocity.magnitude));
 
             return;
         }
