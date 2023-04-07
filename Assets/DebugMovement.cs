@@ -11,10 +11,10 @@ public class DebugMovement : MonoBehaviour
     void Awake()
     {
         _pm = GetComponent<PlayerMovement>();
-        _keyBinds.enabled = true;
+        _keyBinds.gameObject.SetActive(true);
 
 #if UNITY_EDITOR
-        _movementDebugText.enabled = true;
+        _movementDebugText.gameObject.SetActive(true);
 #endif
     }
 
