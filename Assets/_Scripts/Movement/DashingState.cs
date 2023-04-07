@@ -1,5 +1,11 @@
 using UnityEngine;
 
+[System.Serializable]
+public struct DashProperties
+{
+    public float DashForce;
+}
+
 public class DashingState : MovementState
 {
     private PlayerMovement _pm;
@@ -9,7 +15,6 @@ public class DashingState : MovementState
     public void Begin(PlayerMovement pm)
     {
         _pm = pm;
-        _pm.MaxSpeed = pm.MovementSpeed;
         _pm.Rigidbody.drag = 0.0f;
         _pm.Rigidbody.useGravity = false;
 
@@ -18,8 +23,6 @@ public class DashingState : MovementState
 
     public void Update()
     {
-        _pm.velocityText.text = $"Dashing velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
-
         CheckForModeChange();
     }
 
@@ -30,7 +33,7 @@ public class DashingState : MovementState
             Vector3 dashDir = normalizedWishDir == Vector3.zero ? _pm.orientation.forward : normalizedWishDir;
 
             _pm.Velocity = Vector3.zero;
-            _pm.Rigidbody.AddForce(dashDir * _pm.DashForce, ForceMode.Impulse);
+            _pm.Rigidbody.AddForce(dashDir * _pm.DashProps.DashForce, ForceMode.Impulse);
 
             _dashForceApplied = true;
         }
@@ -50,15 +53,20 @@ public class DashingState : MovementState
         if(_dashingTime <= 0.0f)
         {
             EndDashForce();
-            _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.MaxSpeed));
+            _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.CurrentMaxSpeed));
 
             return;
         }
     }
 
+    public string GetStateName()
+    {
+        return "Dashing";
+    }
+
     private void EndDashForce()
     {
-        _pm.Velocity = _pm.FlatVelocity.normalized * _pm.MaxSpeed;
+        _pm.Velocity = _pm.FlatVelocity.normalized * _pm.CurrentMaxSpeed;
         _pm.Rigidbody.useGravity = true;
     }
 }

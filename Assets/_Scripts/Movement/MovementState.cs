@@ -11,4 +11,6 @@ public interface MovementState
     public void End();
 
     public void CheckForModeChange();
+
+    public string GetStateName();
 }

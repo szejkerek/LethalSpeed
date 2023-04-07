@@ -1,6 +1,13 @@
 using UnityEngine;
 using DG.Tweening;
 
+[System.Serializable]
+public struct CrouchProperties
+{
+    public float MaxSpeed;
+    public float ScaleY;
+}
+
 public class CrouchingState : MovementState
 {
     private PlayerMovement _pm;
@@ -8,11 +15,11 @@ public class CrouchingState : MovementState
     public void Begin(PlayerMovement pm)
     {
         _pm = pm;
-        _pm.MaxSpeed = pm.CrouchSpeed;
-        _pm.Rigidbody.drag = _pm.GroundFriction;
+        _pm.CurrentMaxSpeed = pm.CrouchProps.MaxSpeed;
+        _pm.Rigidbody.drag = _pm.GroundProps.Friction;
 
-        _pm.transform.DOScaleY(_pm.CrouchScaleY, 0.25f);
-        _pm.transform.position += Vector3.down * _pm.PlayerHeight * _pm.CrouchScaleY * 0.1f;
+        _pm.transform.DOScaleY(_pm.CrouchProps.ScaleY, 0.25f);
+        _pm.transform.position += Vector3.down * _pm.PlayerHeight * _pm.CrouchProps.ScaleY * 0.1f;
     }
 
     public void Update()
@@ -23,7 +30,7 @@ public class CrouchingState : MovementState
 
     public void Move(Vector3 normalizedWishDir)
     {
-        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.MaxSpeed * _pm.GroundAcceleration, ForceMode.Force);
+        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.CurrentMaxSpeed * _pm.GroundProps.Acceleration, ForceMode.Force);
     }
 
     public void End()
@@ -36,7 +43,7 @@ public class CrouchingState : MovementState
         if (Input.GetKey(_pm.JumpKey))
         {
             _pm.Velocity = _pm.FlatVelocity;
-            _pm.Rigidbody.AddForce(Vector3.up * _pm.JumpForce, ForceMode.Impulse);
+            _pm.Rigidbody.AddForce(Vector3.up * _pm.AirProps.JumpForce, ForceMode.Impulse);
             _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
 
             return;
@@ -57,16 +64,19 @@ public class CrouchingState : MovementState
         }
     }
 
+    public string GetStateName()
+    {
+        return "Crouching";
+    }
+
     private void ClipGroundSpeed()
     {
-        if (_pm.FlatVelocity.magnitude > _pm.MaxSpeed)
+        if (_pm.FlatVelocity.magnitude > _pm.CurrentMaxSpeed)
         {
-            float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 3.0f ? _pm.GroundDeacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+            float drop = _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed > 3.0f ? _pm.GroundProps.Deacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed;
             Vector3 newSpeed = _pm.FlatVelocity.normalized * (_pm.FlatVelocity.magnitude - drop);
 
             _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
-
-        _pm.velocityText.text = $"Crouching velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
     }
 }

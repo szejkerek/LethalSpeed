@@ -1,5 +1,14 @@
 using UnityEngine;
 
+[System.Serializable]
+public struct GroundProperties
+{
+    public float MaxSpeed;
+    public float Acceleration;
+    public float Deacceleration;
+    public float Friction;
+}
+
 public class RunningState : MovementState
 {
     private PlayerMovement _pm;
@@ -8,8 +17,8 @@ public class RunningState : MovementState
     public void Begin(PlayerMovement pm)
     {
         _pm = pm;
-        _pm.MaxSpeed = pm.MovementSpeed;
-        _pm.Rigidbody.drag = _pm.GroundFriction;
+        _pm.CurrentMaxSpeed = pm.GroundProps.MaxSpeed;
+        _pm.Rigidbody.drag = _pm.GroundProps.Friction;
     }
 
     public void Update()
@@ -23,14 +32,14 @@ public class RunningState : MovementState
         if (_pm.IsOnSlope(out _slopeRayHit))
         {
             _pm.Rigidbody.AddForce(
-                Vector3.ProjectOnPlane(normalizedWishDir, _slopeRayHit.normal).normalized * _pm.MaxSpeed * _pm.GroundAcceleration, 
+                Vector3.ProjectOnPlane(normalizedWishDir, _slopeRayHit.normal).normalized * _pm.CurrentMaxSpeed * _pm.GroundProps.Acceleration, 
                 ForceMode.Force
             );
 
             return;
         }
 
-        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.MaxSpeed * _pm.GroundAcceleration, ForceMode.Force);
+        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.CurrentMaxSpeed * _pm.GroundProps.Acceleration, ForceMode.Force);
     }
 
     public void End()
@@ -43,7 +52,7 @@ public class RunningState : MovementState
         if (Input.GetKey(_pm.JumpKey))
         {
             _pm.Velocity = _pm.FlatVelocity;
-            _pm.Rigidbody.AddForce(Vector3.up * _pm.JumpForce, ForceMode.Impulse);
+            _pm.Rigidbody.AddForce(Vector3.up * _pm.AirProps.JumpForce, ForceMode.Impulse);
             _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
 
             return;
@@ -79,24 +88,26 @@ public class RunningState : MovementState
         }
     }
 
+    public string GetStateName()
+    {
+        return "Running";
+    }
+
     private void ClipGroundSpeed()
     {
-        if (_pm.IsOnSlope(out _slopeRayHit) && _pm.Velocity.magnitude > _pm.MaxSpeed)
+        if (_pm.IsOnSlope(out _slopeRayHit) && _pm.Velocity.magnitude > _pm.CurrentMaxSpeed)
         {
-            _pm.Velocity = _pm.Velocity.normalized * _pm.MaxSpeed;
-            _pm.velocityText.text = $"Slope velocity: {_pm.Velocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
+            _pm.Velocity = _pm.Velocity.normalized * _pm.CurrentMaxSpeed;
 
             return;
         }
 
-        if(_pm.FlatVelocity.magnitude > _pm.MaxSpeed)
+        if(_pm.FlatVelocity.magnitude > _pm.CurrentMaxSpeed)
         {
-            float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 3.0f ? _pm.GroundDeacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+            float drop = _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed > 3.0f ? _pm.GroundProps.Deacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed;
             Vector3 newSpeed = _pm.FlatVelocity.normalized * (_pm.FlatVelocity.magnitude - drop);
 
             _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
-
-        _pm.velocityText.text = $"Ground velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
     }
 }

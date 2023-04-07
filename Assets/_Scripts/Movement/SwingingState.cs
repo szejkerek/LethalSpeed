@@ -1,5 +1,12 @@
 using UnityEngine;
 
+[System.Serializable]
+public struct SwingProperties
+{
+    public float MaxDistance;
+    public LayerMask SwingSurfaceMask;
+}
+
 public class SwingingState : MovementState
 {
     private PlayerMovement _pm;
@@ -20,16 +27,16 @@ public class SwingingState : MovementState
     public void Begin(PlayerMovement pm)
     {
         _pm = pm;
-        _pm.MaxSpeed = pm.MovementSpeed;
+        _pm.CurrentMaxSpeed = pm.GroundProps.MaxSpeed;
         _pm.Rigidbody.drag = 0.0f;
 
         _pc = _pm.pc;
-        _hookGunTip = _pm.GrappleTip;
-        _lr = _pm.Lr;
+        _hookGunTip = _pm.GrappleProps.HookGunTip;
+        _lr = _pm.GrappleProps.HookLineRenderer;
 
         RaycastHit swingRayHit;
 
-        if(Physics.Raycast(_pc.transform.position, _pc.transform.forward, out swingRayHit, _pm.MaxSwingingDistance, _pm.SwingMask))
+        if(Physics.Raycast(_pc.transform.position, _pc.transform.forward, out swingRayHit, _pm.SwingProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask))
         {
             _swingPoint = swingRayHit.point;
             _lr.enabled = true;
@@ -60,7 +67,7 @@ public class SwingingState : MovementState
     public void Move(Vector3 normalizedWishDir)
     {
         _pm.Rigidbody.AddForce(normalizedWishDir * 10.0f, ForceMode.Force);
-        _pm.Rigidbody.AddForce(Vector3.down * _pm.GravityForce, ForceMode.Force);
+        _pm.Rigidbody.AddForce(Vector3.down * _pm.AirProps.GravityForce, ForceMode.Force);
     }
 
     public void End()
@@ -73,34 +80,35 @@ public class SwingingState : MovementState
     {
         if(!Input.GetKey(_pm.HookKey))
         {
-            _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundFriction : 0.0f;
+            _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundProps.Friction : 0.0f;
             _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.FlatVelocity.magnitude));
 
             return;
         }
     }
 
+    public string GetStateName()
+    {
+        return "Swinging";
+    }
+
     private void ClipSwingSpeed()
     {
-        if (_initialSpeed > _pm.MaxSpeed)
+        if (_initialSpeed > _pm.CurrentMaxSpeed)
         {
-            _pm.velocityText.text = $"Swinging velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
-            
-            float drop = _pm.Velocity.magnitude - _pm.MaxSpeed > 1.0f ?
-                _pm.GroundDeacceleration * Time.deltaTime / 5000.0f : _pm.Velocity.magnitude - _pm.MaxSpeed;
+            float drop = _pm.Velocity.magnitude - _pm.CurrentMaxSpeed > 1.0f ?
+                _pm.GroundProps.Deacceleration * Time.deltaTime / 5000.0f : _pm.Velocity.magnitude - _pm.CurrentMaxSpeed;
 
             Vector3 newSpeed = _pm.Velocity.normalized * Mathf.Min(_initialSpeed, _pm.Velocity.magnitude - drop);
 
             _pm.Velocity = newSpeed;
         }
-        else if (_pm.Velocity.magnitude > _pm.MaxSpeed)
+        else if (_pm.Velocity.magnitude > _pm.CurrentMaxSpeed)
         {
-            float drop = _pm.Velocity.magnitude - _pm.MaxSpeed > 3.0f ? _pm.GroundDeacceleration * Time.deltaTime : _pm.Velocity.magnitude - _pm.MaxSpeed;
+            float drop = _pm.Velocity.magnitude - _pm.CurrentMaxSpeed > 3.0f ? _pm.GroundProps.Deacceleration * Time.deltaTime : _pm.Velocity.magnitude - _pm.CurrentMaxSpeed;
             Vector3 newSpeed = _pm.Velocity.normalized * (_pm.Velocity.magnitude - drop);
 
             _pm.Velocity = newSpeed;
         }
-
-        _pm.velocityText.text = $"Swinging velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
     }
 }

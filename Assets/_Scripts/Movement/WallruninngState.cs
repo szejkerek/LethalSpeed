@@ -1,5 +1,15 @@
 using UnityEngine;
 
+[System.Serializable]
+public struct WallrunProperties
+{
+    public float MaxSpeed;
+    public float Acceleration;
+    public float MaxWallrunningTime;
+    public float WallrunJumpForce;
+    public LayerMask WallMask;
+}
+
 public class WallrunningState : MovementState
 {
     private PlayerMovement _pm;
@@ -18,16 +28,16 @@ public class WallrunningState : MovementState
     public void Begin(PlayerMovement pm)
     {
         _pm = pm;
-        _pm.MaxSpeed = pm.WallrunSpeed;
+        _pm.CurrentMaxSpeed = pm.WallrunProps.MaxSpeed;
         _pm.Velocity = _pm.FlatVelocity;
-        _pm.Rigidbody.drag = _pm.GroundFriction;
+        _pm.Rigidbody.drag = _pm.GroundProps.Friction;
 
-        _wallrunningTime = _pm.MaxWallrunTimeInSeconds;
+        _wallrunningTime = _pm.WallrunProps.MaxWallrunningTime;
 
         _pc = _pm.pc;
         _pc.SetFOV(70.0f);
 
-        if(Physics.Raycast(_pm.transform.position, _pm.orientation.right, 0.8f, _pm.WallMask))
+        if(Physics.Raycast(_pm.transform.position, _pm.orientation.right, 0.8f, _pm.WallrunProps.WallMask))
         {
             _pc.SetTilt(5.0f);
         }
@@ -41,20 +51,20 @@ public class WallrunningState : MovementState
     {
         ClipWallrunSpeed();
 
-        if (Physics.Raycast(_pm.transform.position, _pm.orientation.right, out _wallRayHit, 0.8f, _pm.WallMask))
+        if (Physics.Raycast(_pm.transform.position, _pm.orientation.right, out _wallRayHit, 0.8f, _pm.WallrunProps.WallMask))
         {
             _wallNormal = _wallRayHit.normal;
         }
-        else if(Physics.Raycast(_pm.transform.position, -_pm.orientation.right, out _wallRayHit, 0.8f, _pm.WallMask))
+        else if(Physics.Raycast(_pm.transform.position, -_pm.orientation.right, out _wallRayHit, 0.8f, _pm.WallrunProps.WallMask))
         {
             _wallNormal = _wallRayHit.normal;
         }
 
-        if (_initialSpeed > _pm.MaxSpeed)
+        if (_initialSpeed > _pm.CurrentMaxSpeed)
         {
             float currectVelocity = _pm.FlatVelocity.magnitude;
 
-            _initialSpeed = currectVelocity < _pm.MaxSpeed ? _pm.MaxSpeed : currectVelocity;
+            _initialSpeed = currectVelocity < _pm.CurrentMaxSpeed ? _pm.CurrentMaxSpeed : currectVelocity;
         }
 
         _wallrunningTime -= Time.deltaTime;
@@ -73,12 +83,12 @@ public class WallrunningState : MovementState
 
         float wishedForwardDirMultiplier = Vector3.Dot(normalizedWishDir, forwardDir);
 
-        _pm.Rigidbody.AddForce(wishedForwardDirMultiplier * forwardDir * _pm.Velocity.magnitude * _pm.WallrunAcceleration, ForceMode.Force);
-        _pm.Rigidbody.AddForce(Vector3.down * _pm.GravityForce / 3.0f, ForceMode.Force);
+        _pm.Rigidbody.AddForce(wishedForwardDirMultiplier * forwardDir * _pm.Velocity.magnitude * _pm.WallrunProps.Acceleration, ForceMode.Force);
+        _pm.Rigidbody.AddForce(Vector3.down * _pm.AirProps.GravityForce / 3.0f, ForceMode.Force);
 
         if(Input.GetKey(_pm.JumpKey))
         {
-            _pm.Rigidbody.AddForce(Vector3.up * _pm.JumpForce * 2.0f, ForceMode.Force);
+            _pm.Rigidbody.AddForce(Vector3.up * _pm.AirProps.JumpForce * 2.0f, ForceMode.Force);
         }
 
     }
@@ -104,14 +114,14 @@ public class WallrunningState : MovementState
             Vector3 flatForward = Vector3.ProjectOnPlane(_pm.orientation.forward, Vector3.up);
 
             _pm.Velocity = new Vector3(flatForward.x, 0.0f, flatForward.z).normalized * velocity;
-            _pm.Rigidbody.AddForce(Vector3.up * _pm.WallrunJumpForce, ForceMode.Impulse);
+            _pm.Rigidbody.AddForce(Vector3.up * _pm.WallrunProps.WallrunJumpForce, ForceMode.Impulse);
             _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
 
             return;
         }
 
-        if(!Physics.Raycast(_pm.transform.position, _pm.orientation.right, 0.8f, _pm.WallMask) &&
-           !Physics.Raycast(_pm.transform.position, -_pm.orientation.right, 0.8f, _pm.WallMask) || _wallrunningTime <= 0.0f)
+        if(!Physics.Raycast(_pm.transform.position, _pm.orientation.right, 0.8f, _pm.WallrunProps.WallMask) &&
+           !Physics.Raycast(_pm.transform.position, -_pm.orientation.right, 0.8f, _pm.WallrunProps.WallMask) || _wallrunningTime <= 0.0f)
         {
             _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
 
@@ -119,25 +129,28 @@ public class WallrunningState : MovementState
         }
     }
 
+    public string GetStateName()
+    {
+        return "Wallrunning";
+    }
+
     private void ClipWallrunSpeed()
     {
-        if (_initialSpeed > _pm.MaxSpeed)
+        if (_initialSpeed > _pm.CurrentMaxSpeed)
         {
-            float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 1.0f ? 
-                _pm.GroundDeacceleration * Time.deltaTime / 50.0f : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+            float drop = _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed > 1.0f ? 
+                _pm.GroundProps.Deacceleration * Time.deltaTime / 50.0f : _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed;
 
             Vector3 newSpeed = _pm.FlatVelocity.normalized * Mathf.Min(_initialSpeed, _pm.FlatVelocity.magnitude - drop);
 
             _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
-        else if (_pm.FlatVelocity.magnitude > _pm.MaxSpeed)
+        else if (_pm.FlatVelocity.magnitude > _pm.CurrentMaxSpeed)
         {
-            float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 3.0f ? _pm.GroundDeacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+            float drop = _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed > 3.0f ? _pm.GroundProps.Deacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed;
             Vector3 newSpeed = _pm.FlatVelocity.normalized * (_pm.FlatVelocity.magnitude - drop);
 
             _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
-
-        _pm.velocityText.text = $"Wallrunning velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
     }
 }

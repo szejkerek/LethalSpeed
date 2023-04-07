@@ -1,6 +1,15 @@
 using DG.Tweening;
 using UnityEngine;
 
+[System.Serializable]
+public struct AirProperties
+{
+    public float MaxSpeed;
+    public float Acceleration;
+    public float GravityForce;
+    public float JumpForce;
+}
+
 public class AirState : MovementState
 {
     private PlayerMovement _pm;
@@ -15,7 +24,7 @@ public class AirState : MovementState
     public void Begin(PlayerMovement pm)
     {
         _pm = pm;
-        _pm.MaxSpeed = pm.MovementSpeed;
+        _pm.CurrentMaxSpeed = pm.AirProps.MaxSpeed;
         _pm.Rigidbody.drag = 0.0f;
     }
 
@@ -27,18 +36,18 @@ public class AirState : MovementState
 
         if(Input.GetKeyDown(_pm.CrouchKey))
         {
-            _pm.transform.DOScaleY(_pm.SlideScaleY, 0.25f);
+            _pm.transform.DOScaleY(_pm.SlideProps.ScaleY, 0.25f);
         }
         else if(Input.GetKeyUp(_pm.CrouchKey))
         {
             _pm.transform.DOScaleY(_pm.OriginalScaleY, 0.25f);
         }
 
-        if(_initialVelocity > _pm.MaxSpeed)
+        if(_initialVelocity > _pm.CurrentMaxSpeed)
         {
             float currectVelocity = _pm.FlatVelocity.magnitude;
 
-            _initialVelocity = currectVelocity < _pm.MaxSpeed ? _pm.MaxSpeed : currectVelocity;
+            _initialVelocity = currectVelocity < _pm.CurrentMaxSpeed ? _pm.CurrentMaxSpeed : currectVelocity;
         }
 
         if(Input.GetKeyDown(_pm.JumpKey))
@@ -51,8 +60,8 @@ public class AirState : MovementState
 
     public void Move(Vector3 normalizedWishDir)
     {
-        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.MaxSpeed * _pm.AirAcceleration, ForceMode.Force);
-        _pm.Rigidbody.AddForce(Vector3.down * _pm.GravityForce, ForceMode.Force);
+        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.CurrentMaxSpeed * _pm.AirProps.Acceleration, ForceMode.Force);
+        _pm.Rigidbody.AddForce(Vector3.down * _pm.AirProps.GravityForce, ForceMode.Force);
     }
 
     public void End()
@@ -78,7 +87,7 @@ public class AirState : MovementState
 
         RaycastHit wallRayHit;
 
-        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, _pm.orientation.right, out wallRayHit, 0.8f, _pm.WallMask)
+        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, _pm.orientation.right, out wallRayHit, 0.8f, _pm.WallrunProps.WallMask)
             && !Input.GetKey(_pm.CrouchKey) && (Input.GetKeyDown(_pm.JumpKey) || _jumpCommandBuffer >= 0.0f))
         {
             _pm.ChangeMovementState(new WallrunningState(wallRayHit.normal, _pm.Velocity.magnitude));
@@ -86,7 +95,7 @@ public class AirState : MovementState
             return;
         }
         
-        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, -_pm.orientation.right, out wallRayHit, 0.8f, _pm.WallMask)
+        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, -_pm.orientation.right, out wallRayHit, 0.8f, _pm.WallrunProps.WallMask)
             && !Input.GetKey(_pm.CrouchKey) && (Input.GetKeyDown(_pm.JumpKey) || _jumpCommandBuffer >= 0.0f))
         {
             _pm.ChangeMovementState(new WallrunningState(wallRayHit.normal, _pm.Velocity.magnitude));
@@ -102,14 +111,14 @@ public class AirState : MovementState
             return;
         }
 
-        if (Input.GetKeyDown(_pm.HookKey) && Physics.Raycast(_pm.pc.transform.position, _pm.pc.transform.forward, _pm.GrapplingMaxDistance, _pm.GrappleMask))
+        if (Input.GetKeyDown(_pm.HookKey) && Physics.Raycast(_pm.pc.transform.position, _pm.pc.transform.forward, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
         {
             _pm.ChangeMovementState(new GrapplingState());
 
             return;
         }
 
-        if (Input.GetKeyDown(_pm.HookKey) && Physics.Raycast(_pm.pc.transform.position, _pm.pc.transform.forward, _pm.GrapplingMaxDistance, _pm.SwingMask))
+        if (Input.GetKeyDown(_pm.HookKey) && Physics.Raycast(_pm.pc.transform.position, _pm.pc.transform.forward, _pm.GrappleProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask))
         {
             _pm.ChangeMovementState(new SwingingState(_pm.Velocity.magnitude));
 
@@ -117,21 +126,24 @@ public class AirState : MovementState
         }
     }
 
+    public string GetStateName()
+    {
+        return "Jumping";
+    }
+
     private void ClipAirSpeed()
     {
-        if (_initialVelocity > _pm.MaxSpeed)
+        if (_initialVelocity > _pm.CurrentMaxSpeed)
         {
             Vector3 newSpeed = _pm.FlatVelocity.normalized * Mathf.Min(_initialVelocity, _pm.FlatVelocity.magnitude);
 
             _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
-        else if (_pm.FlatVelocity.magnitude > _pm.MaxSpeed)
+        else if (_pm.FlatVelocity.magnitude > _pm.CurrentMaxSpeed)
         {
-            Vector3 newSpeed = _pm.FlatVelocity.normalized * _pm.MaxSpeed;
+            Vector3 newSpeed = _pm.FlatVelocity.normalized * _pm.CurrentMaxSpeed;
 
             _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
-
-        _pm.velocityText.text = $"Air velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
     }
 }

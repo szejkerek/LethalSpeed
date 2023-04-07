@@ -1,6 +1,16 @@
 using DG.Tweening;
 using UnityEngine;
 
+[System.Serializable]
+public struct SlideProperties
+{
+    public float MaxSpeed;
+    public float Acceleration;
+    public float MaxSlidingTime;
+    public float SlidingJumpForce;
+    public float ScaleY;
+}
+
 public class SlidingState : MovementState
 {
     private PlayerMovement _pm;
@@ -17,10 +27,10 @@ public class SlidingState : MovementState
     public void Begin(PlayerMovement pm)
     {
         _pm = pm;
-        _pm.MaxSpeed = pm.SlidingSpeed;
+        _pm.CurrentMaxSpeed = pm.SlideProps.MaxSpeed;
         _pm.Rigidbody.drag = 0.0f;
 
-        _slidingTime = _pm.MaxSlidingTimeInSeconds;
+        _slidingTime = _pm.SlideProps.MaxSlidingTime;
     }
 
     public void Update()
@@ -28,13 +38,13 @@ public class SlidingState : MovementState
         _slidingTime -= Time.deltaTime;
         ClipSlidingSpeed();
 
-        if (_initialSpeed > _pm.MaxSpeed)
+        if (_initialSpeed > _pm.CurrentMaxSpeed)
         {
             float currectVelocity = _pm.FlatVelocity.magnitude;
 
-            _initialSpeed = currectVelocity < _pm.MaxSpeed ? _pm.MaxSpeed : currectVelocity;
+            _initialSpeed = currectVelocity < _pm.CurrentMaxSpeed ? _pm.CurrentMaxSpeed : currectVelocity;
         }
-        else if(!_pm.IsOnSlope(out _slopeRayHit) && _wasOnSlope && _pm.FlatVelocity.magnitude > _pm.MaxSpeed)
+        else if(!_pm.IsOnSlope(out _slopeRayHit) && _wasOnSlope && _pm.FlatVelocity.magnitude > _pm.CurrentMaxSpeed)
         {
             _initialSpeed = _pm.FlatVelocity.magnitude;
         }
@@ -50,18 +60,18 @@ public class SlidingState : MovementState
             float slopeUpAngle = Vector3.Angle(Vector3.up, _slopeRayHit.normal);
 
             _pm.Rigidbody.AddForce(
-                Vector3.ProjectOnPlane(normalizedWishDir, _slopeRayHit.normal).normalized * _pm.SlidingAcceleration
+                Vector3.ProjectOnPlane(normalizedWishDir, _slopeRayHit.normal).normalized * _pm.SlideProps.Acceleration
                 * (1.0f + slopeUpAngle / _pm.MaxSlopeAngle),
                 ForceMode.Force
             );
             _pm.Rigidbody.useGravity = false;
 
-            _slidingTime = _pm.MaxSlidingTimeInSeconds;
+            _slidingTime = _pm.SlideProps.MaxSlidingTime;
             
             return;
         }
 
-        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.SlidingAcceleration * _pm.SlidingSpeed / 2.0f, ForceMode.Force);
+        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.SlideProps.Acceleration * _pm.CurrentMaxSpeed / 2.0f, ForceMode.Force);
         _pm.Rigidbody.useGravity = true;
     }
 
@@ -80,7 +90,7 @@ public class SlidingState : MovementState
         if (Input.GetKeyDown(_pm.JumpKey))
         {
             _pm.Velocity = _pm.FlatVelocity;
-            _pm.Rigidbody.AddForce(Vector3.up * _pm.JumpForce * _pm.SlideJumpForce, ForceMode.Impulse);
+            _pm.Rigidbody.AddForce(Vector3.up * _pm.SlideProps.SlidingJumpForce, ForceMode.Impulse);
             _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
 
             return;
@@ -108,34 +118,35 @@ public class SlidingState : MovementState
         }
     }
 
+    public string GetStateName()
+    {
+        return "Sliding";
+    }
+
     private void ClipSlidingSpeed()
     {
         if(_pm.IsOnSlope(out _slopeRayHit) && _pm.Velocity.y < -0.1f)
         {
-            _pm.velocityText.text = $"Down sliding velocity: {_pm.Velocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
-
             return;
         }
 
-        if(_initialSpeed > _pm.MaxSpeed)
+        if(_initialSpeed > _pm.CurrentMaxSpeed)
         {
-            float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 1.0f ? 
-                _pm.GroundDeacceleration * Time.deltaTime / 50.0f : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+            float drop = _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed > 1.0f ? 
+                _pm.GroundProps.Deacceleration * Time.deltaTime / 50.0f : _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed;
 
             Vector3 newSpeed = _pm.FlatVelocity.normalized * Mathf.Min(_initialSpeed, _pm.FlatVelocity.magnitude - drop);
 
             _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
-        else if (_pm.FlatVelocity.magnitude > _pm.MaxSpeed)
+        else if (_pm.FlatVelocity.magnitude > _pm.CurrentMaxSpeed)
         {
-            float drop = _pm.FlatVelocity.magnitude - _pm.MaxSpeed > 1.0f ?
-                _pm.GroundDeacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.MaxSpeed;
+            float drop = _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed > 1.0f ?
+                _pm.GroundProps.Deacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed;
 
             Vector3 newSpeed = _pm.FlatVelocity.normalized * (_pm.FlatVelocity.magnitude - drop);
 
             _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
         }
-
-        _pm.velocityText.text = $"Sliding velocity: {_pm.FlatVelocity.magnitude:0.##}ups - Y vel: {_pm.Velocity.y:0.##}";
     }
 }
