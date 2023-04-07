@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    public Transform cameraPosition;
+    private Transform cameraPosition;
+
+    private void Awake()
+    {
+        cameraPosition = FindObjectOfType<Player>().CameraPosition;
+    }
 
     void Update()
     {
