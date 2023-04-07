@@ -93,7 +93,7 @@ public class GrapplingState : MovementState
         _pm.Velocity = Vector3.zero;
         _pm.Rigidbody.useGravity = false;
         _pm.Rigidbody.drag = 0.0f;
-        _pm.Rigidbody.AddForce((_grappleTargetPoint - _pm.transform.position).normalized * _pm.GrappleForce, ForceMode.Impulse);
+        _pm.Rigidbody.AddForce((_grappleTargetPoint - _pm.transform.position) * _pm.GrappleForce, ForceMode.Impulse);
     }
 
     private void StopGrappling()
