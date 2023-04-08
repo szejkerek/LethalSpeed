@@ -642,6 +642,7 @@ MonoBehaviour:
     Acceleration: 3
     GravityForce: 25
     JumpForce: 12
+    CoyoteTime: 0.2
   _crouchProps:
     MaxSpeed: 10
     ScaleY: 0.5
@@ -655,16 +656,18 @@ MonoBehaviour:
     MaxSpeed: 25
     Acceleration: 8
     MaxWallrunningTime: 3
-    WallrunJumpForce: 12
+    WallrunJumpForce: 20
     WallMask:
       serializedVersion: 2
       m_Bits: 128
   _dashProps:
     DashForce: 80
+    KeepPreviousMomentum: 1
   _grappleProps:
     MaxDistance: 100
     GrappleDelay: 0.1
     GrappleForce: 3
+    AfterGrappleForce: 2
     GrappleSurfaceMask:
       serializedVersion: 2
       m_Bits: 256
