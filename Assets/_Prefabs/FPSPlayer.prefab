@@ -703,17 +703,20 @@ MonoBehaviour:
     GrappleSurfaceMask:
       serializedVersion: 2
       m_Bits: 256
+    GrappleAimError: 5
     HookLineRenderer: {fileID: 0}
     HookGunTip: {fileID: 0}
   _swingProps:
     MaxDistance: 100
+    SwingAimError: 5
     SwingSurfaceMask:
       serializedVersion: 2
       m_Bits: 512
   _jumpKey: 32
   _crouchKey: 306
   _dashKey: 304
-  _hookKey: 324
+  _grappleKey: 113
+  _swingKey: 324
   pc: {fileID: 0}
   orientation: {fileID: 7975385519971890260}
 --- !u!114 &8757365507892586898
