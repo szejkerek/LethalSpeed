@@ -98,7 +98,7 @@ public class SlidingState : MovementState
 
         if (!_pm.IsGrounded && _pm.WasGrounded)
         {
-            _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
+            _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude, false));
 
             return;
         }

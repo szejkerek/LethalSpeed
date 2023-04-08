@@ -60,7 +60,7 @@ public class RunningState : MovementState
 
         if (!_pm.IsGrounded && _pm.WasGrounded)
         {
-            _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
+            _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude, false));
 
             return;
         }
@@ -75,12 +75,12 @@ public class RunningState : MovementState
         if (Input.GetKeyDown(_pm.DashKey) && _pm.CanDash)
         {
             _pm.JustDashed();
-            _pm.ChangeMovementState(new DashingState());
+            _pm.ChangeMovementState(new DashingState(_pm.FlatVelocity.magnitude));
 
             return;
         }
 
-        if(Input.GetKeyDown(_pm.HookKey))
+        if(Input.GetKeyDown(_pm.GrappleKey))
         {
             _pm.ChangeMovementState(new GrapplingState());
 

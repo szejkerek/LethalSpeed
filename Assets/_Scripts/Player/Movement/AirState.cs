@@ -8,6 +8,7 @@ public struct AirProperties
     public float Acceleration;
     public float GravityForce;
     public float JumpForce;
+    public float CoyoteTime;
 }
 
 public class AirState : MovementState
@@ -15,10 +16,13 @@ public class AirState : MovementState
     private PlayerMovement _pm;
     private float _initialVelocity;
     private float _jumpCommandBuffer;
+    private float _coyoteTimer;
+    private bool _enteredByJumping;
 
-    public AirState(float startingVelocity)
+    public AirState(float startingVelocity, bool didJump = true)
     {
         _initialVelocity = startingVelocity;
+        _enteredByJumping = didJump;
     }
 
     public void Begin(PlayerMovement pm)
@@ -26,11 +30,21 @@ public class AirState : MovementState
         _pm = pm;
         _pm.CurrentMaxSpeed = pm.AirProps.MaxSpeed;
         _pm.Rigidbody.drag = 0.0f;
+
+        _coyoteTimer = _enteredByJumping ? -1.0f : _pm.AirProps.CoyoteTime;
     }
 
     public void Update()
     {
         _jumpCommandBuffer -= Time.deltaTime;
+        _coyoteTimer -= Time.deltaTime;
+
+        if(_coyoteTimer > 0.0f && Input.GetKeyDown(_pm.JumpKey))
+        {
+            _pm.Velocity = _pm.FlatVelocity;
+            _pm.Rigidbody.AddForce(Vector3.up * _pm.AirProps.JumpForce, ForceMode.Impulse);
+            _coyoteTimer = -1.0f;
+        }
 
         ClipAirSpeed();
 
@@ -106,19 +120,19 @@ public class AirState : MovementState
         if(Input.GetKeyDown(_pm.DashKey) && _pm.CanDash)
         {
             _pm.JustDashed();
-            _pm.ChangeMovementState(new DashingState());
+            _pm.ChangeMovementState(new DashingState(_pm.FlatVelocity.magnitude));
 
             return;
         }
 
-        if (Input.GetKeyDown(_pm.HookKey) && Physics.Raycast(_pm.pc.transform.position, _pm.pc.transform.forward, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
+        if (Input.GetKeyDown(_pm.GrappleKey))
         {
             _pm.ChangeMovementState(new GrapplingState());
 
             return;
         }
 
-        if (Input.GetKeyDown(_pm.HookKey) && Physics.Raycast(_pm.pc.transform.position, _pm.pc.transform.forward, _pm.GrappleProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask))
+        if (Input.GetKeyDown(_pm.SwingKey))
         {
             _pm.ChangeMovementState(new SwingingState(_pm.Velocity.magnitude));
 

@@ -8,7 +8,7 @@ public class EnemyAIStateFactory
         _context = context;
     }
 
-    public EnemyAIState Idle() { return new EnemyAIIdleState(_context, this); }
-    public EnemyAIState SeekPlayer() { return new EnemyAISeekPlayerState(_context, this); }
-    public EnemyAIState Ragdoll() { return new EnemyAIRagdollState(_context, this); }
+    public EnemyAIState Idle()          => new EnemyAIIdleState(_context, this);
+    public EnemyAIState SeekPlayer()    => new EnemyAISeekPlayerState(_context, this);
+    public EnemyAIState Ragdoll()       => new EnemyAIRagdollState(_context, this);
 }

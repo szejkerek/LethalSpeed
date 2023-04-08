@@ -49,6 +49,7 @@ public class DebugMovement : MonoBehaviour
         _keyBinds.text =  $"Jump key: {_pm.JumpKey}\n";
         _keyBinds.text += $"Crouch key: {_pm.CrouchKey}\n";
         _keyBinds.text += $"Dash key: {_pm.DashKey}\n";
-        _keyBinds.text += $"Hook key: {_pm.HookKey}\n";
+        _keyBinds.text += $"Grapple key: {_pm.GrappleKey}\n";
+        _keyBinds.text += $"Swing key: {_pm.SwingKey}\n";
     }
 }

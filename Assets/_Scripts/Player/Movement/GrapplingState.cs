@@ -6,7 +6,9 @@ public struct GrappleProperties
     public float MaxDistance;
     public float GrappleDelay;
     public float GrappleForce;
+    public float AfterGrappleForce;
     public LayerMask GrappleSurfaceMask;
+    public float GrappleAimError;
 
     [HideInInspector] public LineRenderer HookLineRenderer;
     [HideInInspector] public Transform HookGunTip;
@@ -18,6 +20,7 @@ public class GrapplingState : MovementState
     private PlayerCam _pc;
     private Transform _grappleGunTip;
     private Vector3 _grappleTargetPoint;
+    private Vector3 _trajectory;
     private LineRenderer _lr;
     private bool _preGrapple;
 
@@ -38,7 +41,15 @@ public class GrapplingState : MovementState
 
         if(Physics.Raycast(_pc.transform.position, _pc.transform.forward, out grappleRayHit, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
         {
-            _grappleTargetPoint = grappleRayHit.point;
+            _grappleTargetPoint = grappleRayHit.transform.position;
+            _lr.enabled = true;
+            _lr.SetPosition(1, _grappleTargetPoint);
+            _startGrapplingDelay = _pm.GrappleProps.GrappleDelay;
+        }
+        else if(Physics.SphereCast(_pc.transform.position, _pm.GrappleProps.GrappleAimError, 
+            _pc.transform.forward, out grappleRayHit, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
+        {
+            _grappleTargetPoint = grappleRayHit.transform.position;
             _lr.enabled = true;
             _lr.SetPosition(1, _grappleTargetPoint);
             _startGrapplingDelay = _pm.GrappleProps.GrappleDelay;
@@ -63,6 +74,14 @@ public class GrapplingState : MovementState
 
         if(!_preGrapple)
         {
+            if(Vector3.Dot((_grappleTargetPoint - _pm.transform.position).normalized, _trajectory) < 0.9f)
+            {
+                _pm.Velocity = _pm.Velocity.normalized * _pm.GroundProps.MaxSpeed;
+                StopGrappling();
+
+                return;
+            }
+            
             CheckForModeChange();
         }
         else if(_pm.JustLanded)
@@ -89,7 +108,7 @@ public class GrapplingState : MovementState
     {
         if(!_preGrapple && (_grappleTargetPoint - _pm.transform.position).magnitude < 5.0f)
         {
-            _pm.Velocity = _pm.Velocity.normalized * _pm.GroundProps.MaxSpeed;
+            _pm.Velocity = _pm.Velocity.normalized * _pm.GroundProps.MaxSpeed * (Input.GetKey(_pm.GrappleKey) ? _pm.GrappleProps.AfterGrappleForce : 1.0f);
             StopGrappling();
 
             return;
@@ -109,6 +128,7 @@ public class GrapplingState : MovementState
         _pm.Rigidbody.useGravity = false;
         _pm.Rigidbody.drag = 0.0f;
         _pm.Rigidbody.AddForce((_grappleTargetPoint - _pm.transform.position) * _pm.GrappleProps.GrappleForce, ForceMode.Impulse);
+        _trajectory = (_grappleTargetPoint - _pm.transform.position).normalized;
     }
 
     private void StopGrappling()
