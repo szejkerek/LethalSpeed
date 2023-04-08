@@ -14,7 +14,7 @@ public struct SwingProperties
 public class SwingingState : MovementState
 {
     private PlayerMovement _pm;
-    private PlayerCam _pc;
+    private PlayerCamera _pc;
     private Transform _hookGunTip;
     private LineRenderer _lr;
 
