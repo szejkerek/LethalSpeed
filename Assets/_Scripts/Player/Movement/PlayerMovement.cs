@@ -57,12 +57,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _crouchKey = KeyCode.LeftControl;
     [SerializeField] private KeyCode _dashKey = KeyCode.LeftShift;
-    [SerializeField] private KeyCode _hookKey = KeyCode.Mouse1;
+    [SerializeField] private KeyCode _grappleKey = KeyCode.Q;
+    [SerializeField] private KeyCode _swingKey = KeyCode.Mouse1;
 
     public KeyCode JumpKey => _jumpKey;
     public KeyCode CrouchKey => _crouchKey;
     public KeyCode DashKey => _dashKey;
-    public KeyCode HookKey => _hookKey;
+    public KeyCode GrappleKey => _grappleKey;
+    public KeyCode SwingKey => _swingKey;
 
     [HideInInspector]
     public PlayerCam pc;
