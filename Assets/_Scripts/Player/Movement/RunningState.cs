@@ -80,7 +80,7 @@ public class RunningState : MovementState
             return;
         }
 
-        if(Input.GetKeyDown(_pm.HookKey))
+        if(Input.GetKeyDown(_pm.GrappleKey))
         {
             _pm.ChangeMovementState(new GrapplingState());
 
