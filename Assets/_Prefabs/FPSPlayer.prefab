@@ -677,6 +677,9 @@ MonoBehaviour:
   _swingProps:
     MaxDistance: 100
     SwingAimError: 5
+    SpringForce: 4.5
+    SpringDamper: 7
+    MassScale: 4.5
     SwingSurfaceMask:
       serializedVersion: 2
       m_Bits: 512
