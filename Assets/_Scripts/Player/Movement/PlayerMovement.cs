@@ -118,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb.freezeRotation = true;
 
-        _movementState = Physics.CheckSphere(transform.position, 0.25f, _groundMask) ? new RunningState() : new AirState(0.0f);
+        _movementState = Physics.CheckSphere(transform.position, 0.25f, _groundMask) ? new RunningState() : new AirState(0.0f, true);
         _movementState.Begin(this);
 
         _originalScaleY = transform.localScale.y;

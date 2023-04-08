@@ -4,6 +4,7 @@ using UnityEngine;
 public struct DashProperties
 {
     public float DashForce;
+    public bool KeepPreviousMomentum;
 }
 
 public class DashingState : MovementState
@@ -11,6 +12,12 @@ public class DashingState : MovementState
     private PlayerMovement _pm;
     private bool _dashForceApplied;
     private float _dashingTime = 0.1f;
+    private float _preDashSpeed;
+
+    public DashingState(float preDashSpeed)
+    {
+        _preDashSpeed = preDashSpeed;
+    }
 
     public void Begin(PlayerMovement pm)
     {
@@ -45,15 +52,17 @@ public class DashingState : MovementState
 
     public void End()
     {
-
+        _pm.Velocity = _pm.FlatVelocity.normalized * 
+            (_pm.DashProps.KeepPreviousMomentum ? Mathf.Max(_pm.CurrentMaxSpeed, _preDashSpeed) : _pm.CurrentMaxSpeed);
+        _pm.Rigidbody.useGravity = true;
     }
 
     public void CheckForModeChange()
     {
         if(_dashingTime <= 0.0f)
         {
-            EndDashForce();
-            _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.CurrentMaxSpeed));
+            _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : 
+                new AirState((_pm.DashProps.KeepPreviousMomentum ? Mathf.Max(_pm.CurrentMaxSpeed, _preDashSpeed) : _pm.CurrentMaxSpeed)));
 
             return;
         }
@@ -62,11 +71,5 @@ public class DashingState : MovementState
     public string GetStateName()
     {
         return "Dashing";
-    }
-
-    private void EndDashForce()
-    {
-        _pm.Velocity = _pm.FlatVelocity.normalized * _pm.CurrentMaxSpeed;
-        _pm.Rigidbody.useGravity = true;
     }
 }

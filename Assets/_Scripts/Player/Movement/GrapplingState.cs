@@ -6,6 +6,7 @@ public struct GrappleProperties
     public float MaxDistance;
     public float GrappleDelay;
     public float GrappleForce;
+    public float AfterGrappleForce;
     public LayerMask GrappleSurfaceMask;
 
     [HideInInspector] public LineRenderer HookLineRenderer;
@@ -89,7 +90,7 @@ public class GrapplingState : MovementState
     {
         if(!_preGrapple && (_grappleTargetPoint - _pm.transform.position).magnitude < 5.0f)
         {
-            _pm.Velocity = _pm.Velocity.normalized * _pm.GroundProps.MaxSpeed;
+            _pm.Velocity = _pm.Velocity.normalized * _pm.GroundProps.MaxSpeed * (Input.GetKey(_pm.HookKey) ? _pm.GrappleProps.AfterGrappleForce : 1.0f);
             StopGrappling();
 
             return;
