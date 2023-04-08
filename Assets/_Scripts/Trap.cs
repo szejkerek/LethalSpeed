@@ -64,8 +64,8 @@ public class Trap : MonoBehaviour
         else if (_state == TrapState.Active)
         {
             if (other.TryGetComponent<Player>(out Player player)) 
-            { 
-                
+            {
+                player.Die();
             }
         }
     }
