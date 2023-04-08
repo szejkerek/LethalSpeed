@@ -4,6 +4,7 @@ using UnityEngine;
 public struct SwingProperties
 {
     public float MaxDistance;
+    public float SwingAimError;
     public LayerMask SwingSurfaceMask;
 }
 
@@ -36,9 +37,11 @@ public class SwingingState : MovementState
 
         RaycastHit swingRayHit;
 
-        if(Physics.Raycast(_pc.transform.position, _pc.transform.forward, out swingRayHit, _pm.SwingProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask))
+        if(Physics.Raycast(_pc.transform.position, _pc.transform.forward, out swingRayHit, _pm.SwingProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask)
+            || Physics.SphereCast(_pc.transform.position, _pm.SwingProps.SwingAimError,
+            _pc.transform.forward, out swingRayHit, _pm.SwingProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask))
         {
-            _swingPoint = swingRayHit.point;
+            _swingPoint = swingRayHit.transform.position;
             _lr.enabled = true;
             _lr.SetPosition(1, _swingPoint);
 
@@ -53,6 +56,13 @@ public class SwingingState : MovementState
             _joint.spring = 4.5f;
             _joint.damper = 7.0f;
             _joint.massScale = 4.5f;
+        }
+        else
+        {
+            _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundProps.Friction : 0.0f;
+            _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.FlatVelocity.magnitude));
+
+            return;
         }
     }
 
@@ -78,7 +88,7 @@ public class SwingingState : MovementState
 
     public void CheckForModeChange()
     {
-        if(!Input.GetKey(_pm.HookKey))
+        if(!Input.GetKey(_pm.SwingKey))
         {
             _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundProps.Friction : 0.0f;
             _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.FlatVelocity.magnitude));
