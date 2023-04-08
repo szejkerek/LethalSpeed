@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        _isGrounded = Physics.CheckSphere(transform.position, 0.25f, _groundMask);
+        _isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, 0.2f, _groundMask);
         _isStuckCrouched = Physics.Raycast(transform.position, Vector3.up, _playerHeight * 0.8f, _groundMask) 
             && (transform.localScale.y == CrouchProps.ScaleY || transform.localScale.y == SlideProps.ScaleY);
         _justLanded = _isGrounded && !_wasGroundedLastFrame;
