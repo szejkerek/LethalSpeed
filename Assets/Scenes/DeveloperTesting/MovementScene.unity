@@ -53479,34 +53479,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _swingProps.MassScale
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _swingProps.SpringForce
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _swingProps.Acceleration
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _swingProps.ShouldClipSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _swingProps.ShouldResetDash
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _grappleProps.ShouldResetDash
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _wallrunProps.ShouldResetDash
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7975385521685648151, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
       propertyPath: m_Name
       value: Player
