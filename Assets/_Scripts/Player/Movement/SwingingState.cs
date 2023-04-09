@@ -37,6 +37,7 @@ public class SwingingState : MovementState
     {
         _pm = pm;
         _pm.CurrentMaxSpeed = pm.GroundProps.MaxSpeed;
+        _pm.Rigidbody.useGravity = true;
         _pm.Rigidbody.drag = 0.0f;
 
         _pc = _pm.pc;
@@ -50,8 +51,7 @@ public class SwingingState : MovementState
 
         RaycastHit swingRayHit;
 
-        if(Physics.Raycast(_pc.transform.position, _pc.transform.forward, out swingRayHit, _pm.SwingProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask)
-            || Physics.SphereCast(_pc.transform.position, _pm.SwingProps.SwingAimError,
+        if(Physics.SphereCast(_pc.transform.position, _pm.SwingProps.SwingAimError,
             _pc.transform.forward, out swingRayHit, _pm.SwingProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask))
         {
             _swingPoint = swingRayHit.transform.position;
@@ -145,6 +145,13 @@ public class SwingingState : MovementState
             float drop = _pm.Velocity.magnitude - _pm.CurrentMaxSpeed > 3.0f ? _pm.GroundProps.Deacceleration * Time.deltaTime : _pm.Velocity.magnitude - _pm.CurrentMaxSpeed;
             Vector3 newSpeed = _pm.Velocity.normalized * (_pm.Velocity.magnitude - drop);
         
+            _pm.Velocity = newSpeed;
+        }
+        else
+        {
+            float drop = 3.0f * Time.deltaTime;
+            Vector3 newSpeed = _pm.Velocity.normalized * (_pm.Velocity.magnitude - drop);
+
             _pm.Velocity = newSpeed;
         }
     }
