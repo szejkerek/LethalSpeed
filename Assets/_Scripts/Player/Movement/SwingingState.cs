@@ -83,6 +83,13 @@ public class SwingingState : MovementState
     {
         _minSwingingTime -= Time.deltaTime;
         _lr.SetPosition(0, _hookGunTip.position);
+        
+        if (_initialSpeed > _pm.CurrentMaxSpeed)
+        {
+            float currectVelocity = _pm.Velocity.magnitude;
+
+            _initialSpeed = currectVelocity < _pm.CurrentMaxSpeed ? _pm.CurrentMaxSpeed : currectVelocity;
+        }
 
         ClipSwingSpeed();
         CheckForModeChange();
@@ -134,7 +141,7 @@ public class SwingingState : MovementState
         if (_initialSpeed > _pm.CurrentMaxSpeed)
         {
             float drop = _pm.Velocity.magnitude - _pm.CurrentMaxSpeed > 1.0f ?
-                _pm.GroundProps.Deacceleration * Time.deltaTime / 5000.0f : _pm.Velocity.magnitude - _pm.CurrentMaxSpeed;
+                _pm.GroundProps.Deacceleration * Time.deltaTime / 50.0f : _pm.Velocity.magnitude - _pm.CurrentMaxSpeed;
         
             Vector3 newSpeed = _pm.Velocity.normalized * Mathf.Min(_initialSpeed, _pm.Velocity.magnitude - drop);
         
@@ -142,7 +149,7 @@ public class SwingingState : MovementState
         }
         else if (_pm.Velocity.magnitude > _pm.CurrentMaxSpeed)
         {
-            float drop = _pm.Velocity.magnitude - _pm.CurrentMaxSpeed > 3.0f ? _pm.GroundProps.Deacceleration * Time.deltaTime : _pm.Velocity.magnitude - _pm.CurrentMaxSpeed;
+            float drop = _pm.Velocity.magnitude - _pm.CurrentMaxSpeed > 3.0f ? _pm.GroundProps.Deacceleration * Time.deltaTime : 3.0f;
             Vector3 newSpeed = _pm.Velocity.normalized * (_pm.Velocity.magnitude - drop);
         
             _pm.Velocity = newSpeed;
