@@ -37,7 +37,7 @@ public class PlayerCamera : MonoBehaviour
         _xRot -= mouseY;
         _xRot = Mathf.Clamp(_xRot, -90.0f, 90.0f);
 
-        transform.rotation = Quaternion.Euler(_xRot, _yRot, transform.eulerAngles.z);
+        transform.rotation = Quaternion.Euler(_xRot, _yRot, 0);
         _orientation.rotation = Quaternion.Euler(0.0f, _yRot, 0.0f);
     }
 
@@ -50,6 +50,6 @@ public class PlayerCamera : MonoBehaviour
     {
         Vector3 currentRotation = transform.eulerAngles;
         currentRotation.z = targetTiltZ;
-        transform.eulerAngles = currentRotation;
+        _camera.transform.DOLocalRotate(new Vector3(0f, 0f, targetTiltZ), 0.25f);
     }
 }

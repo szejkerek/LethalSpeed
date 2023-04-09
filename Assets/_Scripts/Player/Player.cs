@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -20,6 +18,5 @@ public class Player : MonoBehaviour
     {
         _playerCamera = GetComponentInChildren<PlayerCamera>();
         _cameraOffset = _playerCamera.gameObject.transform.position - transform.position;
-        _playerCamera.transform.SetParent(null);
     }
 }
