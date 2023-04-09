@@ -21,6 +21,7 @@ public abstract class EnemyAIState
     public abstract void UpdateStateInternally();
     public abstract void ExitState();
     public abstract void CheckSwitchState();
+    public abstract DebugEnemyAIText GetDebugText();
     public void SwitchState(EnemyAIState newState) 
     {
         _context.CurrentState.ExitState();

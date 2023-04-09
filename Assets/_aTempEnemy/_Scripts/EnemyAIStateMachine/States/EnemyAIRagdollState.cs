@@ -28,4 +28,9 @@ public class EnemyAIRagdollState : EnemyAIState
     {
         return;
     }
+
+    public override DebugEnemyAIText GetDebugText()
+    {
+        throw new System.NotImplementedException();
+    }
 }

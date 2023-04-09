@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-struct DebugEnemyAIText
+public struct DebugEnemyAIText
 {
     public Color titleColor;
     public string stateName;
@@ -32,7 +32,7 @@ public class DebugEnemyAI : MonoBehaviour
     private void Update()
     {
         debugInfoCanvas.transform.rotation = Quaternion.LookRotation(debugInfoCanvas.transform.position - mainCamera.transform.position);
-        //UpdateDebugText(enemyStates.CurrentState);
+        UpdateDebugText(enemyStates.CurrentState.GetDebugText());
     }
 
     void UpdateDebugText(DebugEnemyAIText debugText)

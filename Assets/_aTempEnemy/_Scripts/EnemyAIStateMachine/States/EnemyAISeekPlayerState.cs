@@ -24,4 +24,13 @@ public class EnemyAISeekPlayerState : EnemyAIState
     public override void CheckSwitchState()
     {
     }
+
+    public override DebugEnemyAIText GetDebugText()
+    {
+        DebugEnemyAIText debugEnemyAIText;
+        debugEnemyAIText.titleColor = Color.blue;
+        debugEnemyAIText.stateName = "Seek player";
+        debugEnemyAIText.info = "none";
+        return debugEnemyAIText;
+    }
 }

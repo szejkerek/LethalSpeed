@@ -20,6 +20,11 @@ public class EnemyAIIdleState : EnemyAIState
         throw new System.NotImplementedException();
     }
 
+    public override DebugEnemyAIText GetDebugText()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void UpdateStateInternally()
     {
         throw new System.NotImplementedException();
