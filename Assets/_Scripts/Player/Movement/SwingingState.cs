@@ -4,11 +4,14 @@ using UnityEngine;
 public struct SwingProperties
 {
     public float MaxDistance;
+    public float Acceleration;
     public float SwingAimError;
     public float SpringForce;
     public float SpringDamper;
     public float MassScale;
     public LayerMask SwingSurfaceMask;
+    public bool ShouldResetDash;
+    public bool ShouldClipSpeed;
 }
 
 public class SwingingState : MovementState
@@ -37,6 +40,11 @@ public class SwingingState : MovementState
         _pc = _pm.pc;
         _hookGunTip = _pm.GrappleProps.HookGunTip;
         _lr = _pm.GrappleProps.HookLineRenderer;
+
+        if(_pm.SwingProps.ShouldResetDash)
+        {
+            _pm.ResetDash();
+        }
 
         RaycastHit swingRayHit;
 
@@ -79,7 +87,7 @@ public class SwingingState : MovementState
 
     public void Move(Vector3 normalizedWishDir)
     {
-        _pm.Rigidbody.AddForce(normalizedWishDir * 10.0f, ForceMode.Force);
+        _pm.Rigidbody.AddForce(normalizedWishDir * _pm.SwingProps.Acceleration, ForceMode.Force);
         _pm.Rigidbody.AddForce(Vector3.down * _pm.AirProps.GravityForce, ForceMode.Force);
     }
 
@@ -107,20 +115,25 @@ public class SwingingState : MovementState
 
     private void ClipSwingSpeed()
     {
+        if(!_pm.SwingProps.ShouldClipSpeed)
+        {
+            return;
+        }
+
         if (_initialSpeed > _pm.CurrentMaxSpeed)
         {
             float drop = _pm.Velocity.magnitude - _pm.CurrentMaxSpeed > 1.0f ?
                 _pm.GroundProps.Deacceleration * Time.deltaTime / 5000.0f : _pm.Velocity.magnitude - _pm.CurrentMaxSpeed;
-
+        
             Vector3 newSpeed = _pm.Velocity.normalized * Mathf.Min(_initialSpeed, _pm.Velocity.magnitude - drop);
-
+        
             _pm.Velocity = newSpeed;
         }
         else if (_pm.Velocity.magnitude > _pm.CurrentMaxSpeed)
         {
             float drop = _pm.Velocity.magnitude - _pm.CurrentMaxSpeed > 3.0f ? _pm.GroundProps.Deacceleration * Time.deltaTime : _pm.Velocity.magnitude - _pm.CurrentMaxSpeed;
             Vector3 newSpeed = _pm.Velocity.normalized * (_pm.Velocity.magnitude - drop);
-
+        
             _pm.Velocity = newSpeed;
         }
     }
