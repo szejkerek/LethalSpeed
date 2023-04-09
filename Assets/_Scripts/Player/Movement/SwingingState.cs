@@ -5,13 +5,16 @@ public struct SwingProperties
 {
     public float MaxDistance;
     public float SwingAimError;
+    public float SpringForce;
+    public float SpringDamper;
+    public float MassScale;
     public LayerMask SwingSurfaceMask;
 }
 
 public class SwingingState : MovementState
 {
     private PlayerMovement _pm;
-    private PlayerCam _pc;
+    private PlayerCamera _pc;
     private Transform _hookGunTip;
     private LineRenderer _lr;
 
@@ -53,9 +56,9 @@ public class SwingingState : MovementState
 
             _joint.maxDistance = distance * 0.8f;
             _joint.minDistance = distance * 0.25f;
-            _joint.spring = 4.5f;
-            _joint.damper = 7.0f;
-            _joint.massScale = 4.5f;
+            _joint.spring = _pm.SwingProps.SpringForce;
+            _joint.damper = _pm.SwingProps.SpringDamper;
+            _joint.massScale = _pm.SwingProps.MassScale;
         }
         else
         {

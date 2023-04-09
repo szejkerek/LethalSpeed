@@ -40,7 +40,7 @@ public class CrouchingState : MovementState
 
     public void CheckForModeChange()
     {
-        if (Input.GetKey(_pm.JumpKey))
+        if (Input.GetKey(_pm.JumpKey) && !_pm.IsStuckCrouching)
         {
             _pm.Velocity = _pm.FlatVelocity;
             _pm.Rigidbody.AddForce(Vector3.up * _pm.AirProps.JumpForce, ForceMode.Impulse);

@@ -13,7 +13,7 @@ public struct WallrunProperties
 public class WallrunningState : MovementState
 {
     private PlayerMovement _pm;
-    private PlayerCam _pc;
+    private PlayerCamera _pc;
     private RaycastHit _wallRayHit;
     private Vector3 _wallNormal;
     private float _initialSpeed;

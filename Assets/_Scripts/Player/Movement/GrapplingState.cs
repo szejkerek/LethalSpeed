@@ -17,7 +17,7 @@ public struct GrappleProperties
 public class GrapplingState : MovementState
 {
     private PlayerMovement _pm;
-    private PlayerCam _pc;
+    private PlayerCamera _pc;
     private Transform _grappleGunTip;
     private Vector3 _grappleTargetPoint;
     private Vector3 _trajectory;

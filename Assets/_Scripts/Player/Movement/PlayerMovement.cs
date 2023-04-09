@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode SwingKey => _swingKey;
 
     [HideInInspector]
-    public PlayerCam pc;
+    public PlayerCamera pc;
 
     [Space]
     public Transform orientation;
@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        pc = FindObjectOfType<PlayerCam>();
+        pc = FindObjectOfType<PlayerCamera>();
         _grappleProps.HookLineRenderer = pc.GetComponentInChildren<LineRenderer>();
         _grappleProps.HookGunTip = _grappleProps.HookLineRenderer.transform.GetChild(0).transform;
     }
