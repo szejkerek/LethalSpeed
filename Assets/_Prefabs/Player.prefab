@@ -945,6 +945,7 @@ MonoBehaviour:
     WallMask:
       serializedVersion: 2
       m_Bits: 128
+    ShouldResetDash: 1
   _dashProps:
     DashForce: 80
     KeepPreviousMomentum: 1
@@ -957,10 +958,12 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 256
     GrappleAimError: 5
+    ShouldResetDash: 1
     HookLineRenderer: {fileID: 3610378510539283199}
     HookGunTip: {fileID: 8873208690326271987}
   _swingProps:
     MaxDistance: 100
+    Acceleration: 15
     SwingAimError: 5
     SpringForce: 4.5
     SpringDamper: 7
@@ -968,6 +971,8 @@ MonoBehaviour:
     SwingSurfaceMask:
       serializedVersion: 2
       m_Bits: 512
+    ShouldResetDash: 1
+    ShouldClipSpeed: 1
   _jumpKey: 32
   _crouchKey: 306
   _dashKey: 304

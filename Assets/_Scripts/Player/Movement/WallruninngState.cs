@@ -8,6 +8,7 @@ public struct WallrunProperties
     public float MaxWallrunningTime;
     public float WallrunJumpForce;
     public LayerMask WallMask;
+    public bool ShouldResetDash;
 }
 
 public class WallrunningState : MovementState
@@ -36,6 +37,11 @@ public class WallrunningState : MovementState
 
         _pc = _pm.pc;
         _pc.SetFOV(70.0f);
+
+        if(_pm.WallrunProps.ShouldResetDash)
+        {
+            _pm.ResetDash();
+        }    
 
         if(Physics.Raycast(_pm.transform.position, _pm.orientation.right, 0.8f, _pm.WallrunProps.WallMask))
         {

@@ -176,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void ResetDash()
+    public void ResetDash()
     {
         _canDash = true;
     }

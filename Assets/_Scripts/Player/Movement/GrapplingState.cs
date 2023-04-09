@@ -9,6 +9,7 @@ public struct GrappleProperties
     public float AfterGrappleForce;
     public LayerMask GrappleSurfaceMask;
     public float GrappleAimError;
+    public bool ShouldResetDash;
 
     [HideInInspector] public LineRenderer HookLineRenderer;
     [HideInInspector] public Transform HookGunTip;
@@ -39,14 +40,12 @@ public class GrapplingState : MovementState
 
         RaycastHit grappleRayHit;
 
-        if(Physics.Raycast(_pc.transform.position, _pc.transform.forward, out grappleRayHit, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
+        if(_pm.GrappleProps.ShouldResetDash)
         {
-            _grappleTargetPoint = grappleRayHit.transform.position;
-            _lr.enabled = true;
-            _lr.SetPosition(1, _grappleTargetPoint);
-            _startGrapplingDelay = _pm.GrappleProps.GrappleDelay;
+            _pm.ResetDash();
         }
-        else if(Physics.SphereCast(_pc.transform.position, _pm.GrappleProps.GrappleAimError, 
+
+        if(Physics.SphereCast(_pc.transform.position, _pm.GrappleProps.GrappleAimError,
             _pc.transform.forward, out grappleRayHit, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
         {
             _grappleTargetPoint = grappleRayHit.transform.position;
@@ -74,7 +73,7 @@ public class GrapplingState : MovementState
 
         if(!_preGrapple)
         {
-            if(Vector3.Dot((_grappleTargetPoint - _pm.transform.position).normalized, _trajectory) < 0.9f)
+            if(Vector3.Dot((_grappleTargetPoint - _pm.transform.position).normalized, _trajectory) < 0.98f)
             {
                 _pm.Velocity = _pm.Velocity.normalized * _pm.GroundProps.MaxSpeed;
                 StopGrappling();
