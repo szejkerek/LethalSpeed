@@ -25,10 +25,12 @@ public class SwingingState : MovementState
     private SpringJoint _joint;
 
     private float _initialSpeed;
+    private float _minSwingingTime;
 
     public SwingingState(float initialSpeed)
     {
         _initialSpeed = initialSpeed;
+        _minSwingingTime = 1.0f;
     }
 
     public void Begin(PlayerMovement pm)
@@ -79,6 +81,7 @@ public class SwingingState : MovementState
 
     public void Update()
     {
+        _minSwingingTime -= Time.deltaTime;
         _lr.SetPosition(0, _hookGunTip.position);
 
         ClipSwingSpeed();
@@ -100,6 +103,14 @@ public class SwingingState : MovementState
     public void CheckForModeChange()
     {
         if(!Input.GetKey(_pm.SwingKey))
+        {
+            _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundProps.Friction : 0.0f;
+            _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.FlatVelocity.magnitude));
+
+            return;
+        }
+
+        if(_pm.Velocity.magnitude < 0.25f && Vector3.Dot((_pm.transform.position - _swingPoint).normalized, Vector3.down) > 0.98f && _minSwingingTime < 0.0f)
         {
             _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundProps.Friction : 0.0f;
             _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.FlatVelocity.magnitude));
