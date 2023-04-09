@@ -30,7 +30,7 @@ public class EnemyAISeekPlayerState : EnemyAIState
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.blue;
         debugEnemyAIText.stateName = "Seek player";
-        debugEnemyAIText.info = "none";
+        debugEnemyAIText.info = $"Speed: {_context.NavMeshAgent.velocity.magnitude}";
         return debugEnemyAIText;
     }
 }

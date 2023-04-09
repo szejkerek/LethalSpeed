@@ -22,7 +22,11 @@ public class EnemyAIIdleState : EnemyAIState
 
     public override DebugEnemyAIText GetDebugText()
     {
-        throw new System.NotImplementedException();
+        DebugEnemyAIText debugEnemyAIText;
+        debugEnemyAIText.titleColor = Color.yellow;
+        debugEnemyAIText.stateName = "Idle";
+        debugEnemyAIText.info = "";
+        return debugEnemyAIText;
     }
 
     public override void UpdateStateInternally()

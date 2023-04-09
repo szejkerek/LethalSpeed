@@ -31,6 +31,10 @@ public class EnemyAIRagdollState : EnemyAIState
 
     public override DebugEnemyAIText GetDebugText()
     {
-        throw new System.NotImplementedException();
+        DebugEnemyAIText debugEnemyAIText;
+        debugEnemyAIText.titleColor = Color.white;
+        debugEnemyAIText.stateName = "Ragdoll";
+        debugEnemyAIText.info = "";
+        return debugEnemyAIText;
     }
 }
