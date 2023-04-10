@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
-public abstract class EnemyAIState
+public abstract class StateEnemyAI
 {
-    protected EnemyAIStateFactory _factory;
-    protected EnemyAIStateMachine _context;
-    public EnemyAIState(EnemyAIStateMachine context, EnemyAIStateFactory factory)
+    protected StateFactoryEnemyAI _factory;
+    protected StateMachineEnemyAI _context;
+    public StateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory)
     {
         _factory = factory;
         _context = context;
@@ -22,7 +22,7 @@ public abstract class EnemyAIState
     public abstract void ExitState();
     public abstract void CheckSwitchState();
     public abstract DebugEnemyAIText GetDebugText();
-    public void SwitchState(EnemyAIState newState) 
+    public void SwitchState(StateEnemyAI newState) 
     {
         _context.CurrentState.ExitState();
         newState.EnterState();

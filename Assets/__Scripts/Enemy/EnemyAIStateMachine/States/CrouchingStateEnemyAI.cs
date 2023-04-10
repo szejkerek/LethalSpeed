@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAISeekPlayerState : EnemyAIState
+public class CrouchingStateEnemyAI : StateEnemyAI
 {
-    public EnemyAISeekPlayerState(EnemyAIStateMachine context, EnemyAIStateFactory factory) : base(context, factory) { }
+    public CrouchingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
 
     public override void EnterState()
     {

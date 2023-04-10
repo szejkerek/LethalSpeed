@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHitbox : HitBox
+public class HitboxEnemyAI : HitBox
 {
     [HideInInspector]
     public Enemy Enemy;

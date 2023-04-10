@@ -6,8 +6,14 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Ragdoll))]
-public class EnemyAIStateMachine : MonoBehaviour
+public class StateMachineEnemyAI : MonoBehaviour
 {
+    //States proporties
+    public IdleProperties IdleProperties => _idleProperties;
+    [SerializeField] IdleProperties _idleProperties;
+
+    //
+
     Player _player;
     NavMeshAgent _navMeshAgent;
     Animator _animator;
@@ -33,15 +39,15 @@ public class EnemyAIStateMachine : MonoBehaviour
 
     #region State Machine
 
-    EnemyAIState _currentState;
-    EnemyAIStateFactory _statesFactory;
+    StateEnemyAI _currentState;
+    StateFactoryEnemyAI _statesFactory;
 
-    public EnemyAIState CurrentState { get { return _currentState; } set { _currentState = value; } }
-    public EnemyAIStateFactory StatesFactory => _statesFactory;
+    public StateEnemyAI CurrentState { get { return _currentState; } set { _currentState = value; } }
+    public StateFactoryEnemyAI StatesFactory => _statesFactory;
     private void Start()
     {
-        _statesFactory = new EnemyAIStateFactory(this);
-        _currentState = _statesFactory.SeekPlayer();
+        _statesFactory = new StateFactoryEnemyAI(this);
+        _currentState = _statesFactory.Idle();
         _currentState.EnterState();
     }
 

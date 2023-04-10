@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAIRagdollState : EnemyAIState
+public class RagdollStateEnemyAI : StateEnemyAI
 {
-    public EnemyAIRagdollState(EnemyAIStateMachine context, EnemyAIStateFactory factory) : base(context, factory) { }
+    public RagdollStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
 
     public override void EnterState()
     {

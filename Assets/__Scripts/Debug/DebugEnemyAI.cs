@@ -13,7 +13,7 @@ public struct DebugEnemyAIText
 public class DebugEnemyAI : MonoBehaviour
 {
     Camera mainCamera;
-    EnemyAIStateMachine enemyStates;
+    StateMachineEnemyAI enemyStates;
 
     [SerializeField] bool turnDebugInfo = true;
     [SerializeField] GameObject backgroundWithText;
@@ -22,7 +22,7 @@ public class DebugEnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        enemyStates = GetComponentInParent<EnemyAIStateMachine>();
+        enemyStates = GetComponentInParent<StateMachineEnemyAI>();
         mainCamera = Helpers.Camera;
         backgroundWithText.gameObject.SetActive(turnDebugInfo);
     }

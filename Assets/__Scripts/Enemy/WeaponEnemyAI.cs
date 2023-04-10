@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class EnemyAIWeapon : MonoBehaviour
+public class WeaponEnemyAI : MonoBehaviour
 {
     private void Awake()
     {
