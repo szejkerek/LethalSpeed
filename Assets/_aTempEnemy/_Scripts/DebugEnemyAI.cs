@@ -16,22 +16,20 @@ public class DebugEnemyAI : MonoBehaviour
     EnemyAIStateMachine enemyStates;
 
     [SerializeField] bool turnDebugInfo = true;
-    [SerializeField] Canvas debugInfoCanvas;
+    [SerializeField] GameObject backgroundWithText;
     [SerializeField] TMP_Text StateText;
     [SerializeField] TMP_Text InfoText;
 
-#if UNITY_EDITOR
-
     private void Awake()
     {
-        enemyStates = GetComponent<EnemyAIStateMachine>();
+        enemyStates = GetComponentInParent<EnemyAIStateMachine>();
         mainCamera = Helpers.Camera;
-        debugInfoCanvas.gameObject.SetActive(turnDebugInfo);
+        backgroundWithText.gameObject.SetActive(turnDebugInfo);
     }
 
     private void Update()
     {
-        debugInfoCanvas.transform.rotation = Quaternion.LookRotation(debugInfoCanvas.transform.position - mainCamera.transform.position);
+        transform.rotation = Quaternion.LookRotation(transform.position - mainCamera.transform.position);
         UpdateDebugText(enemyStates.CurrentState.GetDebugText());
     }
 
@@ -41,6 +39,4 @@ public class DebugEnemyAI : MonoBehaviour
         StateText.color = debugText.titleColor;
         InfoText.text = debugText.info;
     }
-
-#endif
 }
