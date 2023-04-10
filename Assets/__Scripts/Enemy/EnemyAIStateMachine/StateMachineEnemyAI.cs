@@ -11,7 +11,18 @@ public class StateMachineEnemyAI : MonoBehaviour
     //States proporties
     public IdleProperties IdleProperties => _idleProperties;
     [SerializeField] IdleProperties _idleProperties;
-
+    public SeekPlayerProperties SeekPlayerProperties => _seekPlayerProperties;
+    [SerializeField] SeekPlayerProperties _seekPlayerProperties;
+    public ShootingPlayerProperties ShootingPlayerProperties => _shootingPlayerProperties;
+    [SerializeField] ShootingPlayerProperties _shootingPlayerProperties;
+    public CrouchingProperties CrouchingProperties => _crouchingProperties;
+    [SerializeField] CrouchingProperties _crouchingProperties;
+    public WalkBackwardsProperties WalkBackwardsProperties => _walkBackwardsProperties;
+    [SerializeField] WalkBackwardsProperties _walkBackwardsProperties;
+    public ReloadingProperties ReloadingProperties => _reloadingProperties;
+    [SerializeField] ReloadingProperties _reloadingProperties;
+    public RagdollProperties RagdollProperties => _ragdollProperties;
+    [SerializeField] RagdollProperties _ragdollProperties;
     //
 
     Player _player;

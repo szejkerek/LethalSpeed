@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct ReloadingProperties
+{
+}
 public class ReloadingStateEnemyAI : StateEnemyAI
 {
     public ReloadingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }

@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct SeekPlayerProperties
+{
+}
 public class SeekPlayerStateEnemyAI : StateEnemyAI
 {
     public SeekPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
