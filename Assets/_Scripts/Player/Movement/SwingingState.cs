@@ -40,7 +40,7 @@ public class SwingingState : MovementState
         _pm.Rigidbody.useGravity = true;
         _pm.Rigidbody.drag = 0.0f;
 
-        _pc = _pm.pc;
+        _pc = _pm._playerCamera;
         _hookGunTip = _pm.GrappleProps.HookGunTip;
         _lr = _pm.GrappleProps.HookLineRenderer;
 
