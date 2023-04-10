@@ -141,6 +141,37 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1973517960731775387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4080995252440955990}
+  m_Layer: 0
+  m_Name: EnemyTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4080995252440955990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973517960731775387}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6049746290809626671}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005957192817367489
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +471,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7202311452728960652}
+  - {fileID: 4080995252440955990}
   m_Father: {fileID: 7975385521685648148}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -455,8 +487,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962ba5b14d9f775419653322d44d05dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _orientation: {fileID: 7975385519971890260}
+  _enemyAimTarget: {fileID: 4080995252440955990}
   _sensX: 300
   _sensY: 300
+  _cameraHeight: 0.75
 --- !u!1 &4492781545994157503
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +629,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 213.461, y: -77.767}
+  m_AnchoredPosition: {x: 213.461, y: -77.76709}
   m_SizeDelta: {x: 404.923, y: 128.488}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7829635796398178091
@@ -899,7 +934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f8c96765599114ca691a3fe95eaa28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Orientation: {fileID: 7975385519971890260}
+  PlayerCamera: {fileID: 3845972236151078384}
 --- !u!114 &7975385521685648149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,7 +1013,7 @@ MonoBehaviour:
   _dashKey: 304
   _grappleKey: 113
   _swingKey: 324
-  pc: {fileID: 0}
+  _playerCamera: {fileID: 0}
   orientation: {fileID: 7975385519971890260}
 --- !u!114 &8757365507892586898
 MonoBehaviour:

@@ -32,7 +32,7 @@ public class GrapplingState : MovementState
         _pm = pm;
         _pm.CurrentMaxSpeed = pm.GroundProps.MaxSpeed;
 
-        _pc = _pm.pc;
+        _pc = _pm._playerCamera;
         _grappleGunTip = _pm.GrappleProps.HookGunTip;
         _lr = _pm.GrappleProps.HookLineRenderer;
 

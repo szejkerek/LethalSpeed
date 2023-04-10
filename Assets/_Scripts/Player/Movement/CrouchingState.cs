@@ -12,14 +12,14 @@ public class CrouchingState : MovementState
 {
     private PlayerMovement _pm;
 
-    public void Begin(PlayerMovement pm)
+    public void Begin(PlayerMovement playerMovement)
     {
-        _pm = pm;
-        _pm.CurrentMaxSpeed = pm.CrouchProps.MaxSpeed;
+        _pm = playerMovement;
+        _pm.CurrentMaxSpeed = playerMovement.CrouchProps.MaxSpeed;
         _pm.Rigidbody.drag = _pm.GroundProps.Friction;
 
         _pm.transform.DOScaleY(_pm.CrouchProps.ScaleY, 0.25f);
-        _pm.transform.position += Vector3.down * _pm.PlayerHeight * _pm.CrouchProps.ScaleY * 0.1f;
+        _pm._playerCamera.SetCameraPosition(crouching: true);
     }
 
     public void Update()
@@ -36,6 +36,7 @@ public class CrouchingState : MovementState
     public void End()
     {
         _pm.transform.DOScaleY(_pm.OriginalScaleY, 0.25f);
+        _pm._playerCamera.SetCameraPosition(crouching: false);
     }
 
     public void CheckForModeChange()

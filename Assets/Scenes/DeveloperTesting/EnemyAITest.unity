@@ -2481,6 +2481,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4080995252440955990, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7557082738277567732, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -77.76709
@@ -7045,7 +7049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc4afc5b1b06c84185583ac23bf4b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verticalAimOffset: -0.1
 --- !u!4 &7678894308068433706
 Transform:
   m_ObjectHideFlags: 0

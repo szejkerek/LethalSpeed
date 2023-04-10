@@ -12,7 +12,7 @@ public class EnemyAIWeapon : MonoBehaviour
 
     private void SetUpRig()
     {
-        Transform source = FindObjectOfType<PlayerCamera>().transform;
+        Transform source = FindObjectOfType<Player>().PlayerCamera.EnemyAimTarget;
         if (source != null)
         {
             foreach (MultiAimConstraint component in GetComponentsInChildren<MultiAimConstraint>())
