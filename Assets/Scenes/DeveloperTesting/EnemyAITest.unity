@@ -5457,8 +5457,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -180.719
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1676382007104356698, guid: 66764c0cfd600a94e9ee776a12822730, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66764c0cfd600a94e9ee776a12822730, type: 3}
 --- !u!95 &4009186246273500709
 Animator:
@@ -7046,6 +7045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc4afc5b1b06c84185583ac23bf4b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  verticalAimOffset: -0.1
 --- !u!4 &7678894308068433706
 Transform:
   m_ObjectHideFlags: 0
