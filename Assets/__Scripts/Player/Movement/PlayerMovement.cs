@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float MaxSlopeAngle => _maxSlopeAngle;
     public float PlayerHeight => _playerHeight;
+    public LayerMask GroundMask => _groundMask;
 
 
     [Space]
@@ -51,6 +52,11 @@ public class PlayerMovement : MonoBehaviour
     [Space]
     [SerializeField] private SwingProperties _swingProps;
     public SwingProperties SwingProps => _swingProps;
+
+
+    [Space]
+    [SerializeField] private LedgeClimbingProperties _ledgeClimbProps;
+    public LedgeClimbingProperties LedgeClimbingProps => _ledgeClimbProps;
 
 
     [Header("Key bindings")]
