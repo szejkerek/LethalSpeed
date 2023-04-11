@@ -138,6 +138,15 @@ public class AirState : MovementState
 
             return;
         }
+
+        if (Input.GetKeyDown(_pm.JumpKey) 
+            && Physics.Raycast(_pm.transform.position + Vector3.up * (_pm.PlayerHeight) + _pm.orientation.forward * (0.5f + _pm.LedgeClimbingProps.MinDistance),
+            Vector3.down, out RaycastHit rayHit, _pm.LedgeClimbingProps.RayPierceDistance, _pm.GroundMask))
+        {
+            _pm.ChangeMovementState(new LedgeClimbingState(rayHit));
+
+            return;
+        }
     }
 
     public string GetStateName()
