@@ -53484,12 +53484,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _ledgeClimbProps.MinDistance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _ledgeClimbProps.RayPierceDistance
-      value: 1.5
+      propertyPath: _wallrunProps.WallrunJumpForce
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7975385521685648151, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
       propertyPath: m_Name
