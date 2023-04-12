@@ -5,8 +5,6 @@ using UnityEngine.Animations.Rigging;
 [RequireComponent(typeof(Rig))]
 public class RigWeightController : MonoBehaviour
 {
-    [SerializeField] private float interpolationTime = 1f;
-
     private Rig rig;
 
     private void Awake()
