@@ -6884,7 +6884,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _idleProperties:
     showGizmos: 1
-    ActivationRange: 6.01
+    ActivationRange: 5
   _seekPlayerProperties:
     showGizmos: 0
   _shootingPlayerProperties:
