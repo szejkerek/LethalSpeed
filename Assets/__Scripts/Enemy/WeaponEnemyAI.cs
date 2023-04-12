@@ -8,7 +8,6 @@ public class WeaponEnemyAI : MonoBehaviour
     [Header("Gun Proporties")]
     [SerializeField] private GameObject weaponObject;
     [SerializeField] private Transform barrelTip;
-    [SerializeField] private Transform barrelBase;
     private Rigidbody weaponRigidbody;
     private Collider weaponCollider;
 

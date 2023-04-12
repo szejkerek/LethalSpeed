@@ -8,6 +8,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Ragdoll))]
 [RequireComponent(typeof(WeaponEnemyAI))]
+[RequireComponent(typeof(Enemy))]
 public class StateMachineEnemyAI : MonoBehaviour
 {
     //States proporties
@@ -53,6 +54,7 @@ public class StateMachineEnemyAI : MonoBehaviour
         _animator = GetComponent<Animator>();
         _ragdoll = GetComponent<Ragdoll>();
         _weaponEnemyAI = GetComponent<WeaponEnemyAI>();
+        _enemy = GetComponent<Enemy>();
     }
 
     private void OnDrawGizmos()

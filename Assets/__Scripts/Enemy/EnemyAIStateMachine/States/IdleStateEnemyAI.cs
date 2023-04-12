@@ -7,6 +7,7 @@ public struct IdleProperties
 {
     public bool showGizmos;
     public float ActivationRange;
+    public float UnfocusDuration;
 }
 
 public class IdleStateEnemyAI : StateEnemyAI
@@ -17,6 +18,7 @@ public class IdleStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
+        _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.IdleProperties.UnfocusDuration);
     }
 
     public override void UpdateStateInternally()

@@ -14,7 +14,7 @@ public class SeekPlayerStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        
+        _context.Enemy.AimAtTargetRigController.TurnOnRig(1f);
     }
     public override void UpdateStateInternally()
     {

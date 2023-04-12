@@ -1920,11 +1920,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018241717}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1018502143 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5733204046387654556, guid: 66764c0cfd600a94e9ee776a12822730, type: 3}
-  m_PrefabInstance: {fileID: 4002152904823555618}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1023512881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2497,7 +2492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53606a026f16e364c9a6b0f1386ea8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interpolationTime: 10
+  interpolationTime: 0.5
 --- !u!1001 &1408657803
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6914,6 +6909,8 @@ MonoBehaviour:
   _idleProperties:
     showGizmos: 0
     ActivationRange: 5
+  _patrollingProperties:
+    showGizmos: 0
   _seekPlayerProperties:
     showGizmos: 0
   _shootingPlayerProperties:
@@ -7054,7 +7051,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponObject: {fileID: 1068995430}
   barrelTip: {fileID: 1964401273}
-  barrelBase: {fileID: 1018502143}
 --- !u!4 &7678894308068433706
 Transform:
   m_ObjectHideFlags: 0

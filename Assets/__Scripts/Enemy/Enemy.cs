@@ -5,11 +5,15 @@ using UnityEngine.Animations.Rigging;
 
 public class Enemy : MonoBehaviour
 {
+    RigWeightController _aimAtTargetRigController;
+    public RigWeightController AimAtTargetRigController => _aimAtTargetRigController;
+
     StateMachineEnemyAI _stateMachine;
     private void Awake()
     {
         _stateMachine = GetComponent<StateMachineEnemyAI>();
-        ApplyHitboxesToLimbs();
+        _aimAtTargetRigController = GetComponentInChildren<RigWeightController>();
+        ApplyHitboxToLimbs();
         SetUpRig();
     }
 
@@ -18,7 +22,7 @@ public class Enemy : MonoBehaviour
         _stateMachine.CurrentState.SwitchState(_stateMachine.StatesFactory.Ragdoll());
     }
 
-    private void ApplyHitboxesToLimbs()
+    private void ApplyHitboxToLimbs()
     {
         Rigidbody[] _rigidbodies = GetComponentsInChildren<Rigidbody>();
         foreach (Rigidbody rigidbody in _rigidbodies)

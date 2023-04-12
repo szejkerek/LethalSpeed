@@ -5,23 +5,23 @@ using UnityEngine.Animations.Rigging;
 [RequireComponent(typeof(Rig))]
 public class RigWeightController : MonoBehaviour
 {
-    [SerializeField] private float interpolationTime = 2f;
+    [SerializeField] private float interpolationTime = 1f;
 
     private Rig rig;
 
     private void Awake()
     {
         rig = GetComponent<Rig>();
-        ChangeRigWeightValueInTime(0f, 0f);
+        TurnOffRig();
     }
-    public void TurnOnRig()
+    public void TurnOnRig(float duration = 0)
     {
-        ChangeRigWeightValueInTime(1f, interpolationTime);
+        ChangeRigWeightValueInTime(1f, duration);
     }
 
-    public void TurnOffRig()
+    public void TurnOffRig(float duration = 0)
     {
-        ChangeRigWeightValueInTime(0f, interpolationTime);
+        ChangeRigWeightValueInTime(0f, duration);
     }
 
     private void ChangeRigWeightValueInTime(float value, float interpolationTime)
