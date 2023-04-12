@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public struct ReloadingProperties
 {
+    public bool showGizmos;
 }
 public class ReloadingStateEnemyAI : StateEnemyAI
 {

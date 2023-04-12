@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public struct WalkBackwardsProperties
 {
+    public bool showGizmos;
 }
 
 public class WalkBackwardsStateEnemyAI : StateEnemyAI

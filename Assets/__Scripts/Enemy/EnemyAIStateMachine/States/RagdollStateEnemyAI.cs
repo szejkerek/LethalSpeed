@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public struct RagdollProperties
 {
+    public bool showGizmos;
 }
 public class RagdollStateEnemyAI : StateEnemyAI
 {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -46,6 +47,45 @@ public class StateMachineEnemyAI : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _ragdoll = GetComponent<Ragdoll>();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(_idleProperties.showGizmos)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, _idleProperties.ActivationRange);
+        }
+
+        if (_seekPlayerProperties.showGizmos)
+        {
+
+        }
+
+        if (_shootingPlayerProperties.showGizmos)
+        {
+
+        }
+
+        if (_crouchingProperties.showGizmos)
+        {
+
+        }
+
+        if (_walkBackwardsProperties.showGizmos)
+        {
+
+        }
+
+        if (_reloadingProperties.showGizmos)
+        {
+
+        }
+
+        if (_ragdollProperties.showGizmos)
+        {
+
+        }
     }
 
     #region State Machine

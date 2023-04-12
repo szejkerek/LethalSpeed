@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public struct IdleProperties
 {
+    public bool showGizmos;
     public float ActivationRange;
 }
 

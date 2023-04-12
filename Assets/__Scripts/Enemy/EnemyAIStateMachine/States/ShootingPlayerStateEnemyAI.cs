@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public struct ShootingPlayerProperties
 {
+    public bool showGizmos;
 }
 public class ShootingPlayerStateEnemyAI : StateEnemyAI
 {

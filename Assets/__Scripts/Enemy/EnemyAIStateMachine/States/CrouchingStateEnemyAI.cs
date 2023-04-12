@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public struct CrouchingProperties
 {
+    public bool showGizmos;
 }
 public class CrouchingStateEnemyAI : StateEnemyAI
 {

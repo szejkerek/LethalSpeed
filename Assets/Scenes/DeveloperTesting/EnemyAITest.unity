@@ -6883,7 +6883,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _idleProperties:
-    ActivationRange: 3
+    showGizmos: 1
+    ActivationRange: 6.01
+  _seekPlayerProperties:
+    showGizmos: 0
+  _shootingPlayerProperties:
+    showGizmos: 0
+  _crouchingProperties:
+    showGizmos: 0
+  _walkBackwardsProperties:
+    showGizmos: 0
+  _reloadingProperties:
+    showGizmos: 0
+  _ragdollProperties:
+    showGizmos: 0
 --- !u!114 &7640499558858753771
 MonoBehaviour:
   m_ObjectHideFlags: 0
