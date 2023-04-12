@@ -13,6 +13,8 @@ public class StateMachineEnemyAI : MonoBehaviour
     //States proporties
     public IdleProperties IdleProperties => _idleProperties;
     [SerializeField] IdleProperties _idleProperties;
+    public PatrollingProperties PatrollingProperties => _patrollingProperties;
+    [SerializeField] PatrollingProperties _patrollingProperties;
     public SeekPlayerProperties SeekPlayerProperties => _seekPlayerProperties;
     [SerializeField] SeekPlayerProperties _seekPlayerProperties;
     public ShootingPlayerProperties ShootingPlayerProperties => _shootingPlayerProperties;
