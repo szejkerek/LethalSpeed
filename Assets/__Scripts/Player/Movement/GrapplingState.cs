@@ -40,11 +40,6 @@ public class GrapplingState : MovementState
 
         RaycastHit grappleRayHit;
 
-        if(_pm.GrappleProps.ShouldResetDash)
-        {
-            _pm.ResetDash();
-        }
-
         if(Physics.SphereCast(_pc.transform.position, _pm.GrappleProps.GrappleAimError,
             _pc.transform.forward, out grappleRayHit, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
         {
@@ -52,6 +47,11 @@ public class GrapplingState : MovementState
             _lr.enabled = true;
             _lr.SetPosition(1, _grappleTargetPoint);
             _startGrapplingDelay = _pm.GrappleProps.GrappleDelay;
+
+            if (_pm.SwingProps.ShouldResetDash)
+            {
+                _pm.ResetDash();
+            }
         }
         else
         {

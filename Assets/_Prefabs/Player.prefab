@@ -1008,6 +1008,9 @@ MonoBehaviour:
       m_Bits: 512
     ShouldResetDash: 1
     ShouldClipSpeed: 1
+  _ledgeClimbProps:
+    MinDistance: 1
+    RayPierceDistance: 1.5
   _jumpKey: 32
   _crouchKey: 306
   _dashKey: 304
