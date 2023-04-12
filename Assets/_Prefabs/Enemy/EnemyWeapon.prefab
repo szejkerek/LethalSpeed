@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4002152905340357828}
   - component: {fileID: 4002152905341160676}
   - component: {fileID: 4002152905342258724}
-  - component: {fileID: 1676382007104356698}
   - component: {fileID: 4002152905330844452}
   - component: {fileID: 8729001823391446294}
+  - component: {fileID: 5249862393145439378}
   m_Layer: 0
   m_Name: EnemyWeapon
   m_TagString: Untagged
@@ -86,20 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1676382007104356698
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4002152905340326116}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: b5742c35cad19b945bc129c719875b2d, type: 3}
 --- !u!95 &4002152905330844452
 Animator:
   serializedVersion: 5
@@ -135,3 +121,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingOffset: 0.045
   startingVector: {x: 0, y: 0, z: -1}
+--- !u!65 &5249862393145439378
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4002152905340326116}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.03463775, y: 0.6203574, z: 0.1338887}
+  m_Center: {x: -0.0008483253, y: -0.034420367, z: -0.007957573}
