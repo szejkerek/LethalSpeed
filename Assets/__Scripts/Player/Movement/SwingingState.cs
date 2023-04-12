@@ -44,11 +44,6 @@ public class SwingingState : MovementState
         _hookGunTip = _pm.GrappleProps.HookGunTip;
         _lr = _pm.GrappleProps.HookLineRenderer;
 
-        if(_pm.SwingProps.ShouldResetDash)
-        {
-            _pm.ResetDash();
-        }
-
         RaycastHit swingRayHit;
 
         if(Physics.SphereCast(_pc.transform.position, _pm.SwingProps.SwingAimError,
@@ -69,6 +64,11 @@ public class SwingingState : MovementState
             _joint.spring = _pm.SwingProps.SpringForce;
             _joint.damper = _pm.SwingProps.SpringDamper;
             _joint.massScale = _pm.SwingProps.MassScale;
+
+            if (_pm.SwingProps.ShouldResetDash)
+            {
+                _pm.ResetDash();
+            }
         }
         else
         {
