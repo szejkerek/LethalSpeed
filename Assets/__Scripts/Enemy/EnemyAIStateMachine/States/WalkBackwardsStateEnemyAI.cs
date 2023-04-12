@@ -19,8 +19,7 @@ public class WalkBackwardsStateEnemyAI : StateEnemyAI
     }
     public override void UpdateStateInternally()
     {
-         _context.NavMeshAgent.SetDestination(_context.Player.transform.position);
-         _context.Animator.SetFloat("Speed", _context.NavMeshAgent.velocity.magnitude);
+
     }
 
     public override void ExitState()
@@ -34,9 +33,9 @@ public class WalkBackwardsStateEnemyAI : StateEnemyAI
     public override DebugEnemyAIText GetDebugText()
     {
         DebugEnemyAIText debugEnemyAIText;
-        debugEnemyAIText.titleColor = Color.blue;
-        debugEnemyAIText.stateName = "Seek player";
-        debugEnemyAIText.info = $"Speed: {_context.NavMeshAgent.velocity.magnitude}";
+        debugEnemyAIText.titleColor = Color.cyan;
+        debugEnemyAIText.stateName = "WalkBackwards";
+        debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }
 }
