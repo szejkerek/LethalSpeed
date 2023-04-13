@@ -62,7 +62,7 @@ public class StateMachineEnemyAI : MonoBehaviour
         if(_idleProperties.showGizmos)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, _idleProperties.ActivationRange);
+            Gizmos.DrawSphere(transform.position, _idleProperties.ActivationRange);
         }
 
         if (_seekPlayerProperties.showGizmos)
@@ -91,6 +91,11 @@ public class StateMachineEnemyAI : MonoBehaviour
         }
 
         if (_ragdollProperties.showGizmos)
+        {
+
+        }        
+        
+        if (_patrollingProperties.showGizmos)
         {
 
         }
