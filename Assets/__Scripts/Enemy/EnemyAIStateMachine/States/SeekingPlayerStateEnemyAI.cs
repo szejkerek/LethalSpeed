@@ -8,9 +8,9 @@ public struct SeekPlayerProperties
 {
     public bool showGizmos;
 }
-public class SeekPlayerStateEnemyAI : StateEnemyAI
+public class SeekingPlayerStateEnemyAI : StateEnemyAI
 {
-    public SeekPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public SeekingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
 
     public override void EnterState()
     {

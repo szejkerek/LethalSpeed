@@ -9,9 +9,9 @@ public struct WalkBackwardsProperties
     public bool showGizmos;
 }
 
-public class WalkBackwardsStateEnemyAI : StateEnemyAI
+public class WalkingBackwardsStateEnemyAI : StateEnemyAI
 {
-    public WalkBackwardsStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public WalkingBackwardsStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
 
     public override void EnterState()
     {

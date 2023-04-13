@@ -8,8 +8,10 @@ public class WeaponEnemyAI : MonoBehaviour
     [Header("Gun Proporties")]
     [SerializeField] private GameObject weaponObject;
     [SerializeField] private Transform barrelTip;
+    [SerializeField] private LayerMask targetMask;
     private Rigidbody weaponRigidbody;
     private Collider weaponCollider;
+    private float lastShotTime;
 
     private void Awake()
     {
@@ -17,6 +19,12 @@ public class WeaponEnemyAI : MonoBehaviour
         weaponCollider = weaponObject.GetComponent<Collider>();
         weaponRigidbody.isKinematic = true;
         weaponCollider.isTrigger = true;
+    }
+
+    public void ShootAtTarget()
+    {
+        lastShotTime = Time.time;
+        Debug.Log(lastShotTime);
     }
 
     public void DropWeapon()
