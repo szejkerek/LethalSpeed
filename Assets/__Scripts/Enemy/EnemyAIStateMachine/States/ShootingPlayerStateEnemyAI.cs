@@ -7,6 +7,7 @@ using UnityEngine;
 public struct ShootingPlayerProperties
 {
     public bool showGizmos;
+    public float focusDuration;
 }
 public class ShootingPlayerStateEnemyAI : StateEnemyAI
 {
@@ -14,11 +15,14 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        
+        _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.ShootingPlayerProperties.focusDuration);
     }
     public override void UpdateStateInternally()
     {
-
+        if(Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            _context.WeaponEnemyAI.ShootAtTarget();
+        }
     }
 
     public override void ExitState()

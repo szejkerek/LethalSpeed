@@ -6908,13 +6908,14 @@ MonoBehaviour:
   _idleProperties:
     showGizmos: 0
     ActivationRange: 5
-    UnfocusDuration: 0.5
+    unfocusDuration: 0
   _patrollingProperties:
     showGizmos: 0
   _seekPlayerProperties:
     showGizmos: 0
   _shootingPlayerProperties:
     showGizmos: 0
+    focusDuration: 0.5
   _crouchingProperties:
     showGizmos: 0
   _walkBackwardsProperties:
@@ -7051,6 +7052,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponObject: {fileID: 1068995430}
   barrelTip: {fileID: 1964401273}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &7678894308068433706
 Transform:
   m_ObjectHideFlags: 0
