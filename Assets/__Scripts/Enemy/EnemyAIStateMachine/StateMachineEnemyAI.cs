@@ -1,26 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Ragdoll))]
+[RequireComponent(typeof(WeaponEnemyAI))]
+[RequireComponent(typeof(Enemy))]
 public class StateMachineEnemyAI : MonoBehaviour
 {
     //States proporties
     public IdleProperties IdleProperties => _idleProperties;
     [SerializeField] IdleProperties _idleProperties;
-
+    public PatrollingProperties PatrollingProperties => _patrollingProperties;
+    [SerializeField] PatrollingProperties _patrollingProperties;
+    public SeekPlayerProperties SeekPlayerProperties => _seekPlayerProperties;
+    [SerializeField] SeekPlayerProperties _seekPlayerProperties;
+    public ShootingPlayerProperties ShootingPlayerProperties => _shootingPlayerProperties;
+    [SerializeField] ShootingPlayerProperties _shootingPlayerProperties;
+    public CrouchingProperties CrouchingProperties => _crouchingProperties;
+    [SerializeField] CrouchingProperties _crouchingProperties;
+    public WalkBackwardsProperties WalkBackwardsProperties => _walkBackwardsProperties;
+    [SerializeField] WalkBackwardsProperties _walkBackwardsProperties;
+    public ReloadingProperties ReloadingProperties => _reloadingProperties;
+    [SerializeField] ReloadingProperties _reloadingProperties;
+    public RagdollProperties RagdollProperties => _ragdollProperties;
+    [SerializeField] RagdollProperties _ragdollProperties;
     //
 
     Player _player;
+    WeaponEnemyAI _weaponEnemyAI;
     NavMeshAgent _navMeshAgent;
     Animator _animator;
     Ragdoll _ragdoll;
     Enemy _enemy;
     SkinnedMeshRenderer _mesh;
     public Player Player => _player;
+    public WeaponEnemyAI WeaponEnemyAI => _weaponEnemyAI;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public Animator Animator => _animator;
     public Ragdoll Ragdoll => _ragdoll;
@@ -35,6 +53,52 @@ public class StateMachineEnemyAI : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _ragdoll = GetComponent<Ragdoll>();
+        _weaponEnemyAI = GetComponent<WeaponEnemyAI>();
+        _enemy = GetComponent<Enemy>();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(_idleProperties.showGizmos)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(transform.position, _idleProperties.ActivationRange);
+        }
+
+        if (_seekPlayerProperties.showGizmos)
+        {
+
+        }
+
+        if (_shootingPlayerProperties.showGizmos)
+        {
+
+        }
+
+        if (_crouchingProperties.showGizmos)
+        {
+
+        }
+
+        if (_walkBackwardsProperties.showGizmos)
+        {
+
+        }
+
+        if (_reloadingProperties.showGizmos)
+        {
+
+        }
+
+        if (_ragdollProperties.showGizmos)
+        {
+
+        }        
+        
+        if (_patrollingProperties.showGizmos)
+        {
+
+        }
     }
 
     #region State Machine

@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct ReloadingProperties
+public struct PatrollingProperties
 {
     public bool showGizmos;
 }
-public class ReloadingStateEnemyAI : StateEnemyAI
+
+public class PatrollingStateEnemyAI : StateEnemyAI
 {
-    public ReloadingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public PatrollingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
 
     public override void EnterState()
     {
@@ -32,8 +33,8 @@ public class ReloadingStateEnemyAI : StateEnemyAI
     public override DebugEnemyAIText GetDebugText()
     {
         DebugEnemyAIText debugEnemyAIText;
-        debugEnemyAIText.titleColor = Color.grey;
-        debugEnemyAIText.stateName = "Reloading";
+        debugEnemyAIText.titleColor = Color.yellow;
+        debugEnemyAIText.stateName = "Patrolling";
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

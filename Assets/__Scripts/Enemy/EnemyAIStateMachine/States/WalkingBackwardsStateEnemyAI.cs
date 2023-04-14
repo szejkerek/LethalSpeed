@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct ReloadingProperties
+public struct WalkBackwardsProperties
 {
     public bool showGizmos;
 }
-public class ReloadingStateEnemyAI : StateEnemyAI
+
+public class WalkingBackwardsStateEnemyAI : StateEnemyAI
 {
-    public ReloadingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public WalkingBackwardsStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
 
     public override void EnterState()
     {
@@ -32,8 +33,8 @@ public class ReloadingStateEnemyAI : StateEnemyAI
     public override DebugEnemyAIText GetDebugText()
     {
         DebugEnemyAIText debugEnemyAIText;
-        debugEnemyAIText.titleColor = Color.grey;
-        debugEnemyAIText.stateName = "Reloading";
+        debugEnemyAIText.titleColor = Color.cyan;
+        debugEnemyAIText.stateName = "WalkBackwards";
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

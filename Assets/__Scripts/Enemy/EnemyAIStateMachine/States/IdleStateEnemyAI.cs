@@ -5,7 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public struct IdleProperties
 {
+    public bool showGizmos;
     public float ActivationRange;
+    public float unfocusDuration;
 }
 
 public class IdleStateEnemyAI : StateEnemyAI
@@ -16,6 +18,7 @@ public class IdleStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
+        _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.IdleProperties.unfocusDuration);
     }
 
     public override void UpdateStateInternally()
@@ -29,7 +32,7 @@ public class IdleStateEnemyAI : StateEnemyAI
     {
         if(Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleProperties.ActivationRange)
         {
-            SwitchState(_context.StatesFactory.SeekPlayer());
+            SwitchState(_context.StatesFactory.ShootPlayer());
         }
     }
 

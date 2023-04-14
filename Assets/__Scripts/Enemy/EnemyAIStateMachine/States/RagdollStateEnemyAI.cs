@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct RagdollProperties
+{
+    public bool showGizmos;
+}
 public class RagdollStateEnemyAI : StateEnemyAI
 {
     public RagdollStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
@@ -9,6 +14,7 @@ public class RagdollStateEnemyAI : StateEnemyAI
     public override void EnterState()
     {
         _context.Ragdoll.SetRagdoll();
+        _context.WeaponEnemyAI.DropWeapon();
         _context.Mesh.updateWhenOffscreen = true;
         _context.NavMeshAgent.isStopped = true;
         _context.NavMeshAgent.ResetPath();

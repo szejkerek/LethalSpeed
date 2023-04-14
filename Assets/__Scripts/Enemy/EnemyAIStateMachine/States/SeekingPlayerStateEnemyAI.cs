@@ -3,13 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkBackwardsStateEnemyAI : StateEnemyAI
+[System.Serializable]
+public struct SeekPlayerProperties
 {
-    public WalkBackwardsStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public bool showGizmos;
+}
+public class SeekingPlayerStateEnemyAI : StateEnemyAI
+{
+    public SeekingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
 
     public override void EnterState()
     {
-        
+        _context.Enemy.AimAtTargetRigController.TurnOnRig(1f);
     }
     public override void UpdateStateInternally()
     {
