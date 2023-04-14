@@ -16,8 +16,8 @@ TagManager:
   - Grappleable
   - Swingable
   - Player
-  - 
-  - 
+  - Enemy
+  - DeadEnemy
   - 
   - 
   - 

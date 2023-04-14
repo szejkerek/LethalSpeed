@@ -19,12 +19,19 @@ public class Ragdoll : MonoBehaviour
         foreach (Rigidbody rigidbody in _rigidbodies)
         {
             rigidbody.isKinematic = !active;
+
+            if(active)
+            {
+                rigidbody.gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
+            }     
         }
         
         if(_animator is not null)
         {
             _animator.enabled = !active;
         }
+
+
     }
 
 }
