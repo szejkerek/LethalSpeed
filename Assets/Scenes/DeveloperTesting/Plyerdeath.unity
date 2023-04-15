@@ -28959,11 +28959,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!1 &498284848 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9164119120800068053, guid: c949de78ceece0f469df02748ce5b78a, type: 3}
-  m_PrefabInstance: {fileID: 9164119119245284235}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519693624
 GameObject:
   m_ObjectHideFlags: 0
@@ -41023,11 +41018,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1575221148 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9164119119887854320, guid: c949de78ceece0f469df02748ce5b78a, type: 3}
-  m_PrefabInstance: {fileID: 9164119119245284235}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1576738394
 Mesh:
   m_ObjectHideFlags: 0
@@ -51531,34 +51521,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!1 &1787353761 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9164119119466019540, guid: c949de78ceece0f469df02748ce5b78a, type: 3}
-  m_PrefabInstance: {fileID: 9164119119245284235}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1787353765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787353761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3341d919be95344580d64f26c92a3e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameOverText: {fileID: 1808346459}
-  restartButton: {fileID: 1575221148}
-  quitButton: {fileID: 498284848}
-  _text: 0.05
-  _respawnButton: 0.3
-  _quitButton: 0.1
---- !u!1 &1808346459 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9164119119352402483, guid: c949de78ceece0f469df02748ce5b78a, type: 3}
-  m_PrefabInstance: {fileID: 9164119119245284235}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1880863555
 PrefabInstance:
   m_ObjectHideFlags: 0
