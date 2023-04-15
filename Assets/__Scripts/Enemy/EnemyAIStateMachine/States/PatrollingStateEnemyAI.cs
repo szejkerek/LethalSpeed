@@ -19,7 +19,7 @@ public class PatrollingStateEnemyAI : StateEnemyAI
     }
     public override void UpdateStateInternally()
     {
-
+        //_context.SetDestination(_context.Player.transform.position);
     }
 
     public override void ExitState()
