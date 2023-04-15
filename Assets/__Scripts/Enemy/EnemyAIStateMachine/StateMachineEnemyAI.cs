@@ -12,22 +12,17 @@ using UnityEngine.AI;
 public class StateMachineEnemyAI : MonoBehaviour
 {
     //States proporties
-    public IdleProperties IdleProperties => _idleProperties;
-    [SerializeField] IdleProperties _idleProperties;
-    public PatrollingProperties PatrollingProperties => _patrollingProperties;
-    [SerializeField] PatrollingProperties _patrollingProperties;
-    public SeekPlayerProperties SeekPlayerProperties => _seekPlayerProperties;
-    [SerializeField] SeekPlayerProperties _seekPlayerProperties;
-    public ShootingPlayerProperties ShootingPlayerProperties => _shootingPlayerProperties;
-    [SerializeField] ShootingPlayerProperties _shootingPlayerProperties;
-    public CrouchingProperties CrouchingProperties => _crouchingProperties;
-    [SerializeField] CrouchingProperties _crouchingProperties;
-    public WalkBackwardsProperties WalkBackwardsProperties => _walkBackwardsProperties;
-    [SerializeField] WalkBackwardsProperties _walkBackwardsProperties;
-    public ReloadingProperties ReloadingProperties => _reloadingProperties;
-    [SerializeField] ReloadingProperties _reloadingProperties;
-    public RagdollProperties RagdollProperties => _ragdollProperties;
-    [SerializeField] RagdollProperties _ragdollProperties;
+
+    [SerializeField] private DebugEnemyAIStates debugEnemyAIStates;
+
+    [field: Header("Common")]
+    [field: SerializeField] public float FocusDuration { get; private set; }
+    [field: SerializeField] public float UnfocusDuration { get; private set; }
+
+    [field:Header("Idle")]
+    [field: SerializeField] public float IdleActivationRange { get; private set; }
+
+    [field: Header("Shoot")]
     //
 
     Player _player;
@@ -59,43 +54,43 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(_idleProperties.showGizmos)
+        if(debugEnemyAIStates.IdleShowGizmos)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(transform.position, _idleProperties.ActivationRange);
+            Gizmos.DrawSphere(transform.position, IdleActivationRange);
         }
 
-        if (_seekPlayerProperties.showGizmos)
+        if (debugEnemyAIStates.SeekShowGizmos)
         {
 
         }
 
-        if (_shootingPlayerProperties.showGizmos)
+        if (debugEnemyAIStates.ShootShowGizmos)
         {
 
         }
 
-        if (_crouchingProperties.showGizmos)
+        if (debugEnemyAIStates.CrouchShowGizmos)
         {
 
         }
 
-        if (_walkBackwardsProperties.showGizmos)
+        if (debugEnemyAIStates.WalkBackShowGizmos)
         {
 
         }
 
-        if (_reloadingProperties.showGizmos)
+        if (debugEnemyAIStates.ReloadShowGizmos)
         {
 
         }
 
-        if (_ragdollProperties.showGizmos)
+        if (debugEnemyAIStates.RagdollShowGizmos)
         {
 
-        }        
-        
-        if (_patrollingProperties.showGizmos)
+        }
+
+        if (debugEnemyAIStates.PatrollShowGizmos)
         {
 
         }
@@ -108,6 +103,7 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     public StateEnemyAI CurrentState { get { return _currentState; } set { _currentState = value; } }
     public StateFactoryEnemyAI StatesFactory => _statesFactory;
+
     private void Start()
     {
         _statesFactory = new StateFactoryEnemyAI(this);
@@ -121,4 +117,17 @@ public class StateMachineEnemyAI : MonoBehaviour
     }
 
     #endregion
+}
+
+[System.Serializable]
+public struct DebugEnemyAIStates
+{
+    public bool IdleShowGizmos;
+    public bool ShootShowGizmos;
+    public bool SeekShowGizmos;
+    public bool CrouchShowGizmos;
+    public bool ReloadShowGizmos;
+    public bool WalkBackShowGizmos;
+    public bool RagdollShowGizmos;
+    public bool PatrollShowGizmos;
 }

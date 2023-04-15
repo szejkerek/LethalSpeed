@@ -6542,8 +6542,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7640499558858753765}
-  m_LocalRotation: {x: -0, y: -0.99896365, z: -0, w: -0.045515772}
-  m_LocalPosition: {x: 0, y: 0, z: 7.69}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6551,7 +6551,7 @@ Transform:
   - {fileID: 839645892}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: -185.218, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &7167150792150389652
 GameObject:
   m_ObjectHideFlags: 0
@@ -6892,25 +6892,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65dd7d8ba72b2ef46862d62e2ecf5f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleProperties:
-    showGizmos: 0
-    ActivationRange: 5
-    unfocusDuration: 0
-  _patrollingProperties:
-    showGizmos: 0
-  _seekPlayerProperties:
-    showGizmos: 0
-  _shootingPlayerProperties:
-    showGizmos: 0
-    focusDuration: 0.5
-  _crouchingProperties:
-    showGizmos: 0
-  _walkBackwardsProperties:
-    showGizmos: 0
-  _reloadingProperties:
-    showGizmos: 0
-  _ragdollProperties:
-    showGizmos: 0
+  debugEnemyAIStates:
+    IdleShowGizmos: 0
+    ShootShowGizmos: 0
+    SeekShowGizmos: 0
+    CrouchShowGizmos: 0
+    ReloadShowGizmos: 0
+    WalkBackShowGizmos: 0
+    RagdollShowGizmos: 0
+    PatrollShowGizmos: 0
+  <FocusDuration>k__BackingField: 0.5
+  <UnfocusDuration>k__BackingField: 0.5
+  <IdleActivationRange>k__BackingField: 7
 --- !u!114 &7640499558858753771
 MonoBehaviour:
   m_ObjectHideFlags: 0

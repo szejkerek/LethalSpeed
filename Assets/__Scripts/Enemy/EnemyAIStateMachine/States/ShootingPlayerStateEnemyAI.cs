@@ -15,7 +15,7 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.ShootingPlayerProperties.focusDuration);
+        _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.FocusDuration);
     }
     public override void UpdateStateInternally()
     {

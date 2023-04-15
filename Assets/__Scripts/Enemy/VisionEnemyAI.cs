@@ -15,7 +15,6 @@ public class VisionEnemyAI : MonoBehaviour
 
     [Header("Vision errors")]
     [SerializeField] bool debugErrors = false;
-    [SerializeField] float sightRange;
     [Range(0f,1f)]
     [SerializeField] float topError = 0.32f;
     [Range(0f,0.5f)]
@@ -25,6 +24,8 @@ public class VisionEnemyAI : MonoBehaviour
     float lastScanTime = 0;
     Collider[] colliders = new Collider[1];
     PlayerMovement playerMovment;
+    Transform scannedPlayer;
+    float scaledPlayerHeight;
     float playerHeight;
 
     private void Awake()
@@ -39,14 +40,12 @@ public class VisionEnemyAI : MonoBehaviour
         Scan();
     }
 
-    Transform scannedPlayer;
-    float scaledPlayerHeight;
     public void Scan()
     {  
         if (Time.time - lastScanTime < scanIntervals)
             return;
 
-        count = Physics.OverlapSphereNonAlloc(eyeLevel.position, sightRange, colliders, player, QueryTriggerInteraction.Collide);
+        count = Physics.OverlapSphereNonAlloc(eyeLevel.position, Mathf.Infinity, colliders, player, QueryTriggerInteraction.Collide);
         lastScanTime = Time.time;
 
         if (colliders[0] is null)
@@ -54,7 +53,6 @@ public class VisionEnemyAI : MonoBehaviour
 
         scannedPlayer = colliders[0].transform;
         scaledPlayerHeight = playerHeight * playerMovment.transform.localScale.y;
-        Debug.Log(scaledPlayerHeight);
 
         bool isBlockedMiddle = Physics.Linecast(eyeLevel.position, scannedPlayer.position, blockers);
         bool isBlockedTop = Physics.Linecast(eyeLevel.position, scannedPlayer.position + Vector3.up * (scaledPlayerHeight/2 - topError), blockers);
@@ -69,13 +67,7 @@ public class VisionEnemyAI : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!debugErrors)
-            return;
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(eyeLevel.position, sightRange);
-
-        if (!targerInVision)
+        if (!debugErrors && !targerInVision)
             return;
 
         Gizmos.color = Color.blue;

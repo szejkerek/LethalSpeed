@@ -2,14 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct IdleProperties
-{
-    public bool showGizmos;
-    public float ActivationRange;
-    public float unfocusDuration;
-}
-
 public class IdleStateEnemyAI : StateEnemyAI
 {
 
@@ -18,7 +10,7 @@ public class IdleStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.IdleProperties.unfocusDuration);
+        _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.UnfocusDuration);
     }
 
     public override void UpdateStateInternally()
@@ -30,7 +22,7 @@ public class IdleStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        if(Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleProperties.ActivationRange)
+        if(Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleActivationRange)
         {
             SwitchState(_context.StatesFactory.ShootPlayer());
         }
