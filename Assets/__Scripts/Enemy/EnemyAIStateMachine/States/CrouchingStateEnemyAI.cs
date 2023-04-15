@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct CrouchingProperties
+{
+    public bool showGizmos;
+}
 public class CrouchingStateEnemyAI : StateEnemyAI
 {
     public CrouchingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }

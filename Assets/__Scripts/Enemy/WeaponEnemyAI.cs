@@ -5,28 +5,33 @@ using UnityEngine.Animations.Rigging;
 
 public class WeaponEnemyAI : MonoBehaviour
 {
+    [Header("Gun Proporties")]
+    [SerializeField] private GameObject weaponObject;
+    [SerializeField] private Transform barrelTip;
+    [SerializeField] private LayerMask targetMask;
+    private Rigidbody weaponRigidbody;
+    private Collider weaponCollider;
+    private float lastShotTime;
+
     private void Awake()
     {
-        SetUpRig();
+        weaponRigidbody = weaponObject.GetComponent<Rigidbody>();
+        weaponCollider = weaponObject.GetComponent<Collider>();
+        weaponRigidbody.isKinematic = true;
+        weaponCollider.isTrigger = true;
     }
 
-    private void SetUpRig()
+    public void ShootAtTarget()
     {
-        Transform source = FindObjectOfType<Player>().PlayerCamera.EnemyAimTarget;
-        if (source != null)
-        {
-            foreach (MultiAimConstraint component in GetComponentsInChildren<MultiAimConstraint>())
-            {
-                var data = component.data.sourceObjects;
-                data.SetTransform(0, source);
-                component.data.sourceObjects = data;
-            }
-            RigBuilder rigs = GetComponent<RigBuilder>();
-            rigs.Build();
-        }
-        else
-        {
-            Debug.LogError("Couldn't find player");
-        }
+        lastShotTime = Time.time;
+        Debug.Log(lastShotTime);
     }
+
+    public void DropWeapon()
+    {
+        weaponObject.transform.SetParent(null);
+        weaponRigidbody.isKinematic = false;
+        weaponCollider.isTrigger = false;
+    }
+
 }
