@@ -7055,7 +7055,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanIntervals: 0.5
-  radious: 100
   eyeLevel: {fileID: 2106757597}
   player:
     serializedVersion: 2
@@ -7063,6 +7062,10 @@ MonoBehaviour:
   blockers:
     serializedVersion: 2
     m_Bits: 961
+  debugErrors: 0
+  sightRange: 30
+  topError: 0.32
+  sideError: 0.32
 --- !u!4 &7678894308068433706
 Transform:
   m_ObjectHideFlags: 0

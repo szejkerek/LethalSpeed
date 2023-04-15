@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class VisionEnemyAI : MonoBehaviour
 {
@@ -8,18 +9,23 @@ public class VisionEnemyAI : MonoBehaviour
     bool targerInVision = false;
     
     [SerializeField] float scanIntervals = 0.5f;
-    [SerializeField] float radious;
     [SerializeField] Transform eyeLevel;
     [SerializeField] LayerMask player;
     [SerializeField] LayerMask blockers;
-    
+
+    [Header("Vision errors")]
+    [SerializeField] bool debugErrors = false;
+    [SerializeField] float sightRange;
+    [Range(0f,1f)]
+    [SerializeField] float topError = 0.32f;
+    [Range(0f,0.5f)]
+    [SerializeField] float sideError = 0.32f;
+
     int count;
     float lastScanTime = 0;
     Collider[] colliders = new Collider[1];
     PlayerMovement playerMovment;
     float playerHeight;
-    float epsilon = 0.1f;
-
 
     private void Awake()
     {
@@ -33,23 +39,51 @@ public class VisionEnemyAI : MonoBehaviour
         Scan();
     }
 
+    Transform scannedPlayer;
+    float scaledPlayerHeight;
     public void Scan()
     {  
         if (Time.time - lastScanTime < scanIntervals)
             return;
 
-        count = Physics.OverlapSphereNonAlloc(eyeLevel.position, radious, colliders, player, QueryTriggerInteraction.Collide);
+        count = Physics.OverlapSphereNonAlloc(eyeLevel.position, sightRange, colliders, player, QueryTriggerInteraction.Collide);
         lastScanTime = Time.time;
 
-        Transform scannedPlayer = colliders[0].transform;
+        if (colliders[0] is null)
+            return;
 
-        float scaledPlayerHeight = playerHeight * playerMovment.transform.localScale.y; 
+        scannedPlayer = colliders[0].transform;
+        scaledPlayerHeight = playerHeight * playerMovment.transform.localScale.y;
+        Debug.Log(scaledPlayerHeight);
 
         bool isBlockedMiddle = Physics.Linecast(eyeLevel.position, scannedPlayer.position, blockers);
-        bool isBlockedTop = Physics.Linecast(eyeLevel.position, scannedPlayer.position + Vector3.up * (scaledPlayerHeight/2 - epsilon), blockers);
-        bool isBlockedBottom = Physics.Linecast(eyeLevel.position, scannedPlayer.position - Vector3.up * (scaledPlayerHeight / 2 - epsilon), blockers);
+        bool isBlockedTop = Physics.Linecast(eyeLevel.position, scannedPlayer.position + Vector3.up * (scaledPlayerHeight/2 - topError), blockers);
+        bool isBlockedBottom = Physics.Linecast(eyeLevel.position, scannedPlayer.position + Vector3.down * (scaledPlayerHeight / 2 - topError), blockers);
+        bool isBlockedLeft = Physics.Linecast(eyeLevel.position, scannedPlayer.position + Vector3.left * sideError, blockers);
+        bool isBlockedRight = Physics.Linecast(eyeLevel.position, scannedPlayer.position + Vector3.right * sideError, blockers);
 
-        bool blocked = isBlockedMiddle && isBlockedTop && isBlockedBottom;
-        targerInVision = count > 0 && !blocked;
+        bool blocked = isBlockedMiddle && isBlockedTop && isBlockedBottom && isBlockedLeft && isBlockedRight;
+
+        targerInVision = (count > 0) && (!blocked);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!debugErrors)
+            return;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(eyeLevel.position, sightRange);
+
+        if (!targerInVision)
+            return;
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(eyeLevel.position, scannedPlayer.position);
+        Gizmos.DrawLine(eyeLevel.position, scannedPlayer.position + Vector3.up * (scaledPlayerHeight / 2 - topError));
+        Gizmos.DrawLine(eyeLevel.position, scannedPlayer.position + Vector3.down * (scaledPlayerHeight / 2 - topError));
+        Gizmos.DrawLine(eyeLevel.position, scannedPlayer.position + Vector3.left * sideError);
+        Gizmos.DrawLine(eyeLevel.position, scannedPlayer.position + Vector3.right * sideError);
+
     }
 }
