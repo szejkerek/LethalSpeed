@@ -4,30 +4,41 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeathScreen : MonoBehaviour
 {
-    public GameObject gameOverText;
-    public GameObject restartButton;
-    public GameObject quitButton;
+    public RectTransform gameOverText;
+    public RectTransform restartButton;
+    public RectTransform quitButton;
+
+    private Vector2 gameOverTextStartingPos; 
+    private Vector2 restartButtonStartingPos; 
+    private Vector2 quitButtonStartingPos; 
 
     [Header("Timer")]
-    [SerializeField] private float _text;
-    [SerializeField] private float _respawnButton;
-    [SerializeField] private float _quitButton;
+    [SerializeField] private float _textTimer;
+    [SerializeField] private float _respawnButtonTimer;
+    [SerializeField] private float _quitButtonTimer;
+
+    private void Awake()
+    {
+        gameOverTextStartingPos = gameOverText.position;
+        restartButtonStartingPos = restartButton.position;
+        quitButtonStartingPos = quitButton.position;
+    }
 
     private void OnEnable()
     {
-        StartCoroutine(DisplayDeathscreen());
+        gameOverText.DOLocalMoveX(0, 0.35f).SetEase(Ease.InOutExpo).SetDelay(_textTimer);
+        restartButton.DOLocalMoveY(-230, 0.4f).SetEase(Ease.InOutExpo).SetDelay(_respawnButtonTimer);
+        quitButton.DOLocalMoveY(-330, 0.4f).SetEase(Ease.InOutExpo).SetDelay(_quitButtonTimer);
     }
 
-    private IEnumerator DisplayDeathscreen()
+    private void OnDisable()
     {
-        yield return new WaitForSeconds(_text);
-        LeanTween.moveLocalX(gameOverText, 0, 0.35f).setEaseInOutExpo();
-        yield return new WaitForSeconds(_respawnButton);
-        LeanTween.moveLocalY(restartButton, -230, 0.4f).setEaseInOutExpo();
-        yield return new WaitForSeconds(_quitButton);
-        LeanTween.moveLocalY(quitButton, -330, 0.4f).setEaseInOutExpo();
+        gameOverText.position = gameOverTextStartingPos;
+        restartButton.position = restartButtonStartingPos;
+        quitButton.position = quitButtonStartingPos;
     }
 }
