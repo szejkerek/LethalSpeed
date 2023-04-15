@@ -18,8 +18,7 @@ public class CrouchingStateEnemyAI : StateEnemyAI
     }
     public override void UpdateStateInternally()
     {
-        // _context.NavMeshAgent.SetDestination(_context.Player.transform.position);
-        // _context.Animator.SetFloat("Speed", _context.NavMeshAgent.velocity.magnitude);
+
     }
 
     public override void ExitState()

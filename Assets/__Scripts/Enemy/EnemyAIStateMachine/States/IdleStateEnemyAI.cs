@@ -10,12 +10,12 @@ public class IdleStateEnemyAI : StateEnemyAI
     {
         _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.UnfocusDuration);
 
-        if (Vector3.Distance(_context.transform.position, _context.InitPosition) >= _context.PatrolRange + _context.IdleTooAwayDistance)
+        if (Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) >= _context.PatrolRange + _context.IdleTooAwayDistance)
         {
             Vector3 point;
-            if (_context.RandomPoint(_context.InitPosition, 0.5f, out point))
+            if (_context.LocomotionEnemyAI.RandomPoint(_context.LocomotionEnemyAI.InitialPosition, 0.5f, out point))
             {
-                _context.SetDestination(point);
+                _context.LocomotionEnemyAI.SetDestination(point);
             }
         }
     }
@@ -27,7 +27,7 @@ public class IdleStateEnemyAI : StateEnemyAI
 
     public override void ExitState()
     {
-        _context.NavMeshAgent.ResetPath();
+        _context.LocomotionEnemyAI.NavMeshAgent.ResetPath();
     }
     public override void CheckSwitchState()
     {

@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(LocomotionEnemyAI))]
 [RequireComponent(typeof(Ragdoll))]
 [RequireComponent(typeof(WeaponEnemyAI))]
 [RequireComponent(typeof(Enemy))]
@@ -42,9 +37,9 @@ public class StateMachineEnemyAI : MonoBehaviour
     public Player Player => _player;
     Player _player;
     public WeaponEnemyAI WeaponEnemyAI => _weaponEnemyAI;
-    WeaponEnemyAI _weaponEnemyAI;
-    public NavMeshAgent NavMeshAgent => _navMeshAgent;
-    NavMeshAgent _navMeshAgent;
+    WeaponEnemyAI _weaponEnemyAI;   
+    public LocomotionEnemyAI LocomotionEnemyAI => _locomotionEnemyAI;
+    LocomotionEnemyAI _locomotionEnemyAI;
     public Animator Animator => _animator;
     Animator _animator;
     public Ragdoll Ragdoll => _ragdoll;
@@ -53,41 +48,17 @@ public class StateMachineEnemyAI : MonoBehaviour
     Enemy _enemy;
     public SkinnedMeshRenderer Mesh => _mesh;
     SkinnedMeshRenderer _mesh;
-    public Vector3 InitPosition => _initPosition;
-    Vector3 _initPosition;
 
     private void Awake()
     {
         _player = FindObjectOfType<Player>();
         _mesh = GetComponentInChildren<SkinnedMeshRenderer>();
 
-        _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _ragdoll = GetComponent<Ragdoll>();
         _weaponEnemyAI = GetComponent<WeaponEnemyAI>();
         _enemy = GetComponent<Enemy>();
-
-        _initPosition = transform.position;
-    }
-    public void SetDestination(Vector3 target)
-    {
-        _navMeshAgent.SetDestination(target);
-    }
-
-    public bool RandomPoint(Vector3 center, float range, out Vector3 result)
-    {
-        for (int i = 0; i < 30; i++)
-        {
-            Vector3 randomPoint = center + Random.insideUnitSphere * range;
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                result = hit.position;
-                return true;
-            }
-        }
-        result = Vector3.zero;
-        return false;
+        _locomotionEnemyAI = GetComponent<LocomotionEnemyAI>();
     }
 
     #region State Machine
@@ -107,8 +78,7 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     private void Update()
     {
-        CurrentState.UpdateState();
-        _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
+        CurrentState.UpdateState();        
     }
 
     #endregion

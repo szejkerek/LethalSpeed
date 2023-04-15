@@ -18,7 +18,7 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     }
     public override void UpdateStateInternally()
     {
-        _context.SetDestination(_context.Player.transform.position);
+        _context.LocomotionEnemyAI.SetDestination(_context.Player.transform.position);
     }
 
     public override void ExitState()
@@ -34,7 +34,7 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.blue;
         debugEnemyAIText.stateName = "Seek player";
-        debugEnemyAIText.info = $"Speed: {_context.NavMeshAgent.velocity.magnitude}";
+        debugEnemyAIText.info = $"Speed: {_context.LocomotionEnemyAI.NavMeshAgent.velocity.magnitude}";
         return debugEnemyAIText;
     }
 }

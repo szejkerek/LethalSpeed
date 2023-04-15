@@ -16,8 +16,8 @@ public class RagdollStateEnemyAI : StateEnemyAI
         _context.Ragdoll.SetRagdoll();
         _context.WeaponEnemyAI.DropWeapon();
         _context.Mesh.updateWhenOffscreen = true;
-        _context.NavMeshAgent.isStopped = true;
-        _context.NavMeshAgent.ResetPath();
+        _context.LocomotionEnemyAI.NavMeshAgent.isStopped = true;
+        _context.LocomotionEnemyAI.NavMeshAgent.ResetPath();
     }
 
     public override void UpdateStateInternally()
