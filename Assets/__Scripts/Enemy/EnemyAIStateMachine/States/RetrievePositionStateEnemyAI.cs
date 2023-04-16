@@ -13,7 +13,7 @@ public class RetrievePositionStateEnemyAI : StateEnemyAI
     }
     public override void UpdateStateInternally()
     {
-        Debug.Log("Retrive");
+
     }
 
     public override void ExitState()

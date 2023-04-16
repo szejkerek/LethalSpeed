@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Ragdoll))]
 [RequireComponent(typeof(WeaponEnemyAI))]
 [RequireComponent(typeof(Enemy))]
+[RequireComponent(typeof(VisionEnemyAI))]
 public class StateMachineEnemyAI : MonoBehaviour
 {
     //States proporties
@@ -46,6 +47,8 @@ public class StateMachineEnemyAI : MonoBehaviour
     Enemy _enemy;
     public SkinnedMeshRenderer Mesh => _mesh;
     SkinnedMeshRenderer _mesh;
+    public VisionEnemyAI VisionEnemyAI => _visionEnemyAI;
+    VisionEnemyAI _visionEnemyAI;
 
     private void Awake()
     {
@@ -57,6 +60,7 @@ public class StateMachineEnemyAI : MonoBehaviour
         _weaponEnemyAI = GetComponent<WeaponEnemyAI>();
         _enemy = GetComponent<Enemy>();
         _locomotionEnemyAI = GetComponent<LocomotionEnemyAI>();
+        _visionEnemyAI = GetComponent<VisionEnemyAI>();
     }
 
     #region State Machine

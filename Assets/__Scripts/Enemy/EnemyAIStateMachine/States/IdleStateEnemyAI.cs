@@ -22,14 +22,15 @@ public class IdleStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        bool playerInRange = Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleActivationRange;
-        bool playerInSight;
-        if (Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleActivationRange)
+        bool playerInActivationRange = Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleActivationRange;
+        bool playerInSight = _context.VisionEnemyAI.TargerInVision;
+        if (playerInActivationRange && playerInSight)
         {
             SwitchState(_context.StatesFactory.ShootPlayer());
         }
 
-        if (Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) >= _context.PatrolRange + _context.IdleTooAwayDistance)
+        bool tooAwayFromInitialPosition = Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) >= _context.PatrolRange + _context.IdleTooAwayDistance;
+        if (tooAwayFromInitialPosition)
         {
             SwitchState(_context.StatesFactory.Retrieve());
         }
