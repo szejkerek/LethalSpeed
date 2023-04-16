@@ -22,6 +22,8 @@ public class PatrollingStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
+        _context.CheckIfEnemyNoticedPlayer();
+
     }
 
     public override DebugEnemyAIText GetDebugText()

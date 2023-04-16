@@ -22,12 +22,17 @@ public class RetrievePositionStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        if (_context.LocomotionEnemyAI.GetPathLength(_context.LocomotionEnemyAI.InitialPosition) <= 0.5f)
+        _context.CheckIfEnemyNoticedPlayer();
+
+        bool atDestination = _context.LocomotionEnemyAI.GetPathLength(_context.LocomotionEnemyAI.InitialPosition) <= 1f;
+        Debug.Log(_context.LocomotionEnemyAI.GetPathLength(_context.LocomotionEnemyAI.InitialPosition));
+        if (atDestination)
         {
-            Debug.Log(_context.LocomotionEnemyAI.GetPathLength(_context.LocomotionEnemyAI.InitialPosition));
             _context.LocomotionEnemyAI.ResetPath();
             _context.CurrentState.SwitchState(_context.StatesFactory.Idle());
         }
+
+
     }
 
     public override DebugEnemyAIText GetDebugText()

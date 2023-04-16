@@ -1,3 +1,4 @@
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -86,6 +87,16 @@ public class StateMachineEnemyAI : MonoBehaviour
     public Vector3 PlayerPos()
     {
         return Player.transform.position;
+    }
+
+    public void CheckIfEnemyNoticedPlayer()
+    {
+        bool playerInActivationRange = Vector3.Distance(transform.position, Player.transform.position) <= IdleActivationRange;
+        bool playerInSight = VisionEnemyAI.TargerInVision;
+        if (playerInActivationRange && playerInSight)
+        {
+            _currentState.SwitchState(StatesFactory.ShootPlayer());
+        }
     }
 
     #endregion

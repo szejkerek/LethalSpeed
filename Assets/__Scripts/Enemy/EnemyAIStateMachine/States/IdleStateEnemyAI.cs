@@ -8,6 +8,7 @@ public class IdleStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
+        _context.LocomotionEnemyAI.ResetPath();
         _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.UnfocusDuration);
     }
 
@@ -18,16 +19,11 @@ public class IdleStateEnemyAI : StateEnemyAI
 
     public override void ExitState()
     {
-        _context.LocomotionEnemyAI.ResetPath();
+     
     }
     public override void CheckSwitchState()
     {
-        bool playerInActivationRange = Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleActivationRange;
-        bool playerInSight = _context.VisionEnemyAI.TargerInVision;
-        if (playerInActivationRange && playerInSight)
-        {
-            SwitchState(_context.StatesFactory.ShootPlayer());
-        }
+        _context.CheckIfEnemyNoticedPlayer();
 
         bool tooAwayFromInitialPosition = Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) >= _context.PatrolRange + _context.IdleTooAwayDistance;
         if (tooAwayFromInitialPosition)
@@ -35,6 +31,7 @@ public class IdleStateEnemyAI : StateEnemyAI
             SwitchState(_context.StatesFactory.Retrieve());
         }
     }
+
 
     public override DebugEnemyAIText GetDebugText()
     {
