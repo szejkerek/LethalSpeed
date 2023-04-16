@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrouchingStateEnemyAI : StateEnemyAI
+public class RetrievePositionStateEnemyAI : StateEnemyAI
 {
-    public CrouchingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public RetrievePositionStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
 
     public override void EnterState()
     {
@@ -27,8 +27,8 @@ public class CrouchingStateEnemyAI : StateEnemyAI
     public override DebugEnemyAIText GetDebugText()
     {
         DebugEnemyAIText debugEnemyAIText;
-        debugEnemyAIText.titleColor = Color.red;
-        debugEnemyAIText.stateName = "Crouch";
+        debugEnemyAIText.titleColor = Color.yellow;
+        debugEnemyAIText.stateName = "RetrievePosition";
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

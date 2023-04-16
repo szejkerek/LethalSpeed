@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct RagdollProperties
-{
-    public bool showGizmos;
-}
 public class RagdollStateEnemyAI : StateEnemyAI
 {
     public RagdollStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }

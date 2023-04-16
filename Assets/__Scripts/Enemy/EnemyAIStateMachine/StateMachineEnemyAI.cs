@@ -81,6 +81,11 @@ public class StateMachineEnemyAI : MonoBehaviour
         CurrentState.UpdateState();        
     }
 
+    public Vector3 PlayerPos()
+    {
+        return Player.transform.position;
+    }
+
     #endregion
 
     #region Debug

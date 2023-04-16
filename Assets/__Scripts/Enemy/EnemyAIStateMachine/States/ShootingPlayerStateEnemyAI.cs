@@ -3,12 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct ShootingPlayerProperties
-{
-    public bool showGizmos;
-    public float focusDuration;
-}
 public class ShootingPlayerStateEnemyAI : StateEnemyAI
 {
     public ShootingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }

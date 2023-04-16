@@ -3,12 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct WalkBackwardsProperties
-{
-    public bool showGizmos;
-}
-
 public class WalkingBackwardsStateEnemyAI : StateEnemyAI
 {
     public WalkingBackwardsStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }

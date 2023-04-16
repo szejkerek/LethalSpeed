@@ -3,11 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct SeekPlayerProperties
-{
-    public bool showGizmos;
-}
 public class SeekingPlayerStateEnemyAI : StateEnemyAI
 {
     public SeekingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
@@ -19,6 +14,7 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     public override void UpdateStateInternally()
     {
         _context.LocomotionEnemyAI.SetDestination(_context.Player.transform.position);
+        Debug.Log(_context.LocomotionEnemyAI.GetPathLength(_context.Player.transform.position));
     }
 
     public override void ExitState()

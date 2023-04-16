@@ -15,7 +15,6 @@ public class DeveloperOptions : MonoBehaviour
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach (Enemy enemy in enemies)
         {
-            Debug.Log($"{enemy.gameObject.name} was killed!");
             enemy.Die();
         }
     }
@@ -45,7 +44,10 @@ public class DeveloperOptions : MonoBehaviour
 
 
     [MenuItem(_developerFolder + "Enemy/State/Ragdoll")]
-    public static void RagdollEnemyAI() { ChangeAllEnemiesState("Ragdoll"); }
+    public static void RagdollEnemyAI() { ChangeAllEnemiesState("Ragdoll"); }    
+    
+    [MenuItem(_developerFolder + "Enemy/State/Retrieve")]
+    public static void RetrieveEnemyAI() { ChangeAllEnemiesState("Retrieve"); }
 
 
     static void ChangeAllEnemiesState(string stateName)
@@ -76,6 +78,9 @@ public class DeveloperOptions : MonoBehaviour
                     break;
                 case "Ragdoll":
                     stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.Ragdoll());
+                    break;                
+                case "Retrieve":
+                    stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.Retrieve());
                     break;
             }
         }
