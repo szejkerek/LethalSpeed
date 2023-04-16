@@ -6,7 +6,9 @@ using static UnityEngine.GraphicsBuffer;
 public class VisionEnemyAI : MonoBehaviour
 {
     public bool TargerInVision => targerInVision;
-    bool targerInVision = false;
+    bool targerInVision = false;    
+    public float LastSeenTimer => _lastSeenTimer;
+    float _lastSeenTimer = float.MaxValue;
     
     [SerializeField] float scanIntervals = 0.5f;
     [SerializeField] Transform eyeLevel;
@@ -37,6 +39,7 @@ public class VisionEnemyAI : MonoBehaviour
 
     private void Update()
     {
+        _lastSeenTimer += Time.deltaTime;
         Scan();
     }
 
@@ -63,6 +66,9 @@ public class VisionEnemyAI : MonoBehaviour
         bool blocked = isBlockedMiddle && isBlockedTop && isBlockedBottom && isBlockedLeft && isBlockedRight;
 
         targerInVision = (count > 0) && (!blocked);
+
+        if (targerInVision)
+            _lastSeenTimer = 0;
     }
 
     private void OnDrawGizmos()

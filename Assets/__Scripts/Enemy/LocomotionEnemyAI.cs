@@ -1,6 +1,7 @@
 using DG.Tweening.Plugins.Core.PathCore;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
@@ -36,20 +37,18 @@ public class LocomotionEnemyAI : MonoBehaviour
         _navMeshAgent.SetDestination(target);
     }
 
-    public bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    public void SetDestinationToRandomPoint(Vector3 target, float range)
     {
-        for (int i = 0; i < 30; i++)
+        Vector3 point;
+        if (RandomPoint(InitialPosition, range, out point))
         {
-            Vector3 randomPoint = center + Random.insideUnitSphere * range;
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                result = hit.position;
-                return true;
-            }
+            SetDestination(point);
         }
-        result = Vector3.zero;
-        return false;
+    }
+
+    public void ResetPath()
+    {
+        _navMeshAgent.ResetPath();
     }
 
     public bool GetPath(Vector3 target)
@@ -82,5 +81,21 @@ public class LocomotionEnemyAI : MonoBehaviour
     public NavMeshPathStatus GetPathStatus()
     {
         return _path.status;
+    }
+
+    private bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomPoint = center + Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+        result = Vector3.zero;
+        return false;
     }
 }

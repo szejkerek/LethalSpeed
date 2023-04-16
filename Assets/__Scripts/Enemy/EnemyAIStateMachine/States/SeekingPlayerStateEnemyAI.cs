@@ -14,7 +14,6 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     public override void UpdateStateInternally()
     {
         _context.LocomotionEnemyAI.SetDestination(_context.Player.transform.position);
-        Debug.Log(_context.LocomotionEnemyAI.GetPathLength(_context.Player.transform.position));
     }
 
     public override void ExitState()

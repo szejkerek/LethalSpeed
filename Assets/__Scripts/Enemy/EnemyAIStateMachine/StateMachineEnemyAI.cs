@@ -30,8 +30,6 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: Tooltip("This chance is checked every Xseconds")]
     [field: SerializeField] public float PatrolChance { get; private set; }
     [field: SerializeField] public float PatrolRange { get; private set; }
-
-
     //
 
     public Player Player => _player;

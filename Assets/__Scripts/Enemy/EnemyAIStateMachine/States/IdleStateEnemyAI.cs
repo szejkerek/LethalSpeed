@@ -9,15 +9,6 @@ public class IdleStateEnemyAI : StateEnemyAI
     public override void EnterState()
     {
         _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.UnfocusDuration);
-
-        if (Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) >= _context.PatrolRange + _context.IdleTooAwayDistance)
-        {
-            Vector3 point;
-            if (_context.LocomotionEnemyAI.RandomPoint(_context.LocomotionEnemyAI.InitialPosition, 0.5f, out point))
-            {
-                _context.LocomotionEnemyAI.SetDestination(point);
-            }
-        }
     }
 
     public override void UpdateStateInternally()
@@ -27,13 +18,20 @@ public class IdleStateEnemyAI : StateEnemyAI
 
     public override void ExitState()
     {
-        _context.LocomotionEnemyAI.NavMeshAgent.ResetPath();
+        _context.LocomotionEnemyAI.ResetPath();
     }
     public override void CheckSwitchState()
     {
-        if(Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleActivationRange)
+        bool playerInRange = Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleActivationRange;
+        bool playerInSight;
+        if (Vector3.Distance(_context.transform.position, _context.Player.transform.position) <= _context.IdleActivationRange)
         {
             SwitchState(_context.StatesFactory.ShootPlayer());
+        }
+
+        if (Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) >= _context.PatrolRange + _context.IdleTooAwayDistance)
+        {
+            SwitchState(_context.StatesFactory.Retrieve());
         }
     }
 
