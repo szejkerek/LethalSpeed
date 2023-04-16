@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(RectTransform))]
 public class UIAnimator : MonoBehaviour
 {
-    public Ease easeType;
-    public Vector3 finalPosition;
-    public float duration;
-    public float delay;
+    [SerializeField] private Ease _easeType;
+    [SerializeField] private Vector3 _finalPosition;
+    [SerializeField] private float _duration;
+    [SerializeField] private float _delay;
 
     private RectTransform _objectToAnimate;
     private Vector2 _startingPosition;
@@ -21,7 +22,7 @@ public class UIAnimator : MonoBehaviour
 
     private void OnEnable()
     {
-        _objectToAnimate.DOLocalMove(finalPosition, duration).SetEase(easeType).SetDelay(delay);
+        _objectToAnimate.DOLocalMove(_finalPosition, _duration).SetEase(_easeType).SetDelay(_delay);
     }
 
     private void OnDisable()
