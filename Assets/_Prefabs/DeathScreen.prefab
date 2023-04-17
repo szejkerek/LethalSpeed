@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 9164119119352402482}
   - component: {fileID: 9164119119352402480}
   - component: {fileID: 9164119119352402481}
+  - component: {fileID: 319322188}
   m_Layer: 5
   m_Name: TextBackground
   m_TagString: Untagged
@@ -212,6 +213,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &319322188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9164119119352402483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 230628fb64774914d84962a3c673d861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _easeType: 0
+  _finalPosition: {x: 0, y: 0, z: 0}
+  _duration: 0.3
+  _delay: 0.1
 --- !u!1 &9164119119466019540
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +240,6 @@ GameObject:
   - component: {fileID: 9164119119466019563}
   - component: {fileID: 9164119119466019561}
   - component: {fileID: 9164119119466019562}
-  - component: {fileID: 1787353765}
   m_Layer: 5
   m_Name: DeathScreen
   m_TagString: Untagged
@@ -292,24 +308,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1787353765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9164119119466019540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3341d919be95344580d64f26c92a3e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameOverText: {fileID: 9164119119352402482}
-  restartButton: {fileID: 9164119119887854327}
-  quitButton: {fileID: 9164119120800068052}
-  _textTimer: 0.1
-  _respawnButtonTimer: 0.25
-  _quitButtonTimer: 0.45
 --- !u!1 &9164119119784481042
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +455,7 @@ GameObject:
   - component: {fileID: 9164119119887854325}
   - component: {fileID: 9164119119887854326}
   - component: {fileID: 1548077346512390673}
+  - component: {fileID: 1404205272}
   m_Layer: 5
   m_Name: RespawnButton
   m_TagString: Untagged
@@ -567,6 +566,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1404205272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9164119119887854320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 230628fb64774914d84962a3c673d861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _easeType: 0
+  _finalPosition: {x: 0, y: -230, z: 0}
+  _duration: 0.3
+  _delay: 0.25
 --- !u!1001 &5790049758036427555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -677,12 +692,33 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3420235816478061303, guid: 8c37919a9dee0aa4da73d00aa76ce468, type: 3}
   m_PrefabInstance: {fileID: 5790049758036427555}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9164119120800068053 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3420235816478061302, guid: 8c37919a9dee0aa4da73d00aa76ce468, type: 3}
+  m_PrefabInstance: {fileID: 5790049758036427555}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &268748950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9164119120800068053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 230628fb64774914d84962a3c673d861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _easeType: 0
+  _finalPosition: {x: 0, y: -330, z: 0}
+  _duration: 0.3
+  _delay: 0.45
 --- !u!114 &9164119120800068075 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3420235816478061256, guid: 8c37919a9dee0aa4da73d00aa76ce468, type: 3}
   m_PrefabInstance: {fileID: 5790049758036427555}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 9164119120800068053}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
