@@ -89,7 +89,7 @@ public class StateMachineEnemyAI : MonoBehaviour
         return Player.transform.position;
     }
 
-    public void CheckIfEnemyNoticedPlayer()
+    public void ShootingActivationCheck()
     {
         bool playerInActivationRange = Vector3.Distance(transform.position, Player.transform.position) <= IdleActivationRange;
         bool playerInSight = VisionEnemyAI.TargerInVision;

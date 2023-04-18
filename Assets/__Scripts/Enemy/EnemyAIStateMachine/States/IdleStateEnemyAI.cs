@@ -23,7 +23,7 @@ public class IdleStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        _context.CheckIfEnemyNoticedPlayer();
+        _context.ShootingActivationCheck();
 
         bool tooAwayFromInitialPosition = Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) >= _context.PatrolRange + _context.IdleTooAwayDistance;
         if (tooAwayFromInitialPosition)

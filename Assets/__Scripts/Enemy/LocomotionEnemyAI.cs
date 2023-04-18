@@ -14,7 +14,9 @@ public class LocomotionEnemyAI : MonoBehaviour
     Vector3 _initialPosition;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     NavMeshAgent _navMeshAgent;
-    //NavMeshPath Path => _path;
+
+    [SerializeField] float atDestinationDistance = 0.45f;
+
     NavMeshPath _path;
 
     Animator _animator;
@@ -44,6 +46,16 @@ public class LocomotionEnemyAI : MonoBehaviour
         {
             SetDestination(point);
         }
+    }
+
+    public bool IsAtDestination(Vector3 target)
+    {
+        return GetPathLength(target) <= atDestinationDistance;
+    }
+
+    public void Patrol(float range)
+    {
+        SetDestinationToRandomPoint(_initialPosition, range);
     }
 
     public void ResetPath()

@@ -11,9 +11,14 @@ public class PatrollingStateEnemyAI : StateEnemyAI
     {
         
     }
+
+    float PatrolRange = 10f;
+    float PatrolCooldown = 5f;
+    float PatrolVariation = 4f;
+
     public override void UpdateStateInternally()
     {
-        
+        _context.LocomotionEnemyAI.Patrol(PatrolRange);
     }
 
     public override void ExitState()
@@ -22,7 +27,7 @@ public class PatrollingStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        _context.CheckIfEnemyNoticedPlayer();
+        _context.ShootingActivationCheck();
 
     }
 
