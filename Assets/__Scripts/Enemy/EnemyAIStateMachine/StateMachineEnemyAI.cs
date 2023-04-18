@@ -28,10 +28,12 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     [field: Header("Patrolling")] // PATROL
     [field: SerializeField] public float PatrolInitialChance { get; private set; }
+    [field: SerializeField] public float PatrolRange { get; private set; }
+    [field: SerializeField] public float PatrolCooldown { get; private set; }
+    [field: SerializeField] public float PatrolVariation { get; private set; }
 
     [field: Tooltip("This chance is checked every Xseconds")]
     [field: SerializeField] public float PatrolChance { get; private set; }
-    [field: SerializeField] public float PatrolRange { get; private set; }
     //
 
     public Player Player => _player;
@@ -62,6 +64,18 @@ public class StateMachineEnemyAI : MonoBehaviour
         _enemy = GetComponent<Enemy>();
         _locomotionEnemyAI = GetComponent<LocomotionEnemyAI>();
         _visionEnemyAI = GetComponent<VisionEnemyAI>();
+    }
+
+    public void OnValidate()
+    {
+        if(PatrolCooldown <= PatrolVariation)
+        {
+            PatrolVariation = PatrolCooldown;
+        }
+        else if(PatrolVariation <= 0)
+        {
+            PatrolVariation = 0;
+        }
     }
 
     #region State Machine

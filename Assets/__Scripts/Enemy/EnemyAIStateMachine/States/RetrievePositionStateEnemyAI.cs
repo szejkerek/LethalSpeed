@@ -21,15 +21,14 @@ public class RetrievePositionStateEnemyAI : StateEnemyAI
 
     public override void ExitState()
     {
-        
+        _context.LocomotionEnemyAI.ResetPath();
     }
     public override void CheckSwitchState()
     {
         _context.ShootingActivationCheck();
 
-        if (_context.LocomotionEnemyAI.IsAtDestination(_initialPosition))
+        if (_context.LocomotionEnemyAI.IsAtDestination())
         {
-            _context.LocomotionEnemyAI.ResetPath();
             _context.CurrentState.SwitchState(_context.StatesFactory.Idle());
         }
 

@@ -6908,8 +6908,10 @@ MonoBehaviour:
   <IdleChance>k__BackingField: 0
   <IdleTooAwayDistance>k__BackingField: 6.53
   <PatrolInitialChance>k__BackingField: 0
+  <PatrolRange>k__BackingField: 4.94
+  <PatrolCooldown>k__BackingField: 3.22
+  <PatrolVariation>k__BackingField: 0.66
   <PatrolChance>k__BackingField: 0
-  <PatrolRange>k__BackingField: 0
 --- !u!114 &7640499558858753771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7076,6 +7078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5169e6b9109a5034bbcb0e060b1f64b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  atDestinationDistance: 0.45
 --- !u!4 &7678894308068433706
 Transform:
   m_ObjectHideFlags: 0

@@ -9,21 +9,29 @@ public class PatrollingStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        
+        nextCooldown = CalculateNextCooldown();
     }
 
-    float PatrolRange = 10f;
-    float PatrolCooldown = 5f;
-    float PatrolVariation = 4f;
+    private float nextCooldown = 0;
+    private float timer = 0;
 
     public override void UpdateStateInternally()
     {
-        _context.LocomotionEnemyAI.Patrol(PatrolRange);
+        if(_context.LocomotionEnemyAI.IsAtDestination())
+        {
+            timer += Time.deltaTime;
+            if(timer >= nextCooldown)
+            {
+                timer = 0;
+                nextCooldown = CalculateNextCooldown();
+                _context.LocomotionEnemyAI.Patrol(_context.PatrolRange);
+            }
+        }
     }
 
     public override void ExitState()
     {
-        
+        _context.LocomotionEnemyAI.ResetPath();
     }
     public override void CheckSwitchState()
     {
@@ -38,5 +46,13 @@ public class PatrollingStateEnemyAI : StateEnemyAI
         debugEnemyAIText.stateName = "Patrolling";
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
+    }
+
+    private float CalculateNextCooldown()
+    {
+        float randomVariation = UnityEngine.Random.Range(-_context.PatrolVariation, _context.PatrolVariation);
+        float newPatrolCooldown = _context.PatrolCooldown + randomVariation;
+
+        return Math.Max(newPatrolCooldown, 0);
     }
 }

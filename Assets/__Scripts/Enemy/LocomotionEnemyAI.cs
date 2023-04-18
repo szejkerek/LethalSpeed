@@ -48,9 +48,16 @@ public class LocomotionEnemyAI : MonoBehaviour
         }
     }
 
-    public bool IsAtDestination(Vector3 target)
+    public bool IsAtDestination()
     {
-        return GetPathLength(target) <= atDestinationDistance;
+        if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= atDestinationDistance)
+        {
+            if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void Patrol(float range)
