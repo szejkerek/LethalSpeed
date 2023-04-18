@@ -15,20 +15,26 @@ public class SceneLoader : Singleton<SceneLoader>
     [SerializeField] private TMP_Text tipTextField;
 
     [Header("Loading screen data")]
-    [SerializeField] private List<LoadinScreenTipsData> tipsDataPool; //tips data pool
+    [SerializeField] private List<LoadingScreenTipsData> tipsDataPool;
+    [SerializeField] private List<LoadingScreenImageData> imageDataPool;
 
-    private Slider progressBar; //progress bar object
+    private Slider progressBar;
     private CanvasGroup tipTextFieldCanvasGroup; //text field canvas group to manage fading
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>(); //list of currently loading and unloading scenes
+    private Dictionary<SceneIndexes, List<Texture>> imageDataPoolHashTable = new Dictionary<SceneIndexes, List<Texture>>();
 
     protected override void Awake()
     {
         base.Awake();
         progressBar = loadingScreen.GetComponentInChildren<Slider>();
         tipTextFieldCanvasGroup = tipTextField.GetComponent<CanvasGroup>();
+
+        foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
+        {
+            imageDataPoolHashTable.Add(imageDataToCoopy.MapIdentifier, imageDataToCoopy.LoadinScreenTextures);
+        }
     }
 
-    //Load new scene with loading screen interval
     public void LoadGame()
     {
         loadingScreen.gameObject.SetActive(true);
@@ -38,7 +44,6 @@ public class SceneLoader : Singleton<SceneLoader>
         StartCoroutine(GetSceneLoadProgress());
     }
 
-    //Generate random tips from data pool every few seconds
     private IEnumerator GenerateTips()
     {
         if (!IsTipsDataPoolCorrect())
@@ -57,7 +62,6 @@ public class SceneLoader : Singleton<SceneLoader>
         }
     }
 
-    //Check correctens of passed tips data pool
     private bool IsTipsDataPoolCorrect()
     {
         if (tipsDataPool.Count == 0)
@@ -66,7 +70,7 @@ public class SceneLoader : Singleton<SceneLoader>
             return false;
         }
 
-        foreach (LoadinScreenTipsData tipsList in tipsDataPool)
+        foreach (LoadingScreenTipsData tipsList in tipsDataPool)
         {
             if (tipsList == null)
             {
@@ -83,7 +87,6 @@ public class SceneLoader : Singleton<SceneLoader>
         return true;
     }
 
-    //Return one random tip from data pool
     private string GetTip()
     {
         int tipsDataIndex;
@@ -118,7 +121,7 @@ public class SceneLoader : Singleton<SceneLoader>
             }
         }
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(10); //TODO: delete this line, it is used only for testing purposes
         loadingScreen.gameObject.SetActive(false);
     }
 }
