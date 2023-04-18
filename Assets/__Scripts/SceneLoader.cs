@@ -35,12 +35,12 @@ public class SceneLoader : Singleton<SceneLoader>
         }
     }
 
-    public void LoadGame()
+    public void LoadGame(SceneIndexes sceneToUnload, SceneIndexes sceneToLoad)
     {
         loadingScreen.gameObject.SetActive(true);
         StartCoroutine(GenerateTips());
-        scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Menu));
-        scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MovementScene, LoadSceneMode.Additive));
+        scenesLoading.Add(SceneManager.UnloadSceneAsync((int)sceneToUnload));
+        scenesLoading.Add(SceneManager.LoadSceneAsync((int)sceneToLoad, LoadSceneMode.Additive));
         StartCoroutine(GetSceneLoadProgress());
     }
 
