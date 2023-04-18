@@ -42,6 +42,31 @@ public class VisionEnemyAI : MonoBehaviour
         Scan();
     }
 
+    private void Scan()
+    {
+        if (Time.time - lastScanTime < scanIntervals)
+            return;
+
+        count = Physics.OverlapSphereNonAlloc(eyeLevel.position, Mathf.Infinity, colliders, player, QueryTriggerInteraction.Collide);
+        lastScanTime = Time.time;
+
+        if (colliders[0] is null)
+        {
+            Debug.LogError("There is no Player in enemy sight.");
+            return;
+        }
+
+        Transform scannedPlayer = colliders[0].transform;
+        UpdatePlayerBodyPartsPositions(scannedPlayer);
+
+        bool blocked = CheckLineOfSightForBlockers();
+
+        targerInVision = (count > 0) && (!blocked);
+
+        if (targerInVision)
+            _lastSeenTimer = 0;
+    }
+
     Vector3 topPosition;
     Vector3 middlePosition;
     Vector3 bottomPosition;
@@ -63,41 +88,60 @@ public class VisionEnemyAI : MonoBehaviour
         myForward.y = 0;
 
         forwardPosition = scannedPlayer.position + myForward * sideError;
-        backPosition = scannedPlayer.position +   -myForward * sideError;
+        backPosition = scannedPlayer.position + -myForward * sideError;
 
     }
-    private void Scan()
-    {  
-        if (Time.time - lastScanTime < scanIntervals)
-            return;
 
-        count = Physics.OverlapSphereNonAlloc(eyeLevel.position, Mathf.Infinity, colliders, player, QueryTriggerInteraction.Collide);
-        lastScanTime = Time.time;
-
-        if (colliders[0] is null)
-        {
-            Debug.LogError("There is no Player in enemy sight.");
-            return;
-        }
-
-        Transform scannedPlayer = colliders[0].transform;
-        UpdatePlayerBodyPartsPositions(scannedPlayer);
-
-        bool isBlockedMiddle = Physics.Linecast(eyeLevel.position, middlePosition, blockers);
-        bool isBlockedTop = Physics.Linecast(eyeLevel.position, topPosition, blockers);
-        bool isBlockedBottom = Physics.Linecast(eyeLevel.position, bottomPosition, blockers);
-        bool isBlockedLeft = Physics.Linecast(eyeLevel.position, leftPosition, blockers);
-        bool isBlockedRight = Physics.Linecast(eyeLevel.position, rightPosition, blockers);
-        bool isBlockedForward = Physics.Linecast(eyeLevel.position, forwardPosition, blockers);
-        bool isBlockedBack = Physics.Linecast(eyeLevel.position, backPosition, blockers);
+    bool isBlockedMiddle;
+    bool isBlockedTop;
+    bool isBlockedBottom;
+    bool isBlockedLeft;
+    bool isBlockedRight;
+    bool isBlockedForward;
+    bool isBlockedBack;
+    private bool CheckLineOfSightForBlockers()
+    {
+        isBlockedMiddle = Physics.Linecast(eyeLevel.position, middlePosition, blockers);
+        isBlockedTop = Physics.Linecast(eyeLevel.position, topPosition, blockers);
+        isBlockedBottom = Physics.Linecast(eyeLevel.position, bottomPosition, blockers);
+        isBlockedLeft = Physics.Linecast(eyeLevel.position, leftPosition, blockers);
+        isBlockedRight = Physics.Linecast(eyeLevel.position, rightPosition, blockers);
+        isBlockedForward = Physics.Linecast(eyeLevel.position, forwardPosition, blockers);
+        isBlockedBack = Physics.Linecast(eyeLevel.position, backPosition, blockers);
 
         bool blocked = isBlockedMiddle && isBlockedTop && isBlockedBottom && isBlockedLeft && isBlockedRight && isBlockedForward && isBlockedBack;
-
-        targerInVision = (count > 0) && (!blocked);
-
-        if (targerInVision)
-            _lastSeenTimer = 0;
+        return blocked;
     }
+
+    private List<Vector3> visibleBodyParts = new List<Vector3>(7);
+    public List<Vector3> GetAvailableBodyParts()
+    {
+        visibleBodyParts.Clear();
+
+        if (!isBlockedMiddle)
+            visibleBodyParts.Add(middlePosition);
+
+        if (!isBlockedTop)
+            visibleBodyParts.Add(topPosition);
+
+        if (!isBlockedLeft)
+            visibleBodyParts.Add(leftPosition);
+
+        if (!isBlockedRight)
+            visibleBodyParts.Add(rightPosition);
+
+        if (!isBlockedForward)
+            visibleBodyParts.Add(forwardPosition);
+
+        if (!isBlockedBottom)
+            visibleBodyParts.Add(bottomPosition);
+
+        if (!isBlockedBack)
+            visibleBodyParts.Add(backPosition);
+
+        return visibleBodyParts;
+    }
+
 
     private void OnDrawGizmos()
     {
@@ -121,6 +165,11 @@ public class VisionEnemyAI : MonoBehaviour
         Gizmos.DrawSphere(rightPosition, 0.01f);
         Gizmos.DrawSphere(forwardPosition, 0.01f);
         Gizmos.DrawSphere(backPosition, 0.01f);
+
+        if(GetAvailableBodyParts().Count != 0)
+        {
+            Gizmos.DrawLine(eyeLevel.position, GetAvailableBodyParts()[0]);
+        }
 
     }
 }
