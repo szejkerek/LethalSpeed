@@ -6543,7 +6543,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7640499558858753765}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 8}
+  m_LocalPosition: {x: 2.19, y: 0.22, z: 10.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6908,9 +6908,9 @@ MonoBehaviour:
   <IdleChance>k__BackingField: 0
   <IdleTooAwayDistance>k__BackingField: 6.53
   <PatrolInitialChance>k__BackingField: 0
-  <PatrolRange>k__BackingField: 4.94
-  <PatrolCooldown>k__BackingField: 3.22
-  <PatrolVariation>k__BackingField: 0.66
+  <PatrolRange>k__BackingField: 5
+  <PatrolCooldown>k__BackingField: 5
+  <PatrolVariation>k__BackingField: 1.5
   <PatrolChance>k__BackingField: 0
 --- !u!114 &7640499558858753771
 MonoBehaviour:
@@ -7055,7 +7055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 406e774241dca8641b9b43cc28a84ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanIntervals: 0.5
+  scanIntervals: 0.05
   eyeLevel: {fileID: 2106757597}
   player:
     serializedVersion: 2
