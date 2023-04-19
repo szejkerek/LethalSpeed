@@ -33,18 +33,57 @@ public class SceneLoader : Singleton<SceneLoader>
 
         foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
         {
-            imageDataPoolHashTable.Add(imageDataToCoopy.MapIndex, imageDataToCoopy.LoadinScreenBackground);
+            if(!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.MapIndex))
+            {
+                imageDataPoolHashTable.Add(imageDataToCoopy.MapIndex, imageDataToCoopy.LoadinScreenBackground);
+            }
+            else
+            {
+                Debug.LogWarning("There can be only one background image data pool for each scene.");
+            }
         }
     }
 
     public void LoadGame(SceneIndexes sceneToUnload, SceneIndexes sceneToLoad)
     {
-        loadingScreenImage.sprite = imageDataPoolHashTable[sceneToLoad][UnityEngine.Random.Range(0, imageDataPoolHashTable[sceneToLoad].Count)];
+        SetBackGoundImage(sceneToLoad);
         loadingScreen.gameObject.SetActive(true);
         StartCoroutine(GenerateTips());
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)sceneToUnload));
         scenesLoading.Add(SceneManager.LoadSceneAsync((int)sceneToLoad, LoadSceneMode.Additive));
         StartCoroutine(GetSceneLoadProgress());
+    }
+
+    private void SetBackGoundImage(SceneIndexes sceneToLoad)
+    {
+        if(!IsImageDataPoolCorrect(sceneToLoad))
+        {
+            loadingScreenImage.color = Color.black;
+            return;
+        }
+
+        loadingScreenImage.sprite = imageDataPoolHashTable[sceneToLoad][UnityEngine.Random.Range(0, imageDataPoolHashTable[sceneToLoad].Count)];
+    }
+
+    private bool IsImageDataPoolCorrect(SceneIndexes sceneToLoad)
+    {
+        if(imageDataPoolHashTable.Count == 0)
+        {
+            Debug.LogWarning("Loading screen background image data pool is empty.");
+            return false;
+        }
+        if (!imageDataPoolHashTable.ContainsKey(sceneToLoad))
+        {
+            Debug.LogWarning("There is no corresponding background image data pool for currently loading scene.");
+            return false;
+        }
+        if (imageDataPoolHashTable[sceneToLoad].Count == 0)
+        {
+            Debug.LogWarning("Loading screen background image data pool of chosen scene is empty.");
+            return false;
+        }
+
+        return true;
     }
 
     private IEnumerator GenerateTips()
