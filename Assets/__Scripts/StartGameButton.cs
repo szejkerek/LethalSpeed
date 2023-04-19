@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class StartGameButton : MonoBehaviour
 {
     Button _button;
-    [field: SerializeField] public SceneIndexes sceneToUnload { private set; get; }
+    //[field: SerializeField] public SceneIndexes sceneToUnload { private set; get; }
     [field: SerializeField] public SceneIndexes sceneToLoad { private set; get; }
 
     private void Awake()
@@ -16,6 +16,6 @@ public class StartGameButton : MonoBehaviour
     }
     private void Start()
     {
-       _button.onClick.AddListener(delegate () { SceneLoader.Instance.LoadGame(sceneToUnload, sceneToLoad);});
+       _button.onClick.AddListener(delegate () { SceneLoader.Instance.LoadNewScene(sceneToLoad);});
     }
 }

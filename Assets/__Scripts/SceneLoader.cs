@@ -44,7 +44,21 @@ public class SceneLoader : Singleton<SceneLoader>
         }
     }
 
-    public void LoadGame(SceneIndexes sceneToUnload, SceneIndexes sceneToLoad)
+    public void ReloadScene()
+    {
+        int currentSceneToReloadIndex = SceneManager.GetSceneAt(1).buildIndex;
+
+        UnloadSceneAndLoadNewOne((SceneIndexes)currentSceneToReloadIndex, (SceneIndexes)currentSceneToReloadIndex);
+    }
+
+    public void LoadNewScene(SceneIndexes sceneToLoad)
+    {
+        int currentSceneToUnloadIndex = SceneManager.GetSceneAt(1).buildIndex;
+
+        UnloadSceneAndLoadNewOne((SceneIndexes)currentSceneToUnloadIndex, sceneToLoad);
+    }
+
+    public void UnloadSceneAndLoadNewOne(SceneIndexes sceneToUnload, SceneIndexes sceneToLoad)
     {
         SetBackGoundImage(sceneToLoad);
         loadingScreen.gameObject.SetActive(true);
