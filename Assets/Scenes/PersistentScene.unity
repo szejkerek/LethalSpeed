@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -436,11 +436,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 2067087471779570064}
-  progressInfoText: {fileID: 27585520}
-  tipText: {fileID: 390144615}
-  tipsData:
+  progressInfoTextField: {fileID: 27585520}
+  tipTextField: {fileID: 390144615}
+  loadingScreenImage: {fileID: 486060261237061576}
+  tipsDataPool:
   - {fileID: 11400000, guid: 5a5786eb13030cf468a972d054d87dd3, type: 2}
   - {fileID: 11400000, guid: f2e52feb701f09c4db37d3cde0a15142, type: 2}
+  imageDataPool:
+  - {fileID: 11400000, guid: 334978f2b4d93bd4281f9d4c0fa22ff2, type: 2}
 --- !u!4 &890395670
 Transform:
   m_ObjectHideFlags: 0
@@ -490,7 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

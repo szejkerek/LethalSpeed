@@ -13,6 +13,8 @@ public class SceneLoader : Singleton<SceneLoader>
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private TMP_Text progressInfoTextField;
     [SerializeField] private TMP_Text tipTextField;
+    [SerializeField] private Image loadingScreenImage;
+
 
     [Header("Loading screen data")]
     [SerializeField] private List<LoadingScreenTipsData> tipsDataPool;
@@ -21,7 +23,7 @@ public class SceneLoader : Singleton<SceneLoader>
     private Slider progressBar;
     private CanvasGroup tipTextFieldCanvasGroup; //text field canvas group to manage fading
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>(); //list of currently loading and unloading scenes
-    private Dictionary<SceneIndexes, List<Texture>> imageDataPoolHashTable = new Dictionary<SceneIndexes, List<Texture>>();
+    private Dictionary<SceneIndexes, List<Sprite>> imageDataPoolHashTable = new Dictionary<SceneIndexes, List<Sprite>>();
 
     protected override void Awake()
     {
@@ -31,12 +33,13 @@ public class SceneLoader : Singleton<SceneLoader>
 
         foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
         {
-            imageDataPoolHashTable.Add(imageDataToCoopy.MapIdentifier, imageDataToCoopy.LoadinScreenTextures);
+            imageDataPoolHashTable.Add(imageDataToCoopy.MapIndex, imageDataToCoopy.LoadinScreenBackground);
         }
     }
 
     public void LoadGame(SceneIndexes sceneToUnload, SceneIndexes sceneToLoad)
     {
+        loadingScreenImage.sprite = imageDataPoolHashTable[sceneToLoad][UnityEngine.Random.Range(0, imageDataPoolHashTable[sceneToLoad].Count)];
         loadingScreen.gameObject.SetActive(true);
         StartCoroutine(GenerateTips());
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)sceneToUnload));

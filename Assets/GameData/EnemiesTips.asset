@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a54f49f1f86154f8bc40d030bd9fa0, type: 3}
   m_Name: EnemiesTips
   m_EditorClassIdentifier: 
-  <TipsList>k__BackingField: []
+  <TipsList>k__BackingField:
+  - Enemies can kill you
+  - Enemies can't hear you
