@@ -34,6 +34,12 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     [field: Tooltip("This chance is checked every Xseconds")]
     [field: SerializeField] public float PatrolChance { get; private set; }
+
+    [field: Header("Seeking")] // SEEKING
+    [field: SerializeField] public float BoredAfterSeconds { get; private set; }
+
+    [field: Header("Shooting")] //SHOOTING
+    [field: SerializeField] public float ShootingAggro { get; private set; }
     //
 
     public Player Player => _player;

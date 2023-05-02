@@ -6894,7 +6894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugEnemyAIStates:
-    IdleShowGizmos: 0
+    IdleShowGizmos: 1
     ShootShowGizmos: 0
     SeekShowGizmos: 0
     CrouchShowGizmos: 0
@@ -6904,14 +6904,15 @@ MonoBehaviour:
     PatrollShowGizmos: 0
   <FocusDuration>k__BackingField: 0.5
   <UnfocusDuration>k__BackingField: 0.5
-  <IdleActivationRange>k__BackingField: 7
+  <IdleActivationRange>k__BackingField: 9
   <IdleChance>k__BackingField: 0
-  <IdleTooAwayDistance>k__BackingField: 6.53
+  <IdleTooAwayDistance>k__BackingField: 7
   <PatrolInitialChance>k__BackingField: 0
   <PatrolRange>k__BackingField: 5
   <PatrolCooldown>k__BackingField: 5
   <PatrolVariation>k__BackingField: 1.5
   <PatrolChance>k__BackingField: 0
+  <BoredAfterSeconds>k__BackingField: 0
 --- !u!114 &7640499558858753771
 MonoBehaviour:
   m_ObjectHideFlags: 0

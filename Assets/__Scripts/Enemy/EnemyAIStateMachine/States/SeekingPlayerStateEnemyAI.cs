@@ -7,6 +7,8 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
 {
     public SeekingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
 
+    float timeSeeking = 0;
+
     public override void EnterState()
     {
         _context.Enemy.AimAtTargetRigController.TurnOnRig(1f);
@@ -14,6 +16,7 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     public override void UpdateStateInternally()
     {
         _context.LocomotionEnemyAI.SetDestination(_context.Player.transform.position);
+        timeSeeking += Time.deltaTime;
     }
 
     public override void ExitState()
@@ -22,6 +25,11 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
+        _context.ShootingActivationCheck();
+        if(timeSeeking >= _context.BoredAfterSeconds)
+        {
+            SwitchState(_context.StatesFactory.Idle());
+        }
     }
 
     public override DebugEnemyAIText GetDebugText()
