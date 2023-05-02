@@ -9,23 +9,32 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        _context.LocomotionEnemyAI.ResetPath();
+        _context.LocomotionEnemyAI.SetStopped();
         _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.FocusDuration);
     }
     public override void UpdateStateInternally()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            _context.WeaponEnemyAI.ShootAtTarget();
-        }
+
     }
 
     public override void ExitState()
     {
-        
+
     }
     public override void CheckSwitchState()
     {
+        Debug.Log($"{_context.VisionEnemyAI.LastSeenTimer} last seen, {_context.AggroDuration} duration");
+        bool playerTooLongNotSeen = _context.VisionEnemyAI.LastSeenTimer >= _context.AggroDuration;
+        bool playerTooAway = _context.GetPlayerDistance() >= _context.AggroDistance;
+        //Reload
+
+        //Seek
+        if (playerTooLongNotSeen || playerTooAway)
+        {
+            SwitchState(_context.StatesFactory.SeekPlayer());
+        }
+        //WalkBackward
+        //Crouch
     }
 
     public override DebugEnemyAIText GetDebugText()

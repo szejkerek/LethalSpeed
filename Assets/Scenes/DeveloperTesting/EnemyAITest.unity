@@ -6860,7 +6860,7 @@ NavMeshAgent:
   m_Acceleration: 4
   avoidancePriority: 50
   m_AngularSpeed: 720
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -6894,7 +6894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugEnemyAIStates:
-    IdleShowGizmos: 1
+    IdleShowGizmos: 0
     ShootShowGizmos: 0
     SeekShowGizmos: 0
     CrouchShowGizmos: 0
@@ -6912,7 +6912,9 @@ MonoBehaviour:
   <PatrolCooldown>k__BackingField: 5
   <PatrolVariation>k__BackingField: 1.5
   <PatrolChance>k__BackingField: 0
-  <BoredAfterSeconds>k__BackingField: 0
+  <BoredAfterSeconds>k__BackingField: 4
+  <AggroDuration>k__BackingField: 3
+  <AggroDistance>k__BackingField: 8
 --- !u!114 &7640499558858753771
 MonoBehaviour:
   m_ObjectHideFlags: 0

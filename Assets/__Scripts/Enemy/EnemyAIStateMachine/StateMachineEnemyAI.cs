@@ -39,7 +39,8 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: SerializeField] public float BoredAfterSeconds { get; private set; }
 
     [field: Header("Shooting")] //SHOOTING
-    [field: SerializeField] public float ShootingAggro { get; private set; }
+    [field: SerializeField] public float AggroDuration { get; private set; }
+    [field: SerializeField] public float AggroDistance { get; private set; }
     //
 
     public Player Player => _player;
@@ -111,12 +112,17 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     public void ShootingActivationCheck()
     {
-        bool playerInActivationRange = Vector3.Distance(transform.position, Player.transform.position) <= IdleActivationRange;
+        bool playerInActivationRange = GetPlayerDistance() <= IdleActivationRange;
         bool playerInSight = VisionEnemyAI.TargerInVision;
         if (playerInActivationRange && playerInSight)
         {
             _currentState.SwitchState(StatesFactory.ShootPlayer());
         }
+    }
+
+    public float GetPlayerDistance()
+    {
+        return Vector3.Distance(transform.position, Player.transform.position);
     }
 
     #endregion
