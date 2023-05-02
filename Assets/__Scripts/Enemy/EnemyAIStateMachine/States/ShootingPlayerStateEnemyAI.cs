@@ -9,7 +9,7 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        _context.LocomotionEnemyAI.SetStopped();
+        _context.LocomotionEnemyAI.ResetPath();
         _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.FocusDuration);
     }
     public override void UpdateStateInternally()
