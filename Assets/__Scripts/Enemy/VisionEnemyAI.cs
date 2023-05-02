@@ -59,9 +59,9 @@ public class VisionEnemyAI : MonoBehaviour
         Transform scannedPlayer = colliders[0].transform;
         UpdatePlayerBodyPartsPositions(scannedPlayer);
 
-        bool blocked = CheckLineOfSightForBlockers();
+        bool blocked = IsVisionBlocked();
 
-        targerInVision = (count > 0) && (!blocked);
+        targerInVision = count > 0 && !blocked;
 
         if (targerInVision)
             _lastSeenTimer = 0;
@@ -99,7 +99,7 @@ public class VisionEnemyAI : MonoBehaviour
     bool isBlockedRight;
     bool isBlockedForward;
     bool isBlockedBack;
-    private bool CheckLineOfSightForBlockers()
+    private bool IsVisionBlocked()
     {
         isBlockedMiddle = Physics.Linecast(eyeLevel.position, middlePosition, blockers);
         isBlockedTop = Physics.Linecast(eyeLevel.position, topPosition, blockers);
@@ -145,7 +145,7 @@ public class VisionEnemyAI : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!debugErrors && !targerInVision)
+        if (!debugErrors || !targerInVision)
             return;
 
         Gizmos.color = Color.blue;

@@ -7042,7 +7042,7 @@ MonoBehaviour:
   barrelTip: {fileID: 1964401273}
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
 --- !u!114 &7640499558858753776
 MonoBehaviour:
   m_ObjectHideFlags: 0
