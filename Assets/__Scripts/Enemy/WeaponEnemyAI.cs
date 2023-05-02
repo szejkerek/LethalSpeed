@@ -24,7 +24,6 @@ public class WeaponEnemyAI : MonoBehaviour
     public void ShootAtTarget()
     {
         lastShotTime = Time.time;
-        Debug.Log(lastShotTime);
     }
 
     public void DropWeapon()

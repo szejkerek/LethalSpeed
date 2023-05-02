@@ -3,23 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct CrouchingProperties
-{
-    public bool showGizmos;
-}
 public class CrouchingStateEnemyAI : StateEnemyAI
 {
-    public CrouchingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public CrouchingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
-        
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
     }
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
-         _context.NavMeshAgent.SetDestination(_context.Player.transform.position);
-         _context.Animator.SetFloat("Speed", _context.NavMeshAgent.velocity.magnitude);
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -33,9 +27,9 @@ public class CrouchingStateEnemyAI : StateEnemyAI
     public override DebugEnemyAIText GetDebugText()
     {
         DebugEnemyAIText debugEnemyAIText;
-        debugEnemyAIText.titleColor = Color.blue;
-        debugEnemyAIText.stateName = "Seek player";
-        debugEnemyAIText.info = $"Speed: {_context.NavMeshAgent.velocity.magnitude}";
+        debugEnemyAIText.titleColor = Color.red;
+        debugEnemyAIText.stateName = "Crouch";
+        debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }
 }

@@ -2,25 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct RagdollProperties
-{
-    public bool showGizmos;
-}
 public class RagdollStateEnemyAI : StateEnemyAI
 {
-    public RagdollStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public RagdollStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.Ragdoll.SetRagdoll();
         _context.WeaponEnemyAI.DropWeapon();
         _context.Mesh.updateWhenOffscreen = true;
-        _context.NavMeshAgent.isStopped = true;
-        _context.NavMeshAgent.ResetPath();
+        _context.LocomotionEnemyAI.NavMeshAgent.isStopped = true;
+        _context.LocomotionEnemyAI.NavMeshAgent.ResetPath();
     }
 
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
         return;
     }

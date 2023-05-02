@@ -3,31 +3,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct PatrollingProperties
-{
-    public bool showGizmos;
-}
-
 public class PatrollingStateEnemyAI : StateEnemyAI
 {
-    public PatrollingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public PatrollingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
-        
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
+        nextCooldown = CalculateNextCooldown();
     }
-    public override void UpdateStateInternally()
-    {
 
+    private float nextCooldown = 0;
+    private float timer = 0;
+
+    public override void UpdateState()
+    {
+        if(_context.LocomotionEnemyAI.IsAtDestination())
+        {
+            timer += Time.deltaTime;
+            if(timer >= nextCooldown)
+            {
+                timer = 0;
+                nextCooldown = CalculateNextCooldown();
+                _context.LocomotionEnemyAI.Patrol(_context.PatrolRange);
+            }
+        }
+        CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        
+        _context.LocomotionEnemyAI.ResetPath();
     }
     public override void CheckSwitchState()
     {
+        if (_context.ShootingActivationCheck())
+        {
+            SwitchState(_context.StatesFactory.ShootPlayer());
+        }
+
     }
 
     public override DebugEnemyAIText GetDebugText()
@@ -37,5 +51,13 @@ public class PatrollingStateEnemyAI : StateEnemyAI
         debugEnemyAIText.stateName = "Patrolling";
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
+    }
+
+    private float CalculateNextCooldown()
+    {
+        float randomVariation = UnityEngine.Random.Range(-_context.PatrolVariation, _context.PatrolVariation);
+        float newPatrolCooldown = _context.PatrolCooldown + randomVariation;
+
+        return Math.Max(newPatrolCooldown, 0);
     }
 }

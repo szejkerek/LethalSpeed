@@ -3,22 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct ReloadingProperties
-{
-    public bool showGizmos;
-}
 public class ReloadingStateEnemyAI : StateEnemyAI
 {
-    public ReloadingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public ReloadingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
-        
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
     }
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
-
+        CheckSwitchState();
     }
 
     public override void ExitState()

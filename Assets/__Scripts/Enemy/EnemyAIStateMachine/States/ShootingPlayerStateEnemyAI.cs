@@ -3,34 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct ShootingPlayerProperties
-{
-    public bool showGizmos;
-    public float focusDuration;
-}
 public class ShootingPlayerStateEnemyAI : StateEnemyAI
 {
-    public ShootingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public ShootingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
-        _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.ShootingPlayerProperties.focusDuration);
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
+        _context.LocomotionEnemyAI.ResetPath();
+        _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.FocusDuration);
     }
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            _context.WeaponEnemyAI.ShootAtTarget();
-        }
+        CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        
+
     }
     public override void CheckSwitchState()
     {
+        bool playerTooLongNotSeen = _context.VisionEnemyAI.LastSeenTimer >= _context.AggroDuration;
+        //Debug.Log(_context.VisionEnemyAI.LastSeenTimer);
+        //Reload
+
+        //Seek
+        if (playerTooLongNotSeen)
+        {
+            SwitchState(_context.StatesFactory.SeekPlayer());
+        }
+        //WalkBackward
+        //Crouch
     }
 
     public override DebugEnemyAIText GetDebugText()
