@@ -19,8 +19,8 @@ public abstract class StateEnemyAI
     public abstract void EnterState();
     public void UpdateState()
     {
-        CheckSwitchState();
         UpdateStateInternally();
+        CheckSwitchState();
     }
     public abstract void UpdateStateInternally();
     public abstract void ExitState();
