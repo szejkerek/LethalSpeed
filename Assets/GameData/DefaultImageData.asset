@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5a54f49f1f86154f8bc40d030bd9fa0, type: 3}
-  m_Name: EnemiesTips
+  m_Script: {fileID: 11500000, guid: a47b420f985e0714a923e11a168ce452, type: 3}
+  m_Name: DefaultImageData
   m_EditorClassIdentifier: 
-  <TipsList>k__BackingField:
-  - Enemies can kill you
-  - Enemies can't hear you
+  <MapIndex>k__BackingField: 2
+  <LoadinScreenBackground>k__BackingField: []

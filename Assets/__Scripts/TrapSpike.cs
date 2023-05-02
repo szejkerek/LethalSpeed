@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TrapSpike : Trap
 {
-    public Ease ease;
+    public Ease Ease;
 
     protected override void Start()
     {
@@ -32,6 +32,6 @@ public class TrapSpike : Trap
 
     private void HideSpikes()
     {
-        transform.DOMoveY(transform.position.y - 0.25f, 0.3f).SetEase(ease);
+        transform.DOMoveY(transform.position.y - 0.25f, 0.3f).SetEase(Ease);
     }
 }
