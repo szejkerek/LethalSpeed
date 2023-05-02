@@ -3,23 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct WalkBackwardsProperties
+public class ReloadingStateEnemyAI : StateEnemyAI
 {
-    public bool showGizmos;
-}
-
-public class WalkingBackwardsStateEnemyAI : StateEnemyAI
-{
-    public WalkingBackwardsStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public ReloadingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
-        
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
     }
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
-
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -33,8 +27,8 @@ public class WalkingBackwardsStateEnemyAI : StateEnemyAI
     public override DebugEnemyAIText GetDebugText()
     {
         DebugEnemyAIText debugEnemyAIText;
-        debugEnemyAIText.titleColor = Color.cyan;
-        debugEnemyAIText.stateName = "WalkBackwards";
+        debugEnemyAIText.titleColor = Color.grey;
+        debugEnemyAIText.stateName = "Reloading";
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: bb68bcc82680d9e408931ceed4549ba1, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 2080ac43eda2cc84cbaf7e46544e5684, type: 2}
 --- !u!1 &11212426
 GameObject:
   m_ObjectHideFlags: 0
@@ -2447,7 +2447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7975385521685648148, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7975385521685648148, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2569,7 +2569,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1484054274
 GameObject:
@@ -2816,7 +2816,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1557168404
 BoxCollider:
@@ -2889,8 +2889,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1557168403}
   m_LocalRotation: {x: -0, y: -0.52673155, z: -0, w: 0.8500317}
-  m_LocalPosition: {x: 16.79, y: 6.137, z: -26.81}
-  m_LocalScale: {x: 0.13013121, y: 1.7554766, z: 4.974378}
+  m_LocalPosition: {x: 16.82, y: 8.3, z: -23.91}
+  m_LocalScale: {x: 0.13013121, y: 4.5352736, z: 4.974378}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 216822601}
@@ -5446,7 +5446,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 19dc6c63124123d40864fbc373307ec9, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -6542,8 +6542,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7640499558858753765}
-  m_LocalRotation: {x: -0, y: -0.99896365, z: -0, w: -0.045515772}
-  m_LocalPosition: {x: 0, y: 0, z: 7.69}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 2.19, y: 0.22, z: 10.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6551,7 +6551,7 @@ Transform:
   - {fileID: 839645892}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: -185.218, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &7167150792150389652
 GameObject:
   m_ObjectHideFlags: 0
@@ -6823,6 +6823,7 @@ GameObject:
   - component: {fileID: 7640499558858753767}
   - component: {fileID: 7640499558858753776}
   - component: {fileID: 7640499558858753770}
+  - component: {fileID: 7640499558858753777}
   - component: {fileID: 7640499558858753775}
   - component: {fileID: 7640499558858753771}
   - component: {fileID: 7640499558858753769}
@@ -6854,14 +6855,14 @@ NavMeshAgent:
   m_GameObject: {fileID: 7640499558858753765}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Speed: 3
   m_Acceleration: 4
   avoidancePriority: 50
   m_AngularSpeed: 720
-  m_StoppingDistance: 4
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -6892,25 +6893,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65dd7d8ba72b2ef46862d62e2ecf5f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleProperties:
-    showGizmos: 0
-    ActivationRange: 5
-    unfocusDuration: 0
-  _patrollingProperties:
-    showGizmos: 0
-  _seekPlayerProperties:
-    showGizmos: 0
-  _shootingPlayerProperties:
-    showGizmos: 0
-    focusDuration: 0.5
-  _crouchingProperties:
-    showGizmos: 0
-  _walkBackwardsProperties:
-    showGizmos: 0
-  _reloadingProperties:
-    showGizmos: 0
-  _ragdollProperties:
-    showGizmos: 0
+  debugEnemyAIStates:
+    IdleShowGizmos: 0
+    ShootShowGizmos: 0
+    SeekShowGizmos: 0
+    CrouchShowGizmos: 0
+    ReloadShowGizmos: 0
+    WalkBackShowGizmos: 0
+    RagdollShowGizmos: 0
+    PatrollShowGizmos: 0
+  <FocusDuration>k__BackingField: 0.5
+  <UnfocusDuration>k__BackingField: 0.5
+  <IdleChance>k__BackingField: 0
+  <IdleTooAwayDistance>k__BackingField: 4
+  <PatrolInitialChance>k__BackingField: 0
+  <PatrolRange>k__BackingField: 5
+  <PatrolCooldown>k__BackingField: 5
+  <PatrolVariation>k__BackingField: 1.5
+  <PatrolChance>k__BackingField: 0
+  <BoredAfterSeconds>k__BackingField: 10
+  <ShootingActivationRange>k__BackingField: 20
+  <AggroDuration>k__BackingField: 4
 --- !u!114 &7640499558858753771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7037,11 +7040,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc4afc5b1b06c84185583ac23bf4b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponObject: {fileID: 1068995430}
-  barrelTip: {fileID: 1964401273}
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 0
+  _bulletPrefab: {fileID: 6939328353078691536, guid: bace2d485f657094fbaab570b0404c98, type: 3}
+  _bulletSpeed: 0.5
+  _weaponObject: {fileID: 1068995430}
+  _barrelTip: {fileID: 1964401273}
 --- !u!114 &7640499558858753776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7054,8 +7056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 406e774241dca8641b9b43cc28a84ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanIntervals: 0.5
-  radious: 100
+  scanIntervals: 0.05
   eyeLevel: {fileID: 2106757597}
   player:
     serializedVersion: 2
@@ -7063,6 +7064,22 @@ MonoBehaviour:
   blockers:
     serializedVersion: 2
     m_Bits: 961
+  debugErrors: 0
+  topError: 0.438
+  sideError: 0.162
+--- !u!114 &7640499558858753777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7640499558858753765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5169e6b9109a5034bbcb0e060b1f64b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atDestinationDistance: 0.45
 --- !u!4 &7678894308068433706
 Transform:
   m_ObjectHideFlags: 0
