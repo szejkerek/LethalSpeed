@@ -15,7 +15,11 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     }
     public override void UpdateStateInternally()
     {
-        _context.LocomotionEnemyAI.SetDestination(_context.Player.transform.position);
+        if (timeSeeking % 0.2f == 0)
+        {
+            _context.LocomotionEnemyAI.SetDestination(_context.Player.transform.position);
+        }
+
         timeSeeking += Time.deltaTime;
     }
 
@@ -26,7 +30,7 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     public override void CheckSwitchState()
     {
         _context.ShootingActivationCheck();
-        if(timeSeeking >= _context.BoredAfterSeconds)
+        if(timeSeeking > _context.BoredAfterSeconds)
         {
             SwitchState(_context.StatesFactory.Idle());
         }

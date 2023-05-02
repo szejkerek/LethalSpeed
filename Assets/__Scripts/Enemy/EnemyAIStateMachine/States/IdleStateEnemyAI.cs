@@ -25,7 +25,7 @@ public class IdleStateEnemyAI : StateEnemyAI
     {
         _context.ShootingActivationCheck();
 
-        bool tooAwayFromInitialPosition = Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) >= _context.PatrolRange + _context.IdleTooAwayDistance;
+        bool tooAwayFromInitialPosition = Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) > _context.PatrolRange + _context.IdleTooAwayDistance;
         if (tooAwayFromInitialPosition)
         {
             SwitchState(_context.StatesFactory.Retrieve());

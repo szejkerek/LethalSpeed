@@ -35,7 +35,9 @@ public class LocomotionEnemyAI : MonoBehaviour
 
     public void SetDestination(Vector3 target)
     {
+        Debug.Log("Go to player");
         GetPath(target);
+        _navMeshAgent.isStopped = false;
         _navMeshAgent.SetDestination(target);
     }
 
@@ -68,6 +70,8 @@ public class LocomotionEnemyAI : MonoBehaviour
     public void ResetPath()
     {
         _navMeshAgent.ResetPath();
+        _navMeshAgent.velocity = Vector3.zero;
+        _navMeshAgent.isStopped = true;
     }
 
     public bool GetPath(Vector3 target)

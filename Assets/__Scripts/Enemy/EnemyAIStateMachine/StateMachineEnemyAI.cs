@@ -18,7 +18,6 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: SerializeField] public float UnfocusDuration { get; private set; }
 
     [field:Header("Idle")] //IDLE
-    [field: SerializeField] public float IdleActivationRange { get; private set; }
 
     [field: Tooltip("This chance is checked every Xseconds")]
     [field: SerializeField] public float IdleChance { get; private set; }
@@ -39,8 +38,10 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: SerializeField] public float BoredAfterSeconds { get; private set; }
 
     [field: Header("Shooting")] //SHOOTING
+
+    [field: SerializeField] public float ShootingActivationRange { get; private set; }
     [field: SerializeField] public float AggroDuration { get; private set; }
-    [field: SerializeField] public float AggroDistance { get; private set; }
+    //[field: SerializeField] public float AggroDistance { get; private set; }
     //
 
     public Player Player => _player;
@@ -112,7 +113,7 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     public void ShootingActivationCheck()
     {
-        bool playerInActivationRange = GetPlayerDistance() <= IdleActivationRange;
+        bool playerInActivationRange = GetPlayerDistance() < ShootingActivationRange;
         bool playerInSight = VisionEnemyAI.TargerInVision;
         if (playerInActivationRange && playerInSight)
         {
@@ -132,8 +133,7 @@ public class StateMachineEnemyAI : MonoBehaviour
     {
         if (debugEnemyAIStates.IdleShowGizmos)
         {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(transform.position, IdleActivationRange);
+
         }
 
         if (debugEnemyAIStates.SeekShowGizmos)
@@ -143,7 +143,8 @@ public class StateMachineEnemyAI : MonoBehaviour
 
         if (debugEnemyAIStates.ShootShowGizmos)
         {
-
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position, ShootingActivationRange);
         }
 
         if (debugEnemyAIStates.CrouchShowGizmos)

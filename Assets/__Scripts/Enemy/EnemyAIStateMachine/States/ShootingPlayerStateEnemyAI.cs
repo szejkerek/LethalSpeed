@@ -23,13 +23,11 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        Debug.Log($"{_context.VisionEnemyAI.LastSeenTimer} last seen, {_context.AggroDuration} duration");
         bool playerTooLongNotSeen = _context.VisionEnemyAI.LastSeenTimer >= _context.AggroDuration;
-        bool playerTooAway = _context.GetPlayerDistance() >= _context.AggroDistance;
         //Reload
 
         //Seek
-        if (playerTooLongNotSeen || playerTooAway)
+        if (playerTooLongNotSeen)
         {
             SwitchState(_context.StatesFactory.SeekPlayer());
         }
