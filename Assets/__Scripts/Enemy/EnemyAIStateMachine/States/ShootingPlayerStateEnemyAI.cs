@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class ShootingPlayerStateEnemyAI : StateEnemyAI
 {
-    public ShootingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public ShootingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.LocomotionEnemyAI.ResetPath();
         _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.FocusDuration);
     }

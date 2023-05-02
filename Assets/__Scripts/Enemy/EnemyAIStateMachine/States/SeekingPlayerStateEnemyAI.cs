@@ -5,20 +5,19 @@ using UnityEngine;
 
 public class SeekingPlayerStateEnemyAI : StateEnemyAI
 {
-    public SeekingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public SeekingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     float timeSeeking = 0;
 
     public override void EnterState()
     {
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.Enemy.AimAtTargetRigController.TurnOnRig(1f);
     }
     public override void UpdateStateInternally()
     {
-        if (timeSeeking % 0.2f == 0)
-        {
-            _context.LocomotionEnemyAI.SetDestination(_context.Player.transform.position);
-        }
+
+        _context.LocomotionEnemyAI.SetDestination(_context.Player.transform.position);
 
         timeSeeking += Time.deltaTime;
     }

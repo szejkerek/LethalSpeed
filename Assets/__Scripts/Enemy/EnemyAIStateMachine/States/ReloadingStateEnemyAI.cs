@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class ReloadingStateEnemyAI : StateEnemyAI
 {
-    public ReloadingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public ReloadingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
-       
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
     }
     public override void UpdateStateInternally()
     {

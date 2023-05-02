@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class RagdollStateEnemyAI : StateEnemyAI
 {
-    public RagdollStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public RagdollStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.Ragdoll.SetRagdoll();
         _context.WeaponEnemyAI.DropWeapon();
         _context.Mesh.updateWhenOffscreen = true;

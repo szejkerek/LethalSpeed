@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,10 +7,13 @@ public abstract class StateEnemyAI
 {
     protected StateFactoryEnemyAI _factory;
     protected StateMachineEnemyAI _context;
-    public StateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory)
+    protected string stateName;
+
+    public StateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName)
     {
         _factory = factory;
         _context = context;
+        this.stateName = stateName;
     }
 
     public abstract void EnterState();

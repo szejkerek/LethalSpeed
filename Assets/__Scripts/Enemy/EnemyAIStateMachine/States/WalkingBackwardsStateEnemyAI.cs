@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class WalkingBackwardsStateEnemyAI : StateEnemyAI
 {
-    public WalkingBackwardsStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public WalkingBackwardsStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
-        
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
     }
     public override void UpdateStateInternally()
     {

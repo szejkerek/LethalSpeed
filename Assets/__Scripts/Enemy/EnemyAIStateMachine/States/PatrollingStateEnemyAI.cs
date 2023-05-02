@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class PatrollingStateEnemyAI : StateEnemyAI
 {
-    public PatrollingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory) : base(context, factory) { }
+    public PatrollingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
     public override void EnterState()
     {
+        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         nextCooldown = CalculateNextCooldown();
     }
 
