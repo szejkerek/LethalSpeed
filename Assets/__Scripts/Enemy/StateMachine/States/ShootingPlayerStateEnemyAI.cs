@@ -15,6 +15,9 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
     }
     public override void UpdateState()
     {
+        if (Input.GetKey(KeyCode.Mouse0))
+            _context.WeaponEnemyAI.ShootAtPlayer();
+
         CheckSwitchState();
     }
 

@@ -5,12 +5,16 @@ using UnityEngine.Animations.Rigging;
 
 public class Enemy : MonoBehaviour
 {
+    public Player Player => _player;
+    Player _player;
+
     RigWeightController _aimAtTargetRigController;
     public RigWeightController AimAtTargetRigController => _aimAtTargetRigController;
 
     StateMachineEnemyAI _stateMachine;
     private void Awake()
     {
+        _player = FindObjectOfType<Player>();
         _stateMachine = GetComponent<StateMachineEnemyAI>();
         _aimAtTargetRigController = GetComponentInChildren<RigWeightController>();
         ApplyHitboxToLimbs();
@@ -29,15 +33,6 @@ public class Enemy : MonoBehaviour
         {
             HitboxEnemyAI hitBox = rigidbody.gameObject.AddComponent<HitboxEnemyAI>();
             hitBox.Enemy = this;
-        }
-    }
-
-    //Test 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Die();
         }
     }
 
