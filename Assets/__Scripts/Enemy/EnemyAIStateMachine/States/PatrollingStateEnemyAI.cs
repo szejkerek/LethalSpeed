@@ -16,7 +16,7 @@ public class PatrollingStateEnemyAI : StateEnemyAI
     private float nextCooldown = 0;
     private float timer = 0;
 
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
         if(_context.LocomotionEnemyAI.IsAtDestination())
         {
@@ -28,6 +28,7 @@ public class PatrollingStateEnemyAI : StateEnemyAI
                 _context.LocomotionEnemyAI.Patrol(_context.PatrolRange);
             }
         }
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -36,7 +37,10 @@ public class PatrollingStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        _context.ShootingActivationCheck();
+        if (_context.ShootingActivationCheck())
+        {
+            SwitchState(_context.StatesFactory.ShootPlayer());
+        }
 
     }
 

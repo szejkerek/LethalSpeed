@@ -111,14 +111,15 @@ public class StateMachineEnemyAI : MonoBehaviour
         return Player.transform.position;
     }
 
-    public void ShootingActivationCheck()
+    public bool ShootingActivationCheck()
     {
         bool playerInActivationRange = GetPlayerDistance() < ShootingActivationRange;
         bool playerInSight = VisionEnemyAI.TargerInVision;
         if (playerInActivationRange && playerInSight)
         {
-            _currentState.SwitchState(StatesFactory.ShootPlayer());
+            return true;
         }
+        return false;
     }
 
     public float GetPlayerDistance()

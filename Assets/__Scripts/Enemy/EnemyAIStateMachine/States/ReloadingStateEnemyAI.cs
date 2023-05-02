@@ -11,9 +11,9 @@ public class ReloadingStateEnemyAI : StateEnemyAI
     {
         Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
     }
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
-
+        CheckSwitchState();
     }
 
     public override void ExitState()

@@ -16,22 +16,23 @@ public class RetrievePositionStateEnemyAI : StateEnemyAI
         _initialPosition = _context.LocomotionEnemyAI.InitialPosition;
         _context.LocomotionEnemyAI.SetDestinationToRandomPoint(_context.LocomotionEnemyAI.InitialPosition, 0.5f);
     }
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
-
+        CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        _context.LocomotionEnemyAI.ResetPath();
     }
     public override void CheckSwitchState()
     {
-        _context.ShootingActivationCheck();
-
-        if (_context.LocomotionEnemyAI.IsAtDestination())
+        if(_context.ShootingActivationCheck())
         {
-            _context.CurrentState.SwitchState(_context.StatesFactory.Idle());
+            SwitchState(_context.StatesFactory.ShootPlayer());
+        }
+        else if (_context.LocomotionEnemyAI.IsAtDestination())
+        {
+            SwitchState(_context.StatesFactory.Idle());
         }
 
 

@@ -13,9 +13,9 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
         _context.LocomotionEnemyAI.ResetPath();
         _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.FocusDuration);
     }
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
-
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -25,6 +25,7 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
     public override void CheckSwitchState()
     {
         bool playerTooLongNotSeen = _context.VisionEnemyAI.LastSeenTimer >= _context.AggroDuration;
+        //Debug.Log(_context.VisionEnemyAI.LastSeenTimer);
         //Reload
 
         //Seek

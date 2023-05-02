@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-
 public abstract class StateEnemyAI
 {
     protected StateFactoryEnemyAI _factory;
@@ -17,12 +12,7 @@ public abstract class StateEnemyAI
     }
 
     public abstract void EnterState();
-    public void UpdateState()
-    {
-        UpdateStateInternally();
-        CheckSwitchState();
-    }
-    public abstract void UpdateStateInternally();
+    public abstract void UpdateState();
     public abstract void ExitState();
     public abstract void CheckSwitchState();
     public abstract DebugEnemyAIText GetDebugText();

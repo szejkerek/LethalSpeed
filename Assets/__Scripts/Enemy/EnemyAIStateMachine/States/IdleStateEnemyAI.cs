@@ -13,9 +13,9 @@ public class IdleStateEnemyAI : StateEnemyAI
         _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.UnfocusDuration);
     }
 
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
-
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -24,10 +24,12 @@ public class IdleStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        _context.ShootingActivationCheck();
-
         bool tooAwayFromInitialPosition = Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) > _context.PatrolRange + _context.IdleTooAwayDistance;
-        if (tooAwayFromInitialPosition)
+        if (_context.ShootingActivationCheck())
+        {
+            SwitchState(_context.StatesFactory.ShootPlayer());
+        }
+        else if (tooAwayFromInitialPosition)
         {
             SwitchState(_context.StatesFactory.Retrieve());
         }

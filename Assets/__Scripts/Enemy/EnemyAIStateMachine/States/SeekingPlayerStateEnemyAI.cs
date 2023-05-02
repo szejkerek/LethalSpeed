@@ -13,13 +13,13 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     {
         Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.Enemy.AimAtTargetRigController.TurnOnRig(1f);
+        timeSeeking = 0;
     }
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
-
         _context.LocomotionEnemyAI.SetDestination(_context.Player.transform.position);
-
         timeSeeking += Time.deltaTime;
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -28,8 +28,11 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        _context.ShootingActivationCheck();
-        if(timeSeeking > _context.BoredAfterSeconds)
+        if(_context.ShootingActivationCheck())
+        {
+            SwitchState(_context.StatesFactory.ShootPlayer());
+        }
+        else if(timeSeeking > _context.BoredAfterSeconds)
         {
             SwitchState(_context.StatesFactory.Idle());
         }

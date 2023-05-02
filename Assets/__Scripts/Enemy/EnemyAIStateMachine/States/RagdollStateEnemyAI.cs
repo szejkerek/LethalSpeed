@@ -16,7 +16,7 @@ public class RagdollStateEnemyAI : StateEnemyAI
         _context.LocomotionEnemyAI.NavMeshAgent.ResetPath();
     }
 
-    public override void UpdateStateInternally()
+    public override void UpdateState()
     {
         return;
     }
