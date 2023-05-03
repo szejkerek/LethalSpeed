@@ -39,11 +39,16 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: SerializeField] public float BoredAfterSeconds { get; private set; }
 
     [field: Header("Shooting")] //SHOOTING
-
     [field: SerializeField] public float ShootingActivationRange { get; private set; }
     [field: SerializeField] public float AggroDuration { get; private set; }
-    //[field: SerializeField] public float AggroDistance { get; private set; }
-    //
+
+    [field: Header("Walkingbackward")] //SHOOTING
+    [field: SerializeField] public float DangerZoneRange { get; private set; }
+    [field: SerializeField] public float FleeChance { get; private set; }
+    [field: SerializeField] public float FleeDuration { get; private set; }
+    [field: SerializeField] public float FleeVariation { get; private set; }
+
+
 
     public Player Player => _player;
     Player _player;
@@ -77,7 +82,22 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     public void OnValidate()
     {
-        if(PatrolCooldown <= PatrolVariation)
+        if (FleeDuration <= 0)
+        {
+            FleeDuration = 0;
+        }        
+        
+        if (FleeVariation <= 0)
+        {
+            FleeVariation = 0;
+        }
+
+            if (FleeDuration - FleeVariation < 0 )
+        {
+            FleeVariation = FleeDuration;
+        }
+
+            if (PatrolCooldown <= PatrolVariation)
         {
             PatrolVariation = PatrolCooldown;
         }
