@@ -111,12 +111,12 @@ public class WeaponEnemyAI : MonoBehaviour
     private IEnumerator Reload()
     {
         _isReloading = true;
-        _enemy.Animator.SetBool("Reload", true);
+        _enemy.Animator.SetBool("Reload", _isReloading);
         yield return new WaitForSeconds(_reloadTime);
         _currentAmmo = _magazineSize;
         _timer = 0;
-        _enemy.Animator.SetBool("Reload", false);
         _isReloading = false;
+        _enemy.Animator.SetBool("Reload", _isReloading);
     }
 
 }
