@@ -6904,7 +6904,7 @@ MonoBehaviour:
     PatrollShowGizmos: 0
   <FocusDuration>k__BackingField: 0.5
   <UnfocusDuration>k__BackingField: 0.5
-  <RotationSpeed>k__BackingField: 0
+  <RotationSpeed>k__BackingField: 90
   <IdleChance>k__BackingField: 0
   <IdleTooAwayDistance>k__BackingField: 4
   <PatrolInitialChance>k__BackingField: 0
