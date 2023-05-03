@@ -6915,6 +6915,10 @@ MonoBehaviour:
   <BoredAfterSeconds>k__BackingField: 10
   <ShootingActivationRange>k__BackingField: 20
   <AggroDuration>k__BackingField: 4
+  <DangerZoneRange>k__BackingField: 2
+  <FleeChance>k__BackingField: 0
+  <FleeDuration>k__BackingField: 5
+  <FleeVariation>k__BackingField: 2.5
 --- !u!114 &7640499558858753771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7085,6 +7089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atDestinationDistance: 0.45
+  VelocityModifier: 1
 --- !u!4 &7678894308068433706
 Transform:
   m_ObjectHideFlags: 0
