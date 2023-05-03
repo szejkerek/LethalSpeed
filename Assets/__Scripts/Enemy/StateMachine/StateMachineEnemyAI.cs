@@ -16,6 +16,7 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: Header("Common")]
     [field: SerializeField] public float FocusDuration { get; private set; }
     [field: SerializeField] public float UnfocusDuration { get; private set; }
+    [field: SerializeField] public float RotationSpeed { get; private set; }
 
     [field:Header("Idle")] //IDLE
 
@@ -125,6 +126,18 @@ public class StateMachineEnemyAI : MonoBehaviour
     public float GetPlayerDistance()
     {
         return Vector3.Distance(transform.position, Player.transform.position);
+    }
+
+    public void RotateTowardsPlayer()
+    {
+        Vector3 directionToPlayer = Player.transform.position - transform.position;
+        float angle = Vector3.Angle(transform.forward, directionToPlayer);
+        float threshold = 30f;
+        if (angle > threshold)
+        {
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(directionToPlayer), RotationSpeed * Time.deltaTime);
+        }
     }
 
     #endregion

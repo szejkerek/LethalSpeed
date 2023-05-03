@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -19,17 +20,21 @@ public class WeaponEnemyAI : MonoBehaviour
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private float _firerate;
     [SerializeField] private int _magazineSize;
-    [SerializeField] private float _reloadSpeed;
+    [SerializeField] private float _reloadTime;
 
+    public int MagazineSize => _magazineSize;
+    public int CurrentAmmo => _currentAmmo;
+    private int _currentAmmo;
+
+    public bool IsReloading => _isReloading;
+    private bool _isReloading = false;
 
     private Enemy _enemy;
     private Rigidbody _weaponRigidbody;
     private Collider _weaponCollider;
     private VisionEnemyAI _visionEnemyAI;
     private float _timer;
-    private float lastFireTime;
-    private int _currentAmmo;
-    private bool isReloading = false;
+
 
     private ObjectPool<Bullet> _bulletPool;
     private void Awake()
@@ -69,7 +74,7 @@ public class WeaponEnemyAI : MonoBehaviour
 
     public void ShootingAtPlayer()
     {
-        if (!_visionEnemyAI.TargerInVision || isReloading)
+        if (!_visionEnemyAI.TargerInVision || _isReloading)
             return;
 
         if (_timer <= 0)
@@ -83,12 +88,6 @@ public class WeaponEnemyAI : MonoBehaviour
 
     private void SpawnBullet()
     {
-        if (_currentAmmo <= 0)
-        {
-            StartCoroutine(Reload());
-            return;
-        }
-
         _bulletPool.Get();
         _currentAmmo--;
     }
@@ -105,13 +104,19 @@ public class WeaponEnemyAI : MonoBehaviour
         _bulletPool.Release(bullet);
     }
 
+    public void TriggerReload()
+    {
+        StartCoroutine(Reload());
+    }
     private IEnumerator Reload()
     {
-        isReloading = true;
-        yield return new WaitForSeconds(_reloadSpeed);
+        _isReloading = true;
+        _enemy.Animator.SetBool("Reload", true);
+        yield return new WaitForSeconds(_reloadTime);
         _currentAmmo = _magazineSize;
         _timer = 0;
-        isReloading = false;
+        _enemy.Animator.SetBool("Reload", false);
+        _isReloading = false;
     }
 
 }

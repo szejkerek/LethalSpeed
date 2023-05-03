@@ -16,9 +16,11 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
     public override void UpdateState()
     {
         _context.WeaponEnemyAI.ShootingAtPlayer();
+        _context.RotateTowardsPlayer();
 
         CheckSwitchState();
     }
+
 
     public override void ExitState()
     {
@@ -27,16 +29,25 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
     public override void CheckSwitchState()
     {
         bool playerTooLongNotSeen = _context.VisionEnemyAI.LastSeenTimer >= _context.AggroDuration;
-        //Debug.Log(_context.VisionEnemyAI.LastSeenTimer);
+        
         //Reload
 
-        //Seek
-        if (playerTooLongNotSeen)
+        if(_context.WeaponEnemyAI.CurrentAmmo <= 0)
         {
-            SwitchState(_context.StatesFactory.SeekPlayer());
+            SwitchState(_context.StatesFactory.Reload());
+        }
+        else if (playerTooLongNotSeen)
+        {
+            if (_context.WeaponEnemyAI.CurrentAmmo != _context.WeaponEnemyAI.MagazineSize)
+            {
+                SwitchState(_context.StatesFactory.Reload());
+            }
+            else
+            {
+                SwitchState(_context.StatesFactory.SeekPlayer());
+            }
         }
         //WalkBackward
-        //Crouch
     }
 
     public override DebugEnemyAIText GetDebugText()
