@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static event Action onPlayerDeath;
+
     public PlayerCamera PlayerCamera;
 
     private void Awake()

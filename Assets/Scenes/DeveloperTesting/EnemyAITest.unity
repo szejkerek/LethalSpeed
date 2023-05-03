@@ -7040,10 +7040,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc4afc5b1b06c84185583ac23bf4b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _offsetFromCamera: -0.2
   _bulletPrefab: {fileID: 6939328353078691536, guid: bace2d485f657094fbaab570b0404c98, type: 3}
-  _bulletSpeed: 0.5
   _weaponObject: {fileID: 1068995430}
   _barrelTip: {fileID: 1964401273}
+  _bulletSpeed: 0.5
+  _firerate: 0.75
+  _magazineSize: 5
+  _reloadSpeed: 2
 --- !u!114 &7640499558858753776
 MonoBehaviour:
   m_ObjectHideFlags: 0
