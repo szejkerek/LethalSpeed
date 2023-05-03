@@ -69,7 +69,7 @@ public class WeaponEnemyAI : MonoBehaviour
 
     public void ShootingAtPlayer()
     {
-        if (isReloading)
+        if (!_visionEnemyAI.TargerInVision || isReloading)
             return;
 
         if (_timer <= 0)
