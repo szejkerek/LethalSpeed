@@ -20,9 +20,6 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     [field:Header("Idle")] //IDLE
 
-    [field: Tooltip("This chance is checked every Xseconds")]
-    [field: SerializeField] public float IdleChance { get; private set; }
-
     [field: Tooltip("Distance that indicates from where enemy will try to come back to his inital spawn point")]
     [field: SerializeField] public float IdleTooAwayDistance { get; private set; }
 

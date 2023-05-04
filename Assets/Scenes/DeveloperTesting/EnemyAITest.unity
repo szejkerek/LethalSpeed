@@ -6906,12 +6906,11 @@ MonoBehaviour:
   <FocusDuration>k__BackingField: 0.5
   <UnfocusDuration>k__BackingField: 0.5
   <RotationSpeed>k__BackingField: 90
-  <IdleChance>k__BackingField: 0
   <IdleTooAwayDistance>k__BackingField: 4
-  <PartolChance>k__BackingField: 1
-  <PatrolDuration>k__BackingField: 10
-  <PatrolRange>k__BackingField: 15
-  <PatrolCooldown>k__BackingField: 5
+  <PartolChance>k__BackingField: 0.5
+  <PatrolDuration>k__BackingField: 25
+  <PatrolRange>k__BackingField: 8
+  <PatrolCooldown>k__BackingField: 3
   <PatrolVariation>k__BackingField: 1.5
   <BoredAfterSeconds>k__BackingField: 10
   <ShootingActivationRange>k__BackingField: 20
