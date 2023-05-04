@@ -26,14 +26,12 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: Tooltip("Distance that indicates from where enemy will try to come back to his inital spawn point")]
     [field: SerializeField] public float IdleTooAwayDistance { get; private set; }
 
-    [field: Header("Patrolling")] // PATROL
-    [field: SerializeField] public float PatrolInitialChance { get; private set; }
+    [field: Header("Patroling")] // PATROL
+    [field: SerializeField] public float PartolChance { get; private set; }
+    [field: SerializeField] public float PatrolDuration { get; private set; }
     [field: SerializeField] public float PatrolRange { get; private set; }
     [field: SerializeField] public float PatrolCooldown { get; private set; }
     [field: SerializeField] public float PatrolVariation { get; private set; }
-
-    [field: Tooltip("This chance is checked every Xseconds")]
-    [field: SerializeField] public float PatrolChance { get; private set; }
 
     [field: Header("Seeking")] // SEEKING
     [field: SerializeField] public float BoredAfterSeconds { get; private set; }
@@ -87,7 +85,8 @@ public class StateMachineEnemyAI : MonoBehaviour
     public void OnValidate()
     {
         FleeChance = Mathf.Clamp(FleeChance, 0f, 1f);
-        EngageChance = Mathf.Clamp(EngageChance, 0f, 1f);       
+        EngageChance = Mathf.Clamp(EngageChance, 0f, 1f);
+        PartolChance = Mathf.Clamp(PartolChance, 0f, 1f);       
 
         if (PatrolCooldown <= PatrolVariation)
         {

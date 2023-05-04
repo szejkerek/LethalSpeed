@@ -5,12 +5,13 @@ using UnityEngine;
 public class IdleStateEnemyAI : StateEnemyAI
 {
     public IdleStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base (context, factory, stateName){}
-
+    bool _canPatrol;
     public override void EnterState()
     {
         Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.LocomotionEnemyAI.ResetPath();
         _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.UnfocusDuration);
+        _canPatrol = true;
     }
 
     public override void UpdateState()
@@ -32,6 +33,15 @@ public class IdleStateEnemyAI : StateEnemyAI
         else if (tooAwayFromInitialPosition)
         {
             SwitchState(_context.StatesFactory.Retrieve());
+        }
+        else if (_canPatrol)
+        {
+            _canPatrol = false;
+            float randomNumber = Random.Range(0f, 1f);
+            if (randomNumber <= _context.PartolChance)
+            {
+                SwitchState(_context.StatesFactory.Patrol());
+            }
         }
     }
 

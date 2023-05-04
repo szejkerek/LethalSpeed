@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class ShootingPlayerStateEnemyAI : StateEnemyAI
@@ -51,7 +49,7 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
         }
         else if (_canBeScared && playerInDangerZone)
         {
-            float randomNumber = UnityEngine.Random.Range(0f, 1f);
+            float randomNumber = Random.Range(0f, 1f);
             _canBeScared = false;
             if(randomNumber <= _context.FleeChance)
             {
@@ -61,7 +59,7 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
         else if(_canEngage)
         {
             _canEngage = false;
-            float randomNumber = UnityEngine.Random.Range(0f, 1f);
+            float randomNumber = Random.Range(0f, 1f);
             if (randomNumber <= _context.EngageChance)
             {
                 SwitchState(_context.StatesFactory.Engage());

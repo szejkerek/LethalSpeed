@@ -6908,19 +6908,19 @@ MonoBehaviour:
   <RotationSpeed>k__BackingField: 90
   <IdleChance>k__BackingField: 0
   <IdleTooAwayDistance>k__BackingField: 4
-  <PatrolInitialChance>k__BackingField: 0
-  <PatrolRange>k__BackingField: 5
+  <PartolChance>k__BackingField: 1
+  <PatrolDuration>k__BackingField: 10
+  <PatrolRange>k__BackingField: 15
   <PatrolCooldown>k__BackingField: 5
   <PatrolVariation>k__BackingField: 1.5
-  <PatrolChance>k__BackingField: 0
   <BoredAfterSeconds>k__BackingField: 10
   <ShootingActivationRange>k__BackingField: 20
   <AggroDuration>k__BackingField: 4
   <DangerZoneRange>k__BackingField: 5
-  <FleeChance>k__BackingField: 0.45
+  <FleeChance>k__BackingField: 0.3
   <FleeMaxDuration>k__BackingField: 7
-  <EngageStoppinDistance>k__BackingField: 8
-  <EngageChance>k__BackingField: 0.7
+  <EngageStoppinDistance>k__BackingField: 2.2
+  <EngageChance>k__BackingField: 0.6
   <EngageMaxDuration>k__BackingField: 4
 --- !u!114 &7640499558858753771
 MonoBehaviour:
