@@ -9,7 +9,7 @@ public class FleeStateEnemyAI : StateEnemyAI
     float _oldNavMeshSpeed;
     float _fleeNavMeshSpeed = 1f;
     float _speed = 0.3f;
-
+    float _fleeDuration = 0;
     public override void EnterState()
     {
         Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
@@ -22,6 +22,7 @@ public class FleeStateEnemyAI : StateEnemyAI
 
     public override void UpdateState()
     {
+        _fleeDuration += Time.deltaTime;
         FleeFromPlayer();
         _context.WeaponEnemyAI.ShootingAtPlayer();
         _context.RotateTowardsPlayer();
@@ -47,6 +48,10 @@ public class FleeStateEnemyAI : StateEnemyAI
         if (_context.WeaponEnemyAI.CurrentAmmo <= 0)
         {
             SwitchState(_context.StatesFactory.Reload());
+        }
+        else if (_fleeDuration >= _context.FleeMaxDuration)
+        {
+            SwitchState(_context.StatesFactory.ShootPlayer());
         }
     }
 

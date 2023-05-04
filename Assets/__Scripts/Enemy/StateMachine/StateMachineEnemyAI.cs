@@ -45,8 +45,7 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: Header("Walkingbackward")] //SHOOTING
     [field: SerializeField] public float DangerZoneRange { get; private set; }
     [field: SerializeField] public float FleeChance { get; private set; }
-    [field: SerializeField] public float FleeDuration { get; private set; }
-    [field: SerializeField] public float FleeVariation { get; private set; }
+    [field: SerializeField] public float FleeMaxDuration { get; private set; }
 
 
 
@@ -82,22 +81,9 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     public void OnValidate()
     {
-        if (FleeDuration <= 0)
-        {
-            FleeDuration = 0;
-        }        
-        
-        if (FleeVariation <= 0)
-        {
-            FleeVariation = 0;
-        }
+        FleeChance = Mathf.Clamp(FleeChance, 0f, 1f);       
 
-            if (FleeDuration - FleeVariation < 0 )
-        {
-            FleeVariation = FleeDuration;
-        }
-
-            if (PatrolCooldown <= PatrolVariation)
+        if (PatrolCooldown <= PatrolVariation)
         {
             PatrolVariation = PatrolCooldown;
         }
@@ -186,9 +172,10 @@ public class StateMachineEnemyAI : MonoBehaviour
 
         }
 
-        if (debugEnemyAIStates.WalkBackShowGizmos)
+        if (debugEnemyAIStates.FleeShowGizmos)
         {
-
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position, DangerZoneRange);           
         }
 
         if (debugEnemyAIStates.ReloadShowGizmos)
@@ -218,7 +205,7 @@ public struct DebugEnemyAIStates
     public bool SeekShowGizmos;
     public bool CrouchShowGizmos;
     public bool ReloadShowGizmos;
-    public bool WalkBackShowGizmos;
+    public bool FleeShowGizmos;
     public bool RagdollShowGizmos;
     public bool PatrollShowGizmos;
 }

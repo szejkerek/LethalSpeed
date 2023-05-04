@@ -74,7 +74,7 @@ public class DeveloperOptions : MonoBehaviour
                     stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.ShootPlayer());
                     break;
                 case "WalkBackward":
-                    stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.WalkBackward());
+                    stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.Flee());
                     break;
                 case "Ragdoll":
                     stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.Ragdoll());

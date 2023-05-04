@@ -15,6 +15,6 @@ public class StateFactoryEnemyAI
     public StateEnemyAI Crouch()        => new CrouchingStateEnemyAI(_context, this, "Crouch");
     public StateEnemyAI Reload()        => new ReloadingStateEnemyAI(_context, this, "Reload");
     public StateEnemyAI Patrol()        => new PatrollingStateEnemyAI(_context, this, "Patrol");
-    public StateEnemyAI WalkBackward()  => new FleeStateEnemyAI(_context, this, "WalkBackward");
+    public StateEnemyAI Flee()  => new FleeStateEnemyAI(_context, this, "WalkBackward");
     public StateEnemyAI Retrieve()      => new RetrievePositionStateEnemyAI(_context, this, "Retrieve");
 }
