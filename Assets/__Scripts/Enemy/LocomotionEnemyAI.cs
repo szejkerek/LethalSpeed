@@ -65,7 +65,7 @@ public class LocomotionEnemyAI : MonoBehaviour
 
     public void Patrol(float range)
     {
-        SetDestinationToRandomPoint(_initialPosition, range);
+        SetDestinationToRandomPoint(transform.position, range);
     }
 
     public void ResetPath()
