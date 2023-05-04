@@ -42,10 +42,15 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: SerializeField] public float ShootingActivationRange { get; private set; }
     [field: SerializeField] public float AggroDuration { get; private set; }
 
-    [field: Header("Walkingbackward")] //SHOOTING
+    [field: Header("Flee")] //Flee
     [field: SerializeField] public float DangerZoneRange { get; private set; }
     [field: SerializeField] public float FleeChance { get; private set; }
     [field: SerializeField] public float FleeMaxDuration { get; private set; }
+
+    [field: Header("Engage")] //Flee
+    [field: SerializeField] public float EngageStoppinDistance { get; private set; }
+    [field: SerializeField] public float EngageChance { get; private set; }
+    [field: SerializeField] public float EngageMaxDuration { get; private set; }
 
 
 
@@ -81,7 +86,8 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     public void OnValidate()
     {
-        FleeChance = Mathf.Clamp(FleeChance, 0f, 1f);       
+        FleeChance = Mathf.Clamp(FleeChance, 0f, 1f);
+        EngageChance = Mathf.Clamp(EngageChance, 0f, 1f);       
 
         if (PatrolCooldown <= PatrolVariation)
         {
@@ -120,7 +126,7 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     public bool ShootingActivationCheck()
     {
-        bool playerInActivationRange = GetPlayerDistance() < ShootingActivationRange;
+        bool playerInActivationRange = GetDistanceToPlayer() < ShootingActivationRange;
         bool playerInSight = VisionEnemyAI.TargerInVision;
         if (playerInActivationRange && playerInSight)
         {
@@ -129,7 +135,7 @@ public class StateMachineEnemyAI : MonoBehaviour
         return false;
     }
 
-    public float GetPlayerDistance()
+    public float GetDistanceToPlayer()
     {
         return Vector3.Distance(transform.position, Player.transform.position);
     }
@@ -191,6 +197,12 @@ public class StateMachineEnemyAI : MonoBehaviour
         if (debugEnemyAIStates.PatrollShowGizmos)
         {
 
+        }        
+        
+        if (debugEnemyAIStates.EngageShowGizmos)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.position, EngageStoppinDistance);      
         }
     }
 
@@ -205,6 +217,7 @@ public struct DebugEnemyAIStates
     public bool SeekShowGizmos;
     public bool CrouchShowGizmos;
     public bool ReloadShowGizmos;
+    public bool EngageShowGizmos;
     public bool FleeShowGizmos;
     public bool RagdollShowGizmos;
     public bool PatrollShowGizmos;

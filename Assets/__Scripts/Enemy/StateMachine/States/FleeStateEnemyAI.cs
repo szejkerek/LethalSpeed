@@ -9,10 +9,11 @@ public class FleeStateEnemyAI : StateEnemyAI
     float _oldNavMeshSpeed;
     float _fleeNavMeshSpeed = 1f;
     float _speed = 0.3f;
-    float _fleeDuration = 0;
+    float _fleeDuration;
     public override void EnterState()
     {
         Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
+        _fleeDuration = 0;
         _context.LocomotionEnemyAI.VelocityModifier = -1;
         _context.LocomotionEnemyAI.NavMeshAgent.updateRotation = false;
         _oldNavMeshSpeed = _context.LocomotionEnemyAI.NavMeshAgent.speed;

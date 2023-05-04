@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 public class WeaponEnemyAI : MonoBehaviour
 {
     [Range(-1f,1f)]
-    [SerializeField] private float _offsetFromCamera;
+    [SerializeField] private float _yOffsetFromCamera;
 
     [Header("Bullet proporties")]
     [SerializeField] private Bullet _bulletPrefab;
@@ -58,7 +58,7 @@ public class WeaponEnemyAI : MonoBehaviour
             return Instantiate(_bulletPrefab, _barrelTip.position, Quaternion.LookRotation(direction));
         }, bullet =>
         {
-            Vector3 direction = _enemy.Player.PlayerCamera.transform.position + Vector3.up * _offsetFromCamera - _barrelTip.position;
+            Vector3 direction = _enemy.Player.PlayerCamera.transform.position + Vector3.up * _yOffsetFromCamera - _barrelTip.position;
             bullet.transform.position = _barrelTip.position;
             bullet.transform.rotation = Quaternion.LookRotation(direction);
             bullet.Init(direction, _bulletSpeed, DestroyBullet, 5f);

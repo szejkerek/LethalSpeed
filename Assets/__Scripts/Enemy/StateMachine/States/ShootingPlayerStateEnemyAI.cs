@@ -7,12 +7,14 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
 {
     public ShootingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
     bool _canBeScared;
+    bool _canEngage;
     public override void EnterState()
     {
         Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.LocomotionEnemyAI.ResetPath();
         _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.FocusDuration);
         _canBeScared = true;
+        _canEngage = true;
     }
     public override void UpdateState()
     {
@@ -30,7 +32,7 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
     public override void CheckSwitchState()
     {
         bool playerTooLongNotSeen = _context.VisionEnemyAI.LastSeenTimer >= _context.AggroDuration;
-        bool playerInDangerZone = _context.GetPlayerDistance() <= _context.DangerZoneRange;
+        bool playerInDangerZone = _context.GetDistanceToPlayer() <= _context.DangerZoneRange;
 
         if(_context.WeaponEnemyAI.CurrentAmmo <= 0)
         {
@@ -54,6 +56,15 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
             if(randomNumber <= _context.FleeChance)
             {
                 SwitchState(_context.StatesFactory.Flee());
+            }
+        }
+        else if(_canEngage)
+        {
+            _canEngage = false;
+            float randomNumber = UnityEngine.Random.Range(0f, 1f);
+            if (randomNumber <= _context.EngageChance)
+            {
+                SwitchState(_context.StatesFactory.Engage());
             }
         }
     }
