@@ -7,24 +7,28 @@ public class PatrollingStateEnemyAI : StateEnemyAI
 {
     public PatrollingStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
 
+    private float _nextCooldown = 0;
+    private float _waitAtDestinationTimer = 0;
+    private float _patrolingTimer = 0;
+
     public override void EnterState()
     {
         Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
-        nextCooldown = CalculateNextCooldown();
+        _nextCooldown = CalculateNextCooldown();
+        _waitAtDestinationTimer = 0;
+        _patrolingTimer = 0;
     }
-
-    private float nextCooldown = 0;
-    private float timer = 0;
-
+    
     public override void UpdateState()
     {
-        if(_context.LocomotionEnemyAI.IsAtDestination())
+        _patrolingTimer += Time.deltaTime;
+        if (_context.LocomotionEnemyAI.IsAtDestination())
         {
-            timer += Time.deltaTime;
-            if(timer >= nextCooldown)
+            _waitAtDestinationTimer += Time.deltaTime;
+            if(_waitAtDestinationTimer >= _nextCooldown)
             {
-                timer = 0;
-                nextCooldown = CalculateNextCooldown();
+                _waitAtDestinationTimer = 0;
+                _nextCooldown = CalculateNextCooldown();
                 _context.LocomotionEnemyAI.Patrol(_context.PatrolRange);
             }
         }
@@ -33,7 +37,7 @@ public class PatrollingStateEnemyAI : StateEnemyAI
 
     public override void ExitState()
     {
-        _context.LocomotionEnemyAI.ResetPath();
+
     }
     public override void CheckSwitchState()
     {
@@ -41,7 +45,10 @@ public class PatrollingStateEnemyAI : StateEnemyAI
         {
             SwitchState(_context.StatesFactory.ShootPlayer());
         }
-
+        else if(_patrolingTimer >= _context.PatrolDuration)
+        {
+            SwitchState(_context.StatesFactory.Idle());
+        }
     }
 
     public override DebugEnemyAIText GetDebugText()

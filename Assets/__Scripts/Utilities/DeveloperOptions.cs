@@ -39,15 +39,19 @@ public class DeveloperOptions : MonoBehaviour
     public static void ShootEnemyAI() { ChangeAllEnemiesState("Shoot"); }
 
 
-    [MenuItem(_developerFolder + "Enemy/State/WalkBackward")]
-    public static void WalkBackwardEnemyAI() { ChangeAllEnemiesState("WalkBackward"); }
+    [MenuItem(_developerFolder + "Enemy/State/Flee")]
+    public static void WalkBackwardEnemyAI() { ChangeAllEnemiesState("Flee"); }
 
 
     [MenuItem(_developerFolder + "Enemy/State/Ragdoll")]
     public static void RagdollEnemyAI() { ChangeAllEnemiesState("Ragdoll"); }    
+
     
     [MenuItem(_developerFolder + "Enemy/State/Retrieve")]
     public static void RetrieveEnemyAI() { ChangeAllEnemiesState("Retrieve"); }
+
+    [MenuItem(_developerFolder + "Enemy/State/Engage")]
+    public static void EngageEnemyAI() { ChangeAllEnemiesState("Engage"); }
 
 
     static void ChangeAllEnemiesState(string stateName)
@@ -73,8 +77,11 @@ public class DeveloperOptions : MonoBehaviour
                 case "Shoot":
                     stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.ShootPlayer());
                     break;
-                case "WalkBackward":
-                    stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.WalkBackward());
+                case "Flee":
+                    stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.Flee());
+                    break;                
+                case "Engage":
+                    stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.Flee());
                     break;
                 case "Ragdoll":
                     stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.Ragdoll());

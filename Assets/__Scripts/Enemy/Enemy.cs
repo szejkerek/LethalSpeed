@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     Player _player;
 
     RigWeightController _aimAtTargetRigController;
+    public Animator Animator => _animator;
+    Animator _animator;
     public RigWeightController AimAtTargetRigController => _aimAtTargetRigController;
 
     StateMachineEnemyAI _stateMachine;
@@ -16,6 +18,7 @@ public class Enemy : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         _stateMachine = GetComponent<StateMachineEnemyAI>();
+        _animator = GetComponent<Animator>();
         _aimAtTargetRigController = GetComponentInChildren<RigWeightController>();
         ApplyHitboxToLimbs();
         SetUpRig();

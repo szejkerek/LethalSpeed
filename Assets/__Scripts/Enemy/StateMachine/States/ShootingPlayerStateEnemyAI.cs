@@ -1,25 +1,27 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class ShootingPlayerStateEnemyAI : StateEnemyAI
 {
     public ShootingPlayerStateEnemyAI(StateMachineEnemyAI context, StateFactoryEnemyAI factory, string stateName) : base(context, factory, stateName) { }
-
+    bool _canBeScared;
+    bool _canEngage;
     public override void EnterState()
     {
         Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.LocomotionEnemyAI.ResetPath();
         _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.FocusDuration);
+        _canBeScared = true;
+        _canEngage = true;
     }
     public override void UpdateState()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
-            _context.WeaponEnemyAI.ShootAtPlayer();
+        _context.WeaponEnemyAI.ShootingAtPlayer();
+        _context.RotateTowardsPlayer();
 
         CheckSwitchState();
     }
+
 
     public override void ExitState()
     {
@@ -28,16 +30,41 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
     public override void CheckSwitchState()
     {
         bool playerTooLongNotSeen = _context.VisionEnemyAI.LastSeenTimer >= _context.AggroDuration;
-        //Debug.Log(_context.VisionEnemyAI.LastSeenTimer);
-        //Reload
+        bool playerInDangerZone = _context.GetDistanceToPlayer() <= _context.DangerZoneRange;
 
-        //Seek
-        if (playerTooLongNotSeen)
+        if(_context.WeaponEnemyAI.CurrentAmmo <= 0)
         {
-            SwitchState(_context.StatesFactory.SeekPlayer());
+            SwitchState(_context.StatesFactory.Reload());
         }
-        //WalkBackward
-        //Crouch
+        else if (playerTooLongNotSeen)
+        {
+            if (_context.WeaponEnemyAI.CurrentAmmo != _context.WeaponEnemyAI.MagazineSize)
+            {
+                SwitchState(_context.StatesFactory.Reload());
+            }
+            else
+            {
+                SwitchState(_context.StatesFactory.SeekPlayer());
+            }
+        }
+        else if (_canBeScared && playerInDangerZone)
+        {
+            float randomNumber = Random.Range(0f, 1f);
+            _canBeScared = false;
+            if(randomNumber <= _context.FleeChance)
+            {
+                SwitchState(_context.StatesFactory.Flee());
+            }
+        }
+        else if(_canEngage)
+        {
+            _canEngage = false;
+            float randomNumber = Random.Range(0f, 1f);
+            if (randomNumber <= _context.EngageChance)
+            {
+                SwitchState(_context.StatesFactory.Engage());
+            }
+        }
     }
 
     public override DebugEnemyAIText GetDebugText()

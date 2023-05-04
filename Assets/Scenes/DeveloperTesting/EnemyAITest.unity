@@ -2889,8 +2889,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1557168403}
   m_LocalRotation: {x: -0, y: -0.52673155, z: -0, w: 0.8500317}
-  m_LocalPosition: {x: 16.82, y: 8.3, z: -23.91}
-  m_LocalScale: {x: 0.13013121, y: 4.5352736, z: 4.974378}
+  m_LocalPosition: {x: 17.08, y: 8.3, z: -24.06}
+  m_LocalScale: {x: 0.6336609, y: 4.5352736, z: 4.974378}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 216822601}
@@ -3372,7 +3372,7 @@ Transform:
   m_GameObject: {fileID: 1830184878}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 16.271544, y: 6.3674192, z: -30.209738}
-  m_LocalScale: {x: 60, y: 0.039894, z: 60}
+  m_LocalScale: {x: 190.99199, y: 0.12699057, z: 190.99199}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1530934237}
@@ -6899,21 +6899,28 @@ MonoBehaviour:
     SeekShowGizmos: 0
     CrouchShowGizmos: 0
     ReloadShowGizmos: 0
-    WalkBackShowGizmos: 0
+    EngageShowGizmos: 0
+    FleeShowGizmos: 0
     RagdollShowGizmos: 0
     PatrollShowGizmos: 0
   <FocusDuration>k__BackingField: 0.5
   <UnfocusDuration>k__BackingField: 0.5
-  <IdleChance>k__BackingField: 0
+  <RotationSpeed>k__BackingField: 90
   <IdleTooAwayDistance>k__BackingField: 4
-  <PatrolInitialChance>k__BackingField: 0
-  <PatrolRange>k__BackingField: 5
-  <PatrolCooldown>k__BackingField: 5
+  <PartolChance>k__BackingField: 0.5
+  <PatrolDuration>k__BackingField: 25
+  <PatrolRange>k__BackingField: 8
+  <PatrolCooldown>k__BackingField: 3
   <PatrolVariation>k__BackingField: 1.5
-  <PatrolChance>k__BackingField: 0
   <BoredAfterSeconds>k__BackingField: 10
   <ShootingActivationRange>k__BackingField: 20
   <AggroDuration>k__BackingField: 4
+  <DangerZoneRange>k__BackingField: 5
+  <FleeChance>k__BackingField: 0.3
+  <FleeMaxDuration>k__BackingField: 7
+  <EngageStoppinDistance>k__BackingField: 2.2
+  <EngageChance>k__BackingField: 0.6
+  <EngageMaxDuration>k__BackingField: 4
 --- !u!114 &7640499558858753771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7040,10 +7047,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc4afc5b1b06c84185583ac23bf4b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _yOffsetFromCamera: 0
   _bulletPrefab: {fileID: 6939328353078691536, guid: bace2d485f657094fbaab570b0404c98, type: 3}
-  _bulletSpeed: 0.5
   _weaponObject: {fileID: 1068995430}
   _barrelTip: {fileID: 1964401273}
+  _bulletSpeed: 0.5
+  _firerate: 0.75
+  _magazineSize: 5
+  _reloadTime: 3.5
 --- !u!114 &7640499558858753776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7080,6 +7091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atDestinationDistance: 0.45
+  VelocityModifier: 1
 --- !u!4 &7678894308068433706
 Transform:
   m_ObjectHideFlags: 0

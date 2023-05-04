@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class VisionEnemyAI : MonoBehaviour
 {
@@ -22,7 +21,7 @@ public class VisionEnemyAI : MonoBehaviour
     [Range(0f,0.5f)]
     [SerializeField] float sideError = 0.32f;
 
-    int count;
+    int targetsInRange;
     float lastScanTime = 0;
     Collider[] colliders = new Collider[1];
     PlayerMovement playerMovment;
@@ -47,7 +46,7 @@ public class VisionEnemyAI : MonoBehaviour
         if (Time.time - lastScanTime < scanIntervals)
             return;
 
-        count = Physics.OverlapSphereNonAlloc(eyeLevel.position, Mathf.Infinity, colliders, player, QueryTriggerInteraction.Collide);
+        targetsInRange = Physics.OverlapSphereNonAlloc(eyeLevel.position, Mathf.Infinity, colliders, player, QueryTriggerInteraction.Collide);
         lastScanTime = Time.time;
 
         if (colliders[0] is null)
@@ -59,9 +58,9 @@ public class VisionEnemyAI : MonoBehaviour
         Transform scannedPlayer = colliders[0].transform;
         UpdatePlayerBodyPartsPositions(scannedPlayer);
 
-        bool blocked = IsVisionBlocked();
+        bool inVision = IsInVision();
 
-        targerInVision = count > 0 && !blocked;
+        targerInVision = targetsInRange > 0 && inVision;
 
         if (targerInVision)
             _lastSeenTimer = 0;
@@ -99,7 +98,7 @@ public class VisionEnemyAI : MonoBehaviour
     bool isBlockedRight;
     bool isBlockedForward;
     bool isBlockedBack;
-    private bool IsVisionBlocked()
+    private bool IsInVision()
     {
         isBlockedMiddle = Physics.Linecast(eyeLevel.position, middlePosition, blockers);
         isBlockedTop = Physics.Linecast(eyeLevel.position, topPosition, blockers);
@@ -109,8 +108,16 @@ public class VisionEnemyAI : MonoBehaviour
         isBlockedForward = Physics.Linecast(eyeLevel.position, forwardPosition, blockers);
         isBlockedBack = Physics.Linecast(eyeLevel.position, backPosition, blockers);
 
-        bool blocked = isBlockedMiddle && isBlockedTop && isBlockedBottom && isBlockedLeft && isBlockedRight && isBlockedForward && isBlockedBack;
-        return blocked;
+        bool seeCorePart = !isBlockedMiddle || !isBlockedTop || !isBlockedBottom;
+
+        int sidePartsCount = 0;
+        if (!isBlockedLeft) sidePartsCount++;
+        if (!isBlockedRight) sidePartsCount++;
+        if (!isBlockedForward) sidePartsCount++;
+        if (!isBlockedBack) sidePartsCount++;
+
+        //bool blocked = isBlockedMiddle && isBlockedTop && isBlockedBottom && isBlockedLeft && isBlockedRight && isBlockedForward && isBlockedBack;
+        return seeCorePart || sidePartsCount > 1;
     }
 
     private List<Vector3> visibleBodyParts = new List<Vector3>(7);

@@ -21,6 +21,8 @@ public class LocomotionEnemyAI : MonoBehaviour
 
     Animator _animator;
 
+    public float VelocityModifier = 1;
+
     void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -30,7 +32,7 @@ public class LocomotionEnemyAI : MonoBehaviour
     }
     private void Update()
     {
-        _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
+        _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude * VelocityModifier);
     }
 
     public void SetDestination(Vector3 target)
@@ -63,7 +65,7 @@ public class LocomotionEnemyAI : MonoBehaviour
 
     public void Patrol(float range)
     {
-        SetDestinationToRandomPoint(_initialPosition, range);
+        SetDestinationToRandomPoint(transform.position, range);
     }
 
     public void ResetPath()
