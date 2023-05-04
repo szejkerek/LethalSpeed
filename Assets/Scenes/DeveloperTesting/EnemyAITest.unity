@@ -6899,8 +6899,8 @@ MonoBehaviour:
     SeekShowGizmos: 0
     CrouchShowGizmos: 0
     ReloadShowGizmos: 0
-    EngageShowGizmos: 1
-    FleeShowGizmos: 1
+    EngageShowGizmos: 0
+    FleeShowGizmos: 0
     RagdollShowGizmos: 0
     PatrollShowGizmos: 0
   <FocusDuration>k__BackingField: 0.5

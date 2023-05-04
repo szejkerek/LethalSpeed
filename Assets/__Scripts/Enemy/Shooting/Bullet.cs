@@ -5,19 +5,21 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    Enemy _firedByReference;
     Action<Bullet> _onHitAction;
     float _speed;
     Vector3 _direction;
     float _timeInAir;
     float _maxTimeInAir;
 
-    public void Init(Vector3 direction, float speed, Action<Bullet> onHitAction, float maxTimeInAir = 5f)
+    public void Init(Enemy firedByReference, Vector3 direction, float speed, Action<Bullet> onHitAction, float maxTimeInAir = 5f)
     {
         _timeInAir = 0;
         _direction = direction;
         _speed = speed;
         _onHitAction = onHitAction;
         _maxTimeInAir = maxTimeInAir;
+        _firedByReference = firedByReference;
     }
 
     void Update()
@@ -33,7 +35,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.CompareTag("EnemyWeapon"))
+        if (ShootHimself(col))
             return;
 
         if (col.TryGetComponent(out HitBox hitBox))
@@ -44,4 +46,16 @@ public class Bullet : MonoBehaviour
         _onHitAction(this);
     }
 
+    private bool ShootHimself(Collider hit)
+    {
+        foreach (Collider firedByCollider in _firedByReference.GetComponentsInChildren<Collider>())
+        {
+            if (hit == firedByCollider)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
