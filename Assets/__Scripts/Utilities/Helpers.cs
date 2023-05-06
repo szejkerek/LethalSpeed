@@ -36,5 +36,24 @@ public static class Helpers
         }
     }
 
-  
+    public static T PickRandomElement<T>(this List<T> list)
+    {
+        if (list is null)
+        {
+            throw new System.ArgumentNullException(nameof(list));
+        }
+
+        int index = Random.Range(0,list.Count);
+        return list[index];
+    }
+
+    public static void PlayRandomized(this List<Sound> list, AudioSource audioSource)
+    {
+        if (audioSource is null)
+        {
+            throw new System.ArgumentNullException(nameof(list));
+        }
+
+        list.PickRandomElement().PlayRandomized(audioSource);
+    }
 }

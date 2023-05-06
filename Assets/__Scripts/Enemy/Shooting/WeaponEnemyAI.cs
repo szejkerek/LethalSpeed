@@ -69,7 +69,7 @@ public class WeaponEnemyAI : MonoBehaviour
         }, bullet =>
         {
             Destroy(bullet.gameObject);
-        }, true, 10, 200);
+        }, true, 25, 200);
     }
 
     public void ShootingAtPlayer()
@@ -80,6 +80,7 @@ public class WeaponEnemyAI : MonoBehaviour
         if (_timer <= 0)
         {
             SpawnBullet();
+            _enemy.EnemyAudioLib.Pistol.PlayRandomized(_enemy.AudioSource);
             _timer = 1 / _firerate;
         }
 
@@ -112,6 +113,7 @@ public class WeaponEnemyAI : MonoBehaviour
     {
         _isReloading = true;
         _enemy.Animator.SetBool("Reload", _isReloading);
+        _enemy.EnemyAudioLib.Reload.PlayRandomized(_enemy.AudioSource);
         yield return new WaitForSeconds(_reloadTime);
         _currentAmmo = _magazineSize;
         _timer = 0;
