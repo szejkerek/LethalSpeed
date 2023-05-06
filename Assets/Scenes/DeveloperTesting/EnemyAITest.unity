@@ -6908,20 +6908,21 @@ MonoBehaviour:
   <FocusDuration>k__BackingField: 0.5
   <UnfocusDuration>k__BackingField: 0.5
   <RotationSpeed>k__BackingField: 90
+  <EmotionStatesCooldown>k__BackingField: 10
   <IdleTooAwayDistance>k__BackingField: 4
   <PartolChance>k__BackingField: 0.5
   <PatrolDuration>k__BackingField: 25
   <PatrolRange>k__BackingField: 8
   <PatrolCooldown>k__BackingField: 3
   <PatrolVariation>k__BackingField: 1.5
-  <BoredAfterSeconds>k__BackingField: 10
+  <BoredAfterSeconds>k__BackingField: 6
   <ShootingActivationRange>k__BackingField: 20
   <AggroDuration>k__BackingField: 4
   <DangerZoneRange>k__BackingField: 5
   <FleeChance>k__BackingField: 0.3
   <FleeMaxDuration>k__BackingField: 7
   <EngageStoppinDistance>k__BackingField: 2.2
-  <EngageChance>k__BackingField: 0.6
+  <EngageChance>k__BackingField: 0.7
   <EngageMaxDuration>k__BackingField: 4
 --- !u!114 &7640499558858753771
 MonoBehaviour:
@@ -7069,17 +7070,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 406e774241dca8641b9b43cc28a84ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanIntervals: 0.05
-  eyeLevel: {fileID: 2106757597}
-  player:
+  _scanIntervals: 0.5
+  _reactionTime: 0.2
+  _eyeLevel: {fileID: 2106757597}
+  _player:
     serializedVersion: 2
     m_Bits: 1024
-  blockers:
+  _blockers:
     serializedVersion: 2
-    m_Bits: 961
-  debugErrors: 0
-  topError: 0.438
-  sideError: 0.162
+    m_Bits: 193
+  _debugErrors: 0
+  _topError: 0.32
+  _sideError: 0.32
 --- !u!114 &7640499558858753777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7105,17 +7107,17 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.95522606
-  m_Pitch: 1.0498431
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 6
-  MaxDistance: 70
+  MinDistance: 1
+  MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -7125,50 +7127,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.08571429
+      time: 0
       value: 1
-      inSlope: -11.671349
-      outSlope: -11.671349
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.17142858
-      value: 0.5
-      inSlope: -2.8094325
-      outSlope: -2.8094325
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.30332595
-    - serializedVersion: 3
-      time: 0.34285715
-      value: 0.25
-      inSlope: -0.7294593
-      outSlope: -0.7294593
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.6857143
-      value: 0.125
-      inSlope: -0.18236482
-      outSlope: -0.18236482
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.08571429
-      inSlope: -0.085748546
-      outSlope: -0.085748546
+      value: 0
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -7177,7 +7152,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

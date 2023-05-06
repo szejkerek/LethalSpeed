@@ -18,15 +18,15 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     minRange: 1
-    maxRange: 500
-    pitchVariation: 0.1
-    volumeVariation: 0.1
+    maxRange: 20
+    pitchVariation: 0.5
+    volumeVariation: 0.3
   <Pistol>k__BackingField:
     audioClip: {fileID: 8300000, guid: 5eb4ee4c32b6d2d4d93255b215c53d78, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    minRange: 1
-    maxRange: 500
-    pitchVariation: 0.1
-    volumeVariation: 0.1
+    minRange: 6
+    maxRange: 70
+    pitchVariation: 0
+    volumeVariation: 0

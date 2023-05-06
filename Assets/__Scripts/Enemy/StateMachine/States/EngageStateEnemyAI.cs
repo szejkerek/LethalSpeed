@@ -28,7 +28,7 @@ public class EngageStateEnemyAI : StateEnemyAI
 
     public override void ExitState()
     {
-
+        _context.ResetEmotionsTimer();
     }
     public override void CheckSwitchState()
     {

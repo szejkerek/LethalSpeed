@@ -44,7 +44,7 @@ public class VisionEnemyAI : MonoBehaviour
         
         Scan();
 
-        if(_targerInVisionAbsolute)
+        if(_targerInVisionAbsolute && !_targerInVision)
         {
             reactionInternalTimer += Time.deltaTime;
             if(reactionInternalTimer >= _reactionTime)
@@ -52,7 +52,7 @@ public class VisionEnemyAI : MonoBehaviour
                 _targerInVision = true;
             }
         }
-        else
+        else if(!_targerInVisionAbsolute && _targerInVision)
         {
             reactionInternalTimer = 0f;
             _targerInVision = false;
