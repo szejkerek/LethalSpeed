@@ -23,10 +23,35 @@ MonoBehaviour:
     volumeVariation: 0.3
   <Pistol>k__BackingField:
     audioClip: {fileID: 8300000, guid: 5eb4ee4c32b6d2d4d93255b215c53d78, type: 3}
-    volume: 1
+    volume: 0.06
     pitch: 1
     loop: 0
     minRange: 6
     maxRange: 70
     pitchVariation: 0
     volumeVariation: 0
+  <Footsteps>k__BackingField:
+  - audioClip: {fileID: 8300000, guid: 723adc40fc59da140a85e542019213e0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minRange: 0.5
+    maxRange: 10
+    pitchVariation: 0.5
+    volumeVariation: 0.2
+  - audioClip: {fileID: 8300000, guid: 47e708b521f586542bba8ef352e4ef74, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minRange: 0.5
+    maxRange: 10
+    pitchVariation: 0.5
+    volumeVariation: 0.2
+  - audioClip: {fileID: 8300000, guid: d620c5784a6df4f4bb824508f3281b69, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minRange: 0.5
+    maxRange: 10
+    pitchVariation: 0.5
+    volumeVariation: 0.2

@@ -36,6 +36,14 @@ public class Enemy : MonoBehaviour
         _stateMachine.CurrentState.SwitchState(_stateMachine.StatesFactory.Ragdoll());
     }
 
+    public void Footstep(AnimationEvent animationEvent)
+    {
+        if (animationEvent.animatorClipInfo.weight > 0.5)
+        {
+            _enemyAudioLib.Footsteps.PlayRandomized(_audioSource);
+        }
+    }
+
     private void ApplyHitboxToLimbs()
     {
         Rigidbody[] _rigidbodies = GetComponentsInChildren<Rigidbody>();
