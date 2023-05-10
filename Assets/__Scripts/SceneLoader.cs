@@ -73,6 +73,7 @@ public class SceneLoader : Singleton<SceneLoader>
         StartCoroutine(GenerateTips());
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)sceneToUnload));
         scenesLoading.Add(SceneManager.LoadSceneAsync((int)sceneToLoad, LoadSceneMode.Additive));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)sceneToLoad));
         StartCoroutine(GetSceneLoadProgress());
     }
 
