@@ -17,6 +17,7 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: SerializeField] public float FocusDuration { get; private set; }
     [field: SerializeField] public float UnfocusDuration { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
+    [field: SerializeField] public float EmotionStatesCooldown { get; private set; }
 
     [field:Header("Idle")] //IDLE
 
@@ -64,7 +65,8 @@ public class StateMachineEnemyAI : MonoBehaviour
     public SkinnedMeshRenderer Mesh => _mesh;
     SkinnedMeshRenderer _mesh;
     public VisionEnemyAI VisionEnemyAI => _visionEnemyAI;
-    VisionEnemyAI _visionEnemyAI;
+    VisionEnemyAI _visionEnemyAI;   
+   
 
     private void Awake()
     {
@@ -99,6 +101,7 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     StateEnemyAI _currentState;
     StateFactoryEnemyAI _statesFactory;
+    float _lastEmotionStateExit;
 
     public StateEnemyAI CurrentState { get { return _currentState; } set { _currentState = value; } }
     public StateFactoryEnemyAI StatesFactory => _statesFactory;
@@ -120,7 +123,7 @@ public class StateMachineEnemyAI : MonoBehaviour
         return Player.transform.position;
     }
 
-    public bool ShootingActivationCheck()
+    public bool ShootingEnterCheck()
     {
         bool playerInActivationRange = GetDistanceToPlayer() < ShootingActivationRange;
         bool playerInSight = VisionEnemyAI.TargerInVision;
@@ -129,6 +132,16 @@ public class StateMachineEnemyAI : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public bool EmotionStateEnterCheck()
+    {
+        return Time.time - _lastEmotionStateExit >= EmotionStatesCooldown;
+    }
+
+    public void ResetEmotionsTimer()
+    {
+        _lastEmotionStateExit = Time.time;
     }
 
     public float GetDistanceToPlayer()

@@ -8,6 +8,12 @@ public class Enemy : MonoBehaviour
     public Player Player => _player;
     Player _player;
 
+    public AudioSource AudioSource => _audioSource;
+    AudioSource _audioSource;
+
+    public EnemyAudioLib EnemyAudioLib => _enemyAudioLib;
+    [SerializeField] EnemyAudioLib _enemyAudioLib;
+
     RigWeightController _aimAtTargetRigController;
     public Animator Animator => _animator;
     Animator _animator;
@@ -17,6 +23,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _player = FindObjectOfType<Player>();
+        _audioSource = GetComponent<AudioSource>();
         _stateMachine = GetComponent<StateMachineEnemyAI>();
         _animator = GetComponent<Animator>();
         _aimAtTargetRigController = GetComponentInChildren<RigWeightController>();
@@ -27,6 +34,14 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         _stateMachine.CurrentState.SwitchState(_stateMachine.StatesFactory.Ragdoll());
+    }
+
+    public void Footstep(AnimationEvent animationEvent)
+    {
+        if (animationEvent.animatorClipInfo.weight > 0.5)
+        {
+            _enemyAudioLib.Footsteps.PlayRandomized(_audioSource);
+        }
     }
 
     private void ApplyHitboxToLimbs()

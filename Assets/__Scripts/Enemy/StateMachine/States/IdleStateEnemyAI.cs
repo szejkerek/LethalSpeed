@@ -26,7 +26,7 @@ public class IdleStateEnemyAI : StateEnemyAI
     public override void CheckSwitchState()
     {
         bool tooAwayFromInitialPosition = Vector3.Distance(_context.transform.position, _context.LocomotionEnemyAI.InitialPosition) > _context.PatrolRange + _context.IdleTooAwayDistance;
-        if (_context.ShootingActivationCheck())
+        if (_context.ShootingEnterCheck())
         {
             SwitchState(_context.StatesFactory.ShootPlayer());
         }

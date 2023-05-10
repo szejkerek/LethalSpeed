@@ -43,6 +43,7 @@ public class FleeStateEnemyAI : StateEnemyAI
         _context.LocomotionEnemyAI.NavMeshAgent.updateRotation = true;
         _context.LocomotionEnemyAI.VelocityModifier = 1;
         _context.LocomotionEnemyAI.NavMeshAgent.speed = _oldNavMeshSpeed;
+        _context.ResetEmotionsTimer();
     }
     public override void CheckSwitchState()
     {

@@ -41,7 +41,7 @@ public class PatrollingStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
-        if (_context.ShootingActivationCheck())
+        if (_context.ShootingEnterCheck())
         {
             SwitchState(_context.StatesFactory.ShootPlayer());
         }

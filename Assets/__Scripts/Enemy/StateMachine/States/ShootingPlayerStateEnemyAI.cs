@@ -47,22 +47,25 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
                 SwitchState(_context.StatesFactory.SeekPlayer());
             }
         }
-        else if (_canBeScared && playerInDangerZone)
+        else if(_context.EmotionStateEnterCheck())
         {
-            float randomNumber = Random.Range(0f, 1f);
-            _canBeScared = false;
-            if(randomNumber <= _context.FleeChance)
+            if (_canBeScared && playerInDangerZone)
             {
-                SwitchState(_context.StatesFactory.Flee());
+                float randomNumber = Random.Range(0f, 1f);
+                _canBeScared = false;
+                if (randomNumber <= _context.FleeChance)
+                {
+                    SwitchState(_context.StatesFactory.Flee());
+                }
             }
-        }
-        else if(_canEngage)
-        {
-            _canEngage = false;
-            float randomNumber = Random.Range(0f, 1f);
-            if (randomNumber <= _context.EngageChance)
+            else if (_canEngage)
             {
-                SwitchState(_context.StatesFactory.Engage());
+                _canEngage = false;
+                float randomNumber = Random.Range(0f, 1f);
+                if (randomNumber <= _context.EngageChance)
+                {
+                    SwitchState(_context.StatesFactory.Engage());
+                }
             }
         }
     }
