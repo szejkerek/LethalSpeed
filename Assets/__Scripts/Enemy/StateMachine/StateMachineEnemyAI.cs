@@ -16,33 +16,39 @@ public class StateMachineEnemyAI : MonoBehaviour
     [field: Header("Common")]
     [field: SerializeField] public float FocusDuration { get; private set; }
     [field: SerializeField] public float UnfocusDuration { get; private set; }
+    [field: SerializeField] public float RotationSpeed { get; private set; }
+    [field: SerializeField] public float EmotionStatesCooldown { get; private set; }
 
     [field:Header("Idle")] //IDLE
-
-    [field: Tooltip("This chance is checked every Xseconds")]
-    [field: SerializeField] public float IdleChance { get; private set; }
 
     [field: Tooltip("Distance that indicates from where enemy will try to come back to his inital spawn point")]
     [field: SerializeField] public float IdleTooAwayDistance { get; private set; }
 
-    [field: Header("Patrolling")] // PATROL
-    [field: SerializeField] public float PatrolInitialChance { get; private set; }
+    [field: Header("Patroling")] // PATROL
+    [field: SerializeField] public float PartolChance { get; private set; }
+    [field: SerializeField] public float PatrolDuration { get; private set; }
     [field: SerializeField] public float PatrolRange { get; private set; }
     [field: SerializeField] public float PatrolCooldown { get; private set; }
     [field: SerializeField] public float PatrolVariation { get; private set; }
-
-    [field: Tooltip("This chance is checked every Xseconds")]
-    [field: SerializeField] public float PatrolChance { get; private set; }
 
     [field: Header("Seeking")] // SEEKING
     [field: SerializeField] public float BoredAfterSeconds { get; private set; }
 
     [field: Header("Shooting")] //SHOOTING
-
     [field: SerializeField] public float ShootingActivationRange { get; private set; }
     [field: SerializeField] public float AggroDuration { get; private set; }
-    //[field: SerializeField] public float AggroDistance { get; private set; }
-    //
+
+    [field: Header("Flee")] //Flee
+    [field: SerializeField] public float DangerZoneRange { get; private set; }
+    [field: SerializeField] public float FleeChance { get; private set; }
+    [field: SerializeField] public float FleeMaxDuration { get; private set; }
+
+    [field: Header("Engage")] //Flee
+    [field: SerializeField] public float EngageStoppinDistance { get; private set; }
+    [field: SerializeField] public float EngageChance { get; private set; }
+    [field: SerializeField] public float EngageMaxDuration { get; private set; }
+
+
 
     public Player Player => _player;
     Player _player;
@@ -59,7 +65,8 @@ public class StateMachineEnemyAI : MonoBehaviour
     public SkinnedMeshRenderer Mesh => _mesh;
     SkinnedMeshRenderer _mesh;
     public VisionEnemyAI VisionEnemyAI => _visionEnemyAI;
-    VisionEnemyAI _visionEnemyAI;
+    VisionEnemyAI _visionEnemyAI;   
+   
 
     private void Awake()
     {
@@ -76,7 +83,11 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     public void OnValidate()
     {
-        if(PatrolCooldown <= PatrolVariation)
+        FleeChance = Mathf.Clamp(FleeChance, 0f, 1f);
+        EngageChance = Mathf.Clamp(EngageChance, 0f, 1f);
+        PartolChance = Mathf.Clamp(PartolChance, 0f, 1f);       
+
+        if (PatrolCooldown <= PatrolVariation)
         {
             PatrolVariation = PatrolCooldown;
         }
@@ -90,6 +101,7 @@ public class StateMachineEnemyAI : MonoBehaviour
 
     StateEnemyAI _currentState;
     StateFactoryEnemyAI _statesFactory;
+    float _lastEmotionStateExit;
 
     public StateEnemyAI CurrentState { get { return _currentState; } set { _currentState = value; } }
     public StateFactoryEnemyAI StatesFactory => _statesFactory;
@@ -111,9 +123,9 @@ public class StateMachineEnemyAI : MonoBehaviour
         return Player.transform.position;
     }
 
-    public bool ShootingActivationCheck()
+    public bool ShootingEnterCheck()
     {
-        bool playerInActivationRange = GetPlayerDistance() < ShootingActivationRange;
+        bool playerInActivationRange = GetDistanceToPlayer() < ShootingActivationRange;
         bool playerInSight = VisionEnemyAI.TargerInVision;
         if (playerInActivationRange && playerInSight)
         {
@@ -122,9 +134,31 @@ public class StateMachineEnemyAI : MonoBehaviour
         return false;
     }
 
-    public float GetPlayerDistance()
+    public bool EmotionStateEnterCheck()
+    {
+        return Time.time - _lastEmotionStateExit >= EmotionStatesCooldown;
+    }
+
+    public void ResetEmotionsTimer()
+    {
+        _lastEmotionStateExit = Time.time;
+    }
+
+    public float GetDistanceToPlayer()
     {
         return Vector3.Distance(transform.position, Player.transform.position);
+    }
+
+    public void RotateTowardsPlayer()
+    {
+        Vector3 directionToPlayer = Player.transform.position - transform.position;
+        float angle = Vector3.Angle(transform.forward, directionToPlayer);
+        float threshold = 30f;
+        if (angle > threshold)
+        {
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(directionToPlayer), RotationSpeed * Time.deltaTime);
+        }
     }
 
     #endregion
@@ -153,9 +187,10 @@ public class StateMachineEnemyAI : MonoBehaviour
 
         }
 
-        if (debugEnemyAIStates.WalkBackShowGizmos)
+        if (debugEnemyAIStates.FleeShowGizmos)
         {
-
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position, DangerZoneRange);           
         }
 
         if (debugEnemyAIStates.ReloadShowGizmos)
@@ -171,6 +206,12 @@ public class StateMachineEnemyAI : MonoBehaviour
         if (debugEnemyAIStates.PatrollShowGizmos)
         {
 
+        }        
+        
+        if (debugEnemyAIStates.EngageShowGizmos)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.position, EngageStoppinDistance);      
         }
     }
 
@@ -185,7 +226,8 @@ public struct DebugEnemyAIStates
     public bool SeekShowGizmos;
     public bool CrouchShowGizmos;
     public bool ReloadShowGizmos;
-    public bool WalkBackShowGizmos;
+    public bool EngageShowGizmos;
+    public bool FleeShowGizmos;
     public bool RagdollShowGizmos;
     public bool PatrollShowGizmos;
 }

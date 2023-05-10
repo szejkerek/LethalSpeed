@@ -10,9 +10,12 @@ public class ReloadingStateEnemyAI : StateEnemyAI
     public override void EnterState()
     {
         Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
+        _context.LocomotionEnemyAI.ResetPath();
+        _context.WeaponEnemyAI.TriggerReload();
     }
     public override void UpdateState()
     {
+        _context.RotateTowardsPlayer();
         CheckSwitchState();
     }
 
@@ -22,6 +25,10 @@ public class ReloadingStateEnemyAI : StateEnemyAI
     }
     public override void CheckSwitchState()
     {
+        if(!_context.WeaponEnemyAI.IsReloading)
+        {
+            SwitchState(_context.StatesFactory.ShootPlayer());
+        }
     }
 
     public override DebugEnemyAIText GetDebugText()

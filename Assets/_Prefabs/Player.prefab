@@ -781,7 +781,6 @@ GameObject:
   - component: {fileID: 7975385520071846154}
   - component: {fileID: 7975385520071846157}
   - component: {fileID: 7975385520071846156}
-  - component: {fileID: 1013052048392278278}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -868,18 +867,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1013052048392278278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7975385520071846158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a76b70e193426a41b6fc9068420b239, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7975385521685648151
 GameObject:
   m_ObjectHideFlags: 0
