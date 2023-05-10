@@ -43,7 +43,7 @@ public class SceneLoader : Singleton<SceneLoader>
             }
         }
     }
-    
+
     public void LoadNextSceneInBuilder()
     {
         SceneIndexes currentSceneToUnloadIndex = (SceneIndexes)SceneManager.GetActiveScene().buildIndex;
@@ -73,8 +73,8 @@ public class SceneLoader : Singleton<SceneLoader>
         StartCoroutine(GenerateTips());
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)sceneToUnload));
         scenesLoading.Add(SceneManager.LoadSceneAsync((int)sceneToLoad, LoadSceneMode.Additive));
-        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)sceneToLoad));
         StartCoroutine(GetSceneLoadProgress());
+        StartCoroutine(SetNewlyLoadedSceneAsActive(sceneToLoad));
     }
 
     private void SetBackGroundImage(SceneIndexes sceneToLoad)
@@ -188,5 +188,18 @@ public class SceneLoader : Singleton<SceneLoader>
 
         yield return new WaitForSeconds(10); //TODO: delete this line, it is used only for testing purposes
         loadingScreen.gameObject.SetActive(false);
+    }
+
+    private IEnumerator SetNewlyLoadedSceneAsActive(SceneIndexes sceneToSetActive)
+    {
+        for (int i = 0; i < scenesLoading.Count; i++)
+        {
+            while (!scenesLoading[i].isDone)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+        }
+
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)sceneToSetActive));
     }
 }
