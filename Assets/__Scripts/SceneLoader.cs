@@ -43,6 +43,14 @@ public class SceneLoader : Singleton<SceneLoader>
             }
         }
     }
+    
+    public void LoadNextSceneInBuilder()
+    {
+        SceneIndexes currentSceneToUnloadIndex = (SceneIndexes)SceneManager.GetActiveScene().buildIndex;
+        SceneIndexes nextSceneToLoadIndex = (SceneIndexes)(currentSceneToUnloadIndex + 1);
+
+        UnloadSceneAndLoadNewOne(currentSceneToUnloadIndex, nextSceneToLoadIndex);
+    }
 
     public void ReloadScene()
     {
@@ -60,7 +68,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public void UnloadSceneAndLoadNewOne(SceneIndexes sceneToUnload, SceneIndexes sceneToLoad)
     {
-        SetBackGoundImage(sceneToLoad);
+        SetBackGroundImage(sceneToLoad);
         loadingScreen.gameObject.SetActive(true);
         StartCoroutine(GenerateTips());
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)sceneToUnload));
@@ -68,7 +76,7 @@ public class SceneLoader : Singleton<SceneLoader>
         StartCoroutine(GetSceneLoadProgress());
     }
 
-    private void SetBackGoundImage(SceneIndexes sceneToLoad)
+    private void SetBackGroundImage(SceneIndexes sceneToLoad)
     {
         if(!IsImageDataPoolCorrect(sceneToLoad))
         {
