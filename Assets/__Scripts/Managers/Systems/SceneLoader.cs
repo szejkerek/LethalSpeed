@@ -23,7 +23,7 @@ public class SceneLoader : Singleton<SceneLoader>
     private Slider progressBar;
     private CanvasGroup tipTextFieldCanvasGroup; //text field canvas group to manage fading
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>(); //list of currently loading and unloading scenes
-    private Dictionary<SceneIndexes, List<Sprite>> imageDataPoolHashTable = new Dictionary<SceneIndexes, List<Sprite>>();
+    private Dictionary<int, List<Sprite>> imageDataPoolHashTable = new Dictionary<int, List<Sprite>>();
 
     protected override void Awake()
     {
@@ -33,9 +33,9 @@ public class SceneLoader : Singleton<SceneLoader>
 
         foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
         {
-            if(!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.MapIndex))
+            if(!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.GetSceneBuildIndex()))
             {
-                imageDataPoolHashTable.Add(imageDataToCoopy.MapIndex, imageDataToCoopy.LoadinScreenBackground);
+                imageDataPoolHashTable.Add(imageDataToCoopy.GetSceneBuildIndex(), imageDataToCoopy.LoadinScreenBackground);
             }
             else
             {
@@ -46,61 +46,60 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public void LoadNextSceneInBuilder()
     {
-        SceneIndexes currentSceneToUnloadIndex = (SceneIndexes)SceneManager.GetActiveScene().buildIndex;
-        SceneIndexes nextSceneToLoadIndex = (SceneIndexes)(currentSceneToUnloadIndex + 1);
+        int sceneToUnloadBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        int sceneToLoadBuildIndex = SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1).buildIndex;
 
-        UnloadSceneAndLoadNewOne(currentSceneToUnloadIndex, nextSceneToLoadIndex);
+        UnloadSceneAndLoadNewOneByName(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
     }
 
     public void ReloadScene()
     {
-        SceneIndexes currentSceneToReloadIndex = (SceneIndexes)SceneManager.GetActiveScene().buildIndex;
+        int sceneToReloadBuildIndex = SceneManager.GetActiveScene().buildIndex;
 
-        UnloadSceneAndLoadNewOne(currentSceneToReloadIndex, currentSceneToReloadIndex);
+        UnloadSceneAndLoadNewOneByName(sceneToReloadBuildIndex, sceneToReloadBuildIndex);
     }
 
-    public void LoadNewScene(SceneIndexes sceneToLoad)
+    public void LoadNewSceneByBuildIndex(int sceneToLoadBuildIndex)
     {
-        SceneIndexes currentSceneToUnloadIndex = (SceneIndexes)SceneManager.GetActiveScene().buildIndex;
+        int sceneToUnloadBuildIndex = SceneManager.GetActiveScene().buildIndex; 
 
-        UnloadSceneAndLoadNewOne(currentSceneToUnloadIndex, sceneToLoad);
+        UnloadSceneAndLoadNewOneByName(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
     }
 
-    public void UnloadSceneAndLoadNewOne(SceneIndexes sceneToUnload, SceneIndexes sceneToLoad)
+    public void UnloadSceneAndLoadNewOneByName(int sceneToUnloadBuildIndex, int sceneToLoadBuildIndex)
     {
-        SetBackGroundImage(sceneToLoad);
+        SetBackGroundImage(sceneToLoadBuildIndex);
         loadingScreen.gameObject.SetActive(true);
         StartCoroutine(GenerateTips());
-        scenesLoading.Add(SceneManager.UnloadSceneAsync((int)sceneToUnload));
-        scenesLoading.Add(SceneManager.LoadSceneAsync((int)sceneToLoad, LoadSceneMode.Additive));
+        scenesLoading.Add(SceneManager.UnloadSceneAsync(sceneToUnloadBuildIndex));
+        scenesLoading.Add(SceneManager.LoadSceneAsync(sceneToLoadBuildIndex));
         StartCoroutine(GetSceneLoadProgress());
-        StartCoroutine(SetNewlyLoadedSceneAsActive(sceneToLoad));
     }
 
-    private void SetBackGroundImage(SceneIndexes sceneToLoad)
+    private void SetBackGroundImage(int sceneToLoadBuildIndex)
     {
-        if(!IsImageDataPoolCorrect(sceneToLoad))
+        if(!IsImageDataPoolCorrect(sceneToLoadBuildIndex))
         {
             loadingScreenImage.color = Color.black;
             return;
         }
 
-        loadingScreenImage.sprite = imageDataPoolHashTable[sceneToLoad][UnityEngine.Random.Range(0, imageDataPoolHashTable[sceneToLoad].Count)];
+        loadingScreenImage.sprite = imageDataPoolHashTable[sceneToLoadBuildIndex][UnityEngine.Random.Range(0, imageDataPoolHashTable[sceneToLoadBuildIndex].Count)];
     }
 
-    private bool IsImageDataPoolCorrect(SceneIndexes sceneToLoad)
+    private bool IsImageDataPoolCorrect(int sceneToLoadBuildIndex)
     {
         if(imageDataPoolHashTable.Count == 0)
         {
             Debug.LogWarning("Loading screen background image data pool is empty.");
             return false;
         }
-        if (!imageDataPoolHashTable.ContainsKey(sceneToLoad))
+        if (!imageDataPoolHashTable.ContainsKey(sceneToLoadBuildIndex))
         {
             Debug.LogWarning("There is no corresponding background image data pool for currently loading scene.");
             return false;
         }
-        if (imageDataPoolHashTable[sceneToLoad].Count == 0)
+        if (imageDataPoolHashTable[sceneToLoadBuildIndex].Count == 0)
         {
             Debug.LogWarning("Loading screen background image data pool of chosen scene is empty.");
             return false;
@@ -188,18 +187,5 @@ public class SceneLoader : Singleton<SceneLoader>
 
         yield return new WaitForSeconds(10); //TODO: delete this line, it is used only for testing purposes
         loadingScreen.gameObject.SetActive(false);
-    }
-
-    private IEnumerator SetNewlyLoadedSceneAsActive(SceneIndexes sceneToSetActive)
-    {
-        for (int i = 0; i < scenesLoading.Count; i++)
-        {
-            while (!scenesLoading[i].isDone)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-        }
-
-        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)sceneToSetActive));
     }
 }

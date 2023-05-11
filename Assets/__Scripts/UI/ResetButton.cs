@@ -1,10 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public static class Initializer
+public class ResetButton : MonoBehaviour
 {
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    public static void Execute()
+    Button _button;
+
+    private void Awake()
     {
-        Object.DontDestroyOnLoad(Object.Instantiate(Resources.Load("Systems")));
+        _button = gameObject.GetComponent<Button>();
+
+    }
+    private void Start()
+    {
+        _button.onClick.AddListener(delegate () { SceneLoader.Instance.ReloadScene(); });
     }
 }

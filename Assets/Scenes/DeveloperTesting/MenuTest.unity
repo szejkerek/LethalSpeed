@@ -797,8 +797,8 @@ GameObject:
   - component: {fileID: 1268369301}
   - component: {fileID: 1268369300}
   - component: {fileID: 1268369299}
-  - component: {fileID: 1268369298}
   - component: {fileID: 1268369302}
+  - component: {fileID: 1268369298}
   m_Layer: 5
   m_Name: ResetButton
   m_TagString: Untagged
@@ -936,7 +936,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553b6a9f6741cd54ca41eb4cc61f03bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 0}
 --- !u!1 &1532817664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,7 +1087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2756899071631824e8d5e16a41ce0578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <sceneToLoad>k__BackingField: 2
+  <sceneToLoadBuildIndex>k__BackingField: 1
 --- !u!1 &2121643837
 GameObject:
   m_ObjectHideFlags: 0
