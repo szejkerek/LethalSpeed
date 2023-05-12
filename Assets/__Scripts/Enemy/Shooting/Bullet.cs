@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -11,9 +12,9 @@ public class Bullet : MonoBehaviour
     Vector3 _direction;
     float _timeInAir;
     float _maxTimeInAir;
-    bool _canDamageEnemy;
+    bool _bulletReflected;
 
-    public void Init(Enemy firedByReference, Vector3 direction, float speed, Action<Bullet> onHitAction, float maxTimeInAir = 5f, bool canDamageEnemy = false)
+    public void Init(Enemy firedByReference, Vector3 direction, float speed, Action<Bullet> onHitAction, float maxTimeInAir = 5f, bool bullletReflected = false)
     {
         _timeInAir = 0;
         _direction = direction;
@@ -21,7 +22,7 @@ public class Bullet : MonoBehaviour
         _onHitAction = onHitAction;
         _maxTimeInAir = maxTimeInAir;
         _firedByReference = firedByReference;
-        _canDamageEnemy = canDamageEnemy;
+        _bulletReflected = bullletReflected;
     }
 
     void Update()
@@ -37,7 +38,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-       if (!_canDamageEnemy || ShootOtherEnemy(col))
+       if (!ShouldDamageEnemy(col))
             return;
 
         if (col.TryGetComponent(out HitBox hitBox))
@@ -50,7 +51,8 @@ public class Bullet : MonoBehaviour
 
     private bool ShootHimself(Collider hit)
     {
-        foreach (Collider firedByCollider in _firedByReference.GetComponentsInChildren<Collider>())
+        Collider[] firedEnemyColliders = _firedByReference.GetComponentsInChildren<Collider>();
+        foreach (Collider firedByCollider in firedEnemyColliders)
         {
             if (hit == firedByCollider)
             {
@@ -61,7 +63,7 @@ public class Bullet : MonoBehaviour
         return false;
     }
 
-    private bool ShootOtherEnemy(Collider hit)
+    private bool ShootEnemy(Collider hit)
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach (Enemy enemy in enemies)
@@ -73,5 +75,18 @@ public class Bullet : MonoBehaviour
             }            
         }
         return false;
+    }
+
+    private bool ShouldDamageEnemy(Collider hit)
+    {       
+        if(ShootEnemy(hit) && !_bulletReflected)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
     }
 }

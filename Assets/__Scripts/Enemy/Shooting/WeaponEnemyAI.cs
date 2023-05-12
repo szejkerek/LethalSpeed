@@ -58,7 +58,7 @@ public class WeaponEnemyAI : MonoBehaviour
             return Instantiate(_bulletPrefab, _barrelTip.position, Quaternion.LookRotation(direction));
         }, bullet =>
         {
-            Vector3 direction = _enemy.Player.PlayerCamera.transform.position + Vector3.up * _yOffsetFromCamera - _barrelTip.position;
+            Vector3 direction = (_enemy.Player.PlayerCamera.transform.position + Vector3.up * _yOffsetFromCamera - _barrelTip.position).normalized;
             bullet.transform.position = _barrelTip.position;
             bullet.transform.rotation = Quaternion.LookRotation(direction);
             bullet.Init(_enemy, direction, _bulletSpeed, DestroyBullet, 5f);
