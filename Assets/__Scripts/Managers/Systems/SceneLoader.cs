@@ -184,7 +184,7 @@ public class SceneLoader : Singleton<SceneLoader>
             yield return null;
         }
 
-        yield return new WaitForSeconds(10); //TODO: delete this line, it is used only for testing purposes
+        yield return new WaitForSeconds(5); //TODO: delete this line, it is used only for testing purposes
         loadingScreen.gameObject.SetActive(false);
         loadingScreenImage.color = Color.white;
     }
