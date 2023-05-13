@@ -49,13 +49,25 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 3
+        m_Name: DecalLifetime
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 0, y: 0.3137255, z: 3.764706, w: 0}
+        m_Name: Color3
+        m_Overridden: 0
+      - m_Value: {x: 0.4958472, y: 1.8181064, z: 19.503323, w: 0}
+        m_Name: Color2
+        m_Overridden: 0
+      - m_Value: {x: 0, y: 0.2522632, z: 3.9461172, w: 0}
+        m_Name: Color1
+        m_Overridden: 0
     m_Uint:
       m_Array: []
     m_Int:

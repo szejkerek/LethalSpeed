@@ -44,25 +44,38 @@ public class Bullet : MonoBehaviour
         if (!ShouldDamageEnemy(col))
             return;
 
+
         if (col.TryGetComponent(out HitBox hitBox))
         {
             hitBox.TakeHit();
         }
 
-        OnRegisteredImpact(col);
-    }
+        SpawnImpactEffect(col, CalculateNormal());
 
-    private void OnRegisteredImpact(Collider col)
-    {
-        SpawnImpactEffect();
         _onHitAction(this);
     }
 
-    private void SpawnImpactEffect()
+
+    private Vector3 CalculateNormal()
     {
-        VisualEffect visualEffect = Instantiate(_impactParticle, transform.position, transform.rotation);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + transform.TransformDirection(-Vector3.forward) * 0.3f, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, ~gameObject.layer))
+        {
+            return hit.normal;
+        }
+        else
+        {
+            return transform.rotation.eulerAngles;
+        }
+    }
+
+
+    private void SpawnImpactEffect(Collider col, Vector3 hitNormal)
+    {
+        VisualEffect visualEffect = Instantiate(_impactParticle, transform.position, Quaternion.LookRotation(hitNormal));
+        visualEffect.transform.parent = col.transform;
         visualEffect.Play();
-        Destroy(visualEffect, 10f);
+        Destroy(visualEffect, 5f);
     }
 
     private bool ShootEnemy(Collider hit)
