@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] VisualEffect _impactParticle;
+    
     Enemy _firedByReference;
     Action<Bullet> _onHitAction;
     float _speed;
@@ -38,7 +41,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-       if (!ShouldDamageEnemy(col))
+        if (!ShouldDamageEnemy(col))
             return;
 
         if (col.TryGetComponent(out HitBox hitBox))
@@ -46,21 +49,20 @@ public class Bullet : MonoBehaviour
             hitBox.TakeHit();
         }
 
+        OnRegisteredImpact(col);
+    }
+
+    private void OnRegisteredImpact(Collider col)
+    {
+        SpawnImpactEffect();
         _onHitAction(this);
     }
 
-    private bool ShootHimself(Collider hit)
+    private void SpawnImpactEffect()
     {
-        Collider[] firedEnemyColliders = _firedByReference.GetComponentsInChildren<Collider>();
-        foreach (Collider firedByCollider in firedEnemyColliders)
-        {
-            if (hit == firedByCollider)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        VisualEffect visualEffect = Instantiate(_impactParticle, transform.position, transform.rotation);
+        visualEffect.Play();
+        Destroy(visualEffect, 10f);
     }
 
     private bool ShootEnemy(Collider hit)
