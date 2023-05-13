@@ -34,13 +34,12 @@ public class Sound
 
 
         audioSource.spatialBlend = 1f;
-        audioSource.clip = audioClip;
         audioSource.volume = Random.Range(volume - volumeVariation, volume) /** GetVolumeModifier()*/;
         audioSource.pitch = Random.Range(pitch - pitchVariation, pitch + pitchVariation);
         audioSource.loop = loop;
         audioSource.maxDistance = maxRange;
         audioSource.minDistance = minRange;
-        audioSource.Play();
+        audioSource.PlayOneShot(audioClip);
     }
 
     private float GetVolumeModifier()

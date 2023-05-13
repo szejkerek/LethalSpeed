@@ -7136,7 +7136,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 4450916358181137258, guid: 0830cbbb2e2cc3642a4808c1e5cf7da8, type: 3}
   _weaponObject: {fileID: 1068995430}
   _barrelTip: {fileID: 1964401273}
-  _bulletSpeed: 2.5
+  _bulletSpeed: 20
   _firerate: 0.75
   _magazineSize: 5
   _reloadTime: 3.5
