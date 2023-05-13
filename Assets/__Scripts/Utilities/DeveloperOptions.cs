@@ -26,11 +26,6 @@ public class DeveloperOptions : MonoBehaviour
     [MenuItem(_developerFolder + "Enemy/State/Patrol")]
     public static void PatrolEnemyAI() { ChangeAllEnemiesState("Patrol"); }
 
-
-    [MenuItem(_developerFolder + "Enemy/State/Crouch")]
-    public static void CrouchEnemyAI() { ChangeAllEnemiesState("Crouch"); }
-
-
     [MenuItem(_developerFolder + "Enemy/State/Seek")]
     public static void SeekEnemyAI() { ChangeAllEnemiesState("Seek"); }
 
@@ -67,9 +62,6 @@ public class DeveloperOptions : MonoBehaviour
                     break;
                 case "Patrol":
                     stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.Patrol());
-                    break;
-                case "Crouch":
-                    stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.Crouch());
                     break;
                 case "Seek":
                     stateMachine.CurrentState.SwitchState(stateMachine.StatesFactory.SeekPlayer());

@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] VisualEffect _impactParticle;
+    
     Enemy _firedByReference;
     Action<Bullet> _onHitAction;
     float _speed;
@@ -38,29 +41,41 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-       if (!ShouldDamageEnemy(col))
+        if (!ShouldDamageEnemy(col))
             return;
+
 
         if (col.TryGetComponent(out HitBox hitBox))
         {
             hitBox.TakeHit();
         }
 
+        SpawnImpactEffect(col, CalculateNormal());
+
         _onHitAction(this);
     }
 
-    private bool ShootHimself(Collider hit)
-    {
-        Collider[] firedEnemyColliders = _firedByReference.GetComponentsInChildren<Collider>();
-        foreach (Collider firedByCollider in firedEnemyColliders)
-        {
-            if (hit == firedByCollider)
-            {
-                return true;
-            }
-        }
 
-        return false;
+    private Vector3 CalculateNormal()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + transform.TransformDirection(-Vector3.forward) * 0.3f, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, ~gameObject.layer))
+        {
+            return hit.normal;
+        }
+        else
+        {
+            return transform.rotation.eulerAngles;
+        }
+    }
+
+
+    private void SpawnImpactEffect(Collider col, Vector3 hitNormal)
+    {
+        VisualEffect visualEffect = Instantiate(_impactParticle, transform.position, Quaternion.LookRotation(hitNormal));
+        visualEffect.transform.parent = col.transform;
+        visualEffect.Play();
+        Destroy(visualEffect, 5f);
     }
 
     private bool ShootEnemy(Collider hit)

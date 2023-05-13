@@ -13,7 +13,6 @@ public class PatrollingStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _nextCooldown = CalculateNextCooldown();
         _waitAtDestinationTimer = 0;
         _patrolingTimer = 0;
@@ -55,7 +54,7 @@ public class PatrollingStateEnemyAI : StateEnemyAI
     {
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.yellow;
-        debugEnemyAIText.stateName = "Patrolling";
+        debugEnemyAIText.stateName = stateName;
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

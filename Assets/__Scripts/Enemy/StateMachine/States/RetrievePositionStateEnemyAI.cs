@@ -11,7 +11,6 @@ public class RetrievePositionStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.LocomotionEnemyAI.ResetPath();
         _initialPosition = _context.LocomotionEnemyAI.InitialPosition;
         _context.LocomotionEnemyAI.SetDestinationToRandomPoint(_context.LocomotionEnemyAI.InitialPosition, 0.5f);
@@ -42,7 +41,7 @@ public class RetrievePositionStateEnemyAI : StateEnemyAI
     {
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.yellow;
-        debugEnemyAIText.stateName = "RetrievePosition";
+        debugEnemyAIText.stateName = stateName;
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

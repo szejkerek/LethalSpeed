@@ -44,7 +44,7 @@ public class WeaponEnemyAI : MonoBehaviour
         _visionEnemyAI = GetComponent<VisionEnemyAI>();
         _enemy = GetComponent<Enemy>();
         _weaponRigidbody.isKinematic = true;
-        _weaponCollider.isTrigger = true;
+        //_weaponCollider.isTrigger = true;
 
         _currentAmmo = _magazineSize;
         SetUpBulletPool();
@@ -97,7 +97,7 @@ public class WeaponEnemyAI : MonoBehaviour
     {
         _weaponObject.transform.SetParent(null);
         _weaponRigidbody.isKinematic = false;
-        _weaponCollider.isTrigger = false;
+        //_weaponCollider.isTrigger = false;
     }
 
     private void DestroyBullet(Bullet bullet)

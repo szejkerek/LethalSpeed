@@ -8,7 +8,6 @@ public class IdleStateEnemyAI : StateEnemyAI
     bool _canPatrol;
     public override void EnterState()
     {
-        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.LocomotionEnemyAI.ResetPath();
         _context.Enemy.AimAtTargetRigController.TurnOffRig(_context.UnfocusDuration);
         _canPatrol = true;
@@ -50,7 +49,7 @@ public class IdleStateEnemyAI : StateEnemyAI
     {
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.yellow;
-        debugEnemyAIText.stateName = "Idle";
+        debugEnemyAIText.stateName = stateName;
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

@@ -8,7 +8,6 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
     bool _canEngage;
     public override void EnterState()
     {
-        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.LocomotionEnemyAI.ResetPath();
         _context.Enemy.AimAtTargetRigController.TurnOnRig(_context.FocusDuration);
         _canBeScared = true;
@@ -74,7 +73,7 @@ public class ShootingPlayerStateEnemyAI : StateEnemyAI
     {
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.red;
-        debugEnemyAIText.stateName = "ShootingPlayer";
+        debugEnemyAIText.stateName = stateName;
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }
