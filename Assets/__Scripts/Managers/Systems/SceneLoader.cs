@@ -10,7 +10,9 @@ using System;
 public class SceneLoader : Singleton<SceneLoader>
 {
     [Header("Development")]
-    [SerializeField] private SceneBuildIndexes firstSceneToLoadOnGameStart;
+    [SerializeField] private bool enableLoadChosenSceneOnGameStart; //TODO: delete this line, it is used only for testing purposes
+    [SerializeField] private SceneBuildIndexes firstSceneToLoadOnGameStart; //TODO: delete this line, it is used only for testing purposes
+    [SerializeField] private int additionalTimeOfLoadingScreenBeingActive; //TODO: delete this line, it is used only for testing purposes
 
     [Header("UI")]
     [SerializeField] private GameObject loadingScreen;
@@ -49,7 +51,10 @@ public class SceneLoader : Singleton<SceneLoader>
 
     private void Start()
     {
-        LoadNewSceneByBuildIndex((int)firstSceneToLoadOnGameStart);
+        if (enableLoadChosenSceneOnGameStart)
+        {
+            LoadNewSceneByBuildIndex((int)firstSceneToLoadOnGameStart);
+        }
     }
 
     public void LoadNextSceneInBuilder()
@@ -184,7 +189,7 @@ public class SceneLoader : Singleton<SceneLoader>
             yield return null;
         }
 
-        yield return new WaitForSeconds(5); //TODO: delete this line, it is used only for testing purposes
+        yield return new WaitForSeconds(additionalTimeOfLoadingScreenBeingActive); //TODO: delete this line, it is used only for testing purposes
         loadingScreen.gameObject.SetActive(false);
         loadingScreenImage.color = Color.white;
     }
