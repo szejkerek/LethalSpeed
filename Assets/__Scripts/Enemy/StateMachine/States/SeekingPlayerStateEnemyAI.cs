@@ -11,7 +11,6 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.Enemy.AimAtTargetRigController.TurnOnRig(1f);
         timeSeeking = 0;
     }
@@ -42,7 +41,7 @@ public class SeekingPlayerStateEnemyAI : StateEnemyAI
     {
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.blue;
-        debugEnemyAIText.stateName = "Seek player";
+        debugEnemyAIText.stateName = stateName;
         debugEnemyAIText.info = $"Speed: {_context.LocomotionEnemyAI.NavMeshAgent.velocity.magnitude}";
         return debugEnemyAIText;
     }

@@ -9,7 +9,6 @@ public class EngageStateEnemyAI : StateEnemyAI
     float _engageDuration;
     public override void EnterState()
     {
-        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _engageDuration = 0;
     }
 
@@ -52,7 +51,7 @@ public class EngageStateEnemyAI : StateEnemyAI
     {
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.green;
-        debugEnemyAIText.stateName = "Engage";
+        debugEnemyAIText.stateName = stateName;
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

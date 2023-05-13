@@ -8,7 +8,6 @@ public class RagdollStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.Ragdoll.SetRagdoll();
         _context.WeaponEnemyAI.DropWeapon();
         _context.Mesh.updateWhenOffscreen = true;
@@ -35,7 +34,7 @@ public class RagdollStateEnemyAI : StateEnemyAI
     {
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.white;
-        debugEnemyAIText.stateName = "Ragdoll";
+        debugEnemyAIText.stateName = stateName;
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }
