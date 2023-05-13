@@ -9,6 +9,9 @@ using System;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
+    [Header("Development")]
+    [SerializeField] private SceneBuildIndexes firstSceneToLoadOnGameStart;
+
     [Header("UI")]
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private TMP_Text progressInfoTextField;
@@ -42,6 +45,11 @@ public class SceneLoader : Singleton<SceneLoader>
                 Debug.LogWarning("There can be only one background image data pool for each scene.");
             }
         }
+    }
+
+    private void Start()
+    {
+        LoadNewSceneByBuildIndex((int)firstSceneToLoadOnGameStart);
     }
 
     public void LoadNextSceneInBuilder()
