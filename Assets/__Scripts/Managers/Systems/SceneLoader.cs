@@ -21,8 +21,8 @@ public class SceneLoader : Singleton<SceneLoader>
     [SerializeField] private List<LoadingScreenImageData> imageDataPool;
 
     private Slider progressBar;
-    private CanvasGroup tipTextFieldCanvasGroup; //text field canvas group to manage fading
-    private List<AsyncOperation> scenesLoading = new List<AsyncOperation>(); //list of currently loading and unloading scenes
+    private CanvasGroup tipTextFieldCanvasGroup;
+    private AsyncOperation sceneLoadingAsyncOperation;
     private Dictionary<int, List<Sprite>> imageDataPoolHashTable = new Dictionary<int, List<Sprite>>();
 
     protected override void Awake()
@@ -47,7 +47,7 @@ public class SceneLoader : Singleton<SceneLoader>
     public void LoadNextSceneInBuilder()
     {
         int sceneToUnloadBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        int sceneToLoadBuildIndex = SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1).buildIndex;
+        int sceneToLoadBuildIndex = sceneToUnloadBuildIndex + 1;
 
         UnloadSceneAndLoadNewOneByName(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
     }
@@ -71,9 +71,8 @@ public class SceneLoader : Singleton<SceneLoader>
         SetBackGroundImage(sceneToLoadBuildIndex);
         loadingScreen.gameObject.SetActive(true);
         StartCoroutine(GenerateTips());
-        scenesLoading.Add(SceneManager.UnloadSceneAsync(sceneToUnloadBuildIndex));
-        scenesLoading.Add(SceneManager.LoadSceneAsync(sceneToLoadBuildIndex));
-        StartCoroutine(GetSceneLoadProgress());
+        sceneLoadingAsyncOperation = SceneManager.LoadSceneAsync(sceneToLoadBuildIndex);
+        StartCoroutine(BasedOnSceneLoadProgresGenerateInfoOnLoadingScreen());
     }
 
     private void SetBackGroundImage(int sceneToLoadBuildIndex)
@@ -162,27 +161,19 @@ public class SceneLoader : Singleton<SceneLoader>
         return tipsDataPool[tipsDataIndex].TipsList[tipsListIndex];
     }
 
-    //Based on loading scene progress calculate progress bar value
-    private IEnumerator GetSceneLoadProgress()
+    private IEnumerator BasedOnSceneLoadProgresGenerateInfoOnLoadingScreen()
     {
         float totalSceneProgress;
 
-        for ( int i = 0; i < scenesLoading.Count; i++)
+        while (!sceneLoadingAsyncOperation.isDone)
         {
-            while (!scenesLoading[i].isDone)
-            {
-                totalSceneProgress = 0;
+            totalSceneProgress = 0;
 
-                foreach (AsyncOperation operation in scenesLoading)
-                {
-                    totalSceneProgress += Mathf.Clamp(.0f, .9f, operation.progress);
-                }
+            totalSceneProgress += Mathf.Clamp01(sceneLoadingAsyncOperation.progress / .9f);
 
-                totalSceneProgress = (totalSceneProgress / scenesLoading.Count) / .9f;
-                progressBar.value = totalSceneProgress;
-                progressInfoTextField.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
-                yield return null;
-            }
+            progressBar.value = totalSceneProgress;
+            progressInfoTextField.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);             
+            yield return null;
         }
 
         yield return new WaitForSeconds(10); //TODO: delete this line, it is used only for testing purposes
