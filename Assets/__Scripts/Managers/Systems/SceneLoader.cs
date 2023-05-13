@@ -85,7 +85,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
     private void SetBackGroundImage(int sceneToLoadBuildIndex)
     {
-        if(!IsImageDataPoolCorrect(sceneToLoadBuildIndex))
+        if (!IsImageDataPoolCorrect(sceneToLoadBuildIndex))
         {
             loadingScreenImage.color = Color.black;
             return;
@@ -186,5 +186,6 @@ public class SceneLoader : Singleton<SceneLoader>
 
         yield return new WaitForSeconds(10); //TODO: delete this line, it is used only for testing purposes
         loadingScreen.gameObject.SetActive(false);
+        loadingScreenImage.color = Color.white;
     }
 }
