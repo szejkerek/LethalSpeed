@@ -142,8 +142,12 @@ public class SceneLoader : Singleton<SceneLoader>
         {
             if (tipsList.Count == 0)
             {
-                Debug.LogWarning("Loading screen tips data is empty.");
-                yield break;
+                if(usedTipsList.Count == 0)
+                {
+                    Debug.LogWarning("Loading screen tips data is empty.");
+                    yield break;
+                }
+                resetTipList();
             }
 
             tipTextFieldCanvasGroup.DOFade(1, .5f);
@@ -152,6 +156,12 @@ public class SceneLoader : Singleton<SceneLoader>
             tipTextFieldCanvasGroup.DOFade(0, .5f);
             yield return new WaitForSeconds(.5f);
         }
+    }
+
+    private void resetTipList()
+    {
+        tipsList.AddRange(usedTipsList);
+        usedTipsList.Clear();
     }
 
     private string GetRandomTipFromTipsList()
@@ -193,5 +203,6 @@ public class SceneLoader : Singleton<SceneLoader>
         progressBar.value = 0;
         tipTextField.text = null;
         tipTextFieldCanvasGroup.alpha = 0f;
+        resetTipList();
     }
 }
