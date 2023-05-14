@@ -49,7 +49,7 @@ public static class Helpers
 
     public static void PlayRandomized(this List<Sound> list, AudioSource audioSource)
     {
-        if (audioSource is null)
+        if (audioSource is null || list.Count == 0)
         {
             throw new System.ArgumentNullException(nameof(list));
         }
