@@ -789,7 +789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableLoadChosenSceneOnGameStart: 1
   firstSceneToLoadOnGameStart: 0
-  additionalTimeOfLoadingScreenBeingActive: 0
+  additionalTimeOfLoadingScreenBeingActive: 40
   loadingScreen: {fileID: 7121116273909802303}
   progressInfoTextField: {fileID: 9114314360889913183}
   tipTextField: {fileID: 9114314360602257096}

@@ -29,16 +29,23 @@ public class SceneLoader : Singleton<SceneLoader>
     private CanvasGroup tipTextFieldCanvasGroup;
     private AsyncOperation sceneLoadingAsyncOperation;
     private Dictionary<int, List<Sprite>> imageDataPoolHashTable = new Dictionary<int, List<Sprite>>();
+    private List<string> tipsList = new List<string>();
+    private List<string> usedTipsList = new List<string>();
 
     protected override void Awake()
     {
         base.Awake();
         progressBar = loadingScreen.GetComponentInChildren<Slider>();
         tipTextFieldCanvasGroup = tipTextField.GetComponent<CanvasGroup>();
+        PopulateImageDataPoolHashTable();
+        PopulateTipsList();
+    }
 
+    private void PopulateImageDataPoolHashTable()
+    {
         foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
         {
-            if(imageDataToCoopy != null && imageDataToCoopy.CheckIfLoadingScreenImageDataScriptableObjectIsCorrect())
+            if (imageDataToCoopy != null && imageDataToCoopy.IsCorrect())
             {
                 if (!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.GetSceneBuildIndex()))
                 {
@@ -52,6 +59,16 @@ public class SceneLoader : Singleton<SceneLoader>
         }
     }
 
+    private void PopulateTipsList()
+    {
+        foreach (LoadingScreenTipsData tipsDataToCopy in tipsDataPool)
+        {
+            if(tipsDataToCopy != null && tipsDataToCopy.IsCorrect())
+            {
+                tipsList.AddRange(tipsDataToCopy.TipsList);
+            }
+        }
+    }
     private void Start()
     {
         if (enableLoadChosenSceneOnGameStart)
@@ -86,7 +103,7 @@ public class SceneLoader : Singleton<SceneLoader>
     {
         SetBackGroundImage(sceneToLoadBuildIndex);
         loadingScreen.gameObject.SetActive(true);
-        StartCoroutine(GenerateTips());
+        StartCoroutine(GenerateTipsOnLoadingScreen());
         sceneLoadingAsyncOperation = SceneManager.LoadSceneAsync(sceneToLoadBuildIndex);
         StartCoroutine(BasedOnSceneLoadProgresGenerateInfoOnLoadingScreen());
     }
@@ -118,58 +135,33 @@ public class SceneLoader : Singleton<SceneLoader>
         return true;
     }
 
-    private IEnumerator GenerateTips()
+    private IEnumerator GenerateTipsOnLoadingScreen()
     {
-        if (!IsTipsDataPoolCorrect())
-        {
-            yield break;
-        }
-
         tipTextFieldCanvasGroup.alpha = 0f;
         while (loadingScreen.activeInHierarchy)
         {
+            if (tipsList.Count == 0)
+            {
+                Debug.LogWarning("Loading screen tips data is empty.");
+                yield break;
+            }
+
             tipTextFieldCanvasGroup.DOFade(1, .5f);
-            tipTextField.text = GetTip();
+            tipTextField.text = GetRandomTipFromTipsList();
             yield return new WaitForSeconds(3f);
             tipTextFieldCanvasGroup.DOFade(0, .5f);
             yield return new WaitForSeconds(.5f);
         }
     }
 
-    private bool IsTipsDataPoolCorrect()
+    private string GetRandomTipFromTipsList()
     {
-        if (tipsDataPool.Count == 0)
-        {
-            Debug.LogWarning("TipsData is empty.");
-            return false;
-        }
-
-        foreach (LoadingScreenTipsData tipsList in tipsDataPool)
-        {
-            if (tipsList == null)
-            {
-                Debug.LogWarning("One of tipsData tipsList is null.");
-                return false;
-            }
-            else if (tipsList.TipsList.Count == 0)
-            {
-                Debug.LogWarning("One of tipsData tipsList is empty.");
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private string GetTip()
-    {
-        int tipsDataIndex;
-        int tipsListIndex;
-
-        tipsDataIndex = UnityEngine.Random.Range(0, tipsDataPool.Count);
-        tipsListIndex = UnityEngine.Random.Range(0, tipsDataPool[tipsDataIndex].TipsList.Count);
-
-        return tipsDataPool[tipsDataIndex].TipsList[tipsListIndex];
+        int tipStringIndex;
+        tipStringIndex = UnityEngine.Random.Range(0, tipsList.Count);
+        string nextTipToGenerate = tipsList[tipStringIndex];
+        tipsList.RemoveAt(tipStringIndex);
+        usedTipsList.Add(nextTipToGenerate);
+        return nextTipToGenerate;
     }
 
     private IEnumerator BasedOnSceneLoadProgresGenerateInfoOnLoadingScreen()
@@ -187,11 +179,8 @@ public class SceneLoader : Singleton<SceneLoader>
     private void GenerateProgresBar()
     {
         float totalSceneProgress;
-
         totalSceneProgress = 0;
-
         totalSceneProgress += Mathf.Clamp01(sceneLoadingAsyncOperation.progress / .9f);
-
         progressBar.value = totalSceneProgress;
         progressInfoTextField.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
     }

@@ -11,7 +11,7 @@ public class LoadingScreenImageData : ScriptableObject
     [field: SerializeField] public SceneBuildIndexes SceneBuildIndex { private set; get; }
     [field: SerializeField] public List<Sprite> LoadinScreenBackgroundImages { private set; get; } = new List<Sprite>();
 
-    public bool CheckIfLoadingScreenImageDataScriptableObjectIsCorrect()
+    public bool IsCorrect()
     {
         if (LoadinScreenBackgroundImages.Count == 0)
         {
