@@ -38,7 +38,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
         foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
         {
-            if(imageDataToCoopy != null && imageDataToCoopy.IsCorrect())
+            if(imageDataToCoopy != null && imageDataToCoopy.CheckIfLoadingScreenImageDataScriptableObjectIsCorrect())
             {
                 if (!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.GetSceneBuildIndex()))
                 {
@@ -174,21 +174,35 @@ public class SceneLoader : Singleton<SceneLoader>
 
     private IEnumerator BasedOnSceneLoadProgresGenerateInfoOnLoadingScreen()
     {
-        float totalSceneProgress;
-
         while (!sceneLoadingAsyncOperation.isDone)
         {
-            totalSceneProgress = 0;
-
-            totalSceneProgress += Mathf.Clamp01(sceneLoadingAsyncOperation.progress / .9f);
-
-            progressBar.value = totalSceneProgress;
-            progressInfoTextField.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);             
+            GenerateProgresBar();
             yield return null;
         }
 
         yield return new WaitForSeconds(additionalTimeOfLoadingScreenBeingActive); //TODO: delete this line, it is used only for testing purposes
+        ResetLoadingScreenToDefaultState();
+    }
+
+    private void GenerateProgresBar()
+    {
+        float totalSceneProgress;
+
+        totalSceneProgress = 0;
+
+        totalSceneProgress += Mathf.Clamp01(sceneLoadingAsyncOperation.progress / .9f);
+
+        progressBar.value = totalSceneProgress;
+        progressInfoTextField.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
+    }
+
+    private void ResetLoadingScreenToDefaultState()
+    {
         loadingScreen.gameObject.SetActive(false);
+        loadingScreenImage.sprite = null;
         loadingScreenImage.color = Color.white;
+        progressBar.value = 0;
+        tipTextField.text = null;
+        tipTextFieldCanvasGroup.alpha = 0f;
     }
 }

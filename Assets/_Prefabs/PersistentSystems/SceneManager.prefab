@@ -787,8 +787,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a94f36746dd8f48bfd2eada021ec15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableLoadChosenSceneOnGameStart: 0
-  firstSceneToLoadOnGameStart: 1
+  enableLoadChosenSceneOnGameStart: 1
+  firstSceneToLoadOnGameStart: 0
   additionalTimeOfLoadingScreenBeingActive: 0
   loadingScreen: {fileID: 7121116273909802303}
   progressInfoTextField: {fileID: 9114314360889913183}
