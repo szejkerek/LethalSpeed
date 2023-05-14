@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.VFX;
 
 public class WeaponEnemyAI : MonoBehaviour
 {
     [Range(-1f,1f)]
     [SerializeField] private float _yOffsetFromCamera;
+    [SerializeField] private VisualEffect muzzleFlashEffect;
 
     [Header("Bullet proporties")]
     [SerializeField] private Bullet _bulletPrefab;
@@ -81,11 +83,19 @@ public class WeaponEnemyAI : MonoBehaviour
         if (_timer <= 0)
         {
             SpawnBullet();
+            SpawnMuzzleFlash();
             _enemyAudio.EnemyAudioLib.Pistol.PlayRandomized(_enemyAudio.GunShotAudioSource);
             _timer = 1 / _firerate;
         }
 
         _timer -= Time.deltaTime;
+    }
+
+    private void SpawnMuzzleFlash()
+    {
+        VisualEffect muzzleFlash = Instantiate(muzzleFlashEffect, _barrelTip.transform);
+        muzzleFlash.Play();
+        Destroy(muzzleFlash.gameObject, 1f);
     }
 
     private void SpawnBullet()
