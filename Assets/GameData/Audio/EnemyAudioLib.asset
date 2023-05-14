@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Reload>k__BackingField:
     audioClip: {fileID: 8300000, guid: 2a7cffe9444af1e44a53fa248e64b4b7, type: 3}
-    volume: 1
-    pitch: 1
+    volume: 0.55
+    pitch: 0.7
     loop: 0
     minRange: 1
     maxRange: 20
