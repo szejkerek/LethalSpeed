@@ -75,7 +75,7 @@ public class Bullet : MonoBehaviour
         VisualEffect visualEffect = Instantiate(_impactParticle, transform.position, Quaternion.LookRotation(hitNormal));
         visualEffect.transform.parent = col.transform;
         visualEffect.Play();
-        Destroy(visualEffect, 5f);
+        Destroy(visualEffect.gameObject, 5f);
     }
 
     private bool ShootEnemy(Collider hit)

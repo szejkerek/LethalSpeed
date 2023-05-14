@@ -38,7 +38,7 @@ public static class Helpers
 
     public static T PickRandomElement<T>(this List<T> list)
     {
-        if (list is null)
+        if (list is null || list.Count == 0)
         {
             throw new System.ArgumentNullException(nameof(list));
         }
