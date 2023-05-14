@@ -1,18 +1,9 @@
 using UnityEngine;
 
-public enum AudioType
-{
-    None,
-    SFX,
-    Music,
-    Dialogue
-}
-
 [System.Serializable]
 public class Sound
 {
     public AudioClip audioClip;
-    AudioType audioType;
     public float volume = 1f; 
     public float pitch = 1f;
     public bool loop = false;
@@ -34,30 +25,12 @@ public class Sound
 
 
         audioSource.spatialBlend = 1f;
-        audioSource.volume = Random.Range(volume - volumeVariation, volume) /** GetVolumeModifier()*/;
+        audioSource.volume = Random.Range(volume - volumeVariation, volume);
         audioSource.pitch = Random.Range(pitch - pitchVariation, pitch + pitchVariation);
         audioSource.loop = loop;
         audioSource.maxDistance = maxRange;
         audioSource.minDistance = minRange;
         audioSource.PlayOneShot(audioClip);
-    }
-
-    private float GetVolumeModifier()
-    {
-        switch (audioType)
-        {
-            case AudioType.None:
-                Debug.LogWarning($"{audioClip.name} has no given audio type. Setting its volume modifier to 1.");
-                return 1f;
-            case AudioType.SFX:
-                return PlayerPrefs.GetFloat("SFXVolumePref");
-            case AudioType.Music:
-                return PlayerPrefs.GetFloat("MusicVolumePref");
-            case AudioType.Dialogue:
-                return PlayerPrefs.GetFloat("DialogueVolumePref");
-            default:
-                return 1f;
-        }
     }
 
 }
