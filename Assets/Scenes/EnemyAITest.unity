@@ -3742,7 +3742,7 @@ AudioSource:
   m_GameObject: {fileID: 2028593240}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5094983800690410856, guid: 96bc159fa581f5e4b92f4eda2aff98b8, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -3829,6 +3829,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!82 &2074909408 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8687202732616584798, guid: 66764c0cfd600a94e9ee776a12822730, type: 3}
+  m_PrefabInstance: {fileID: 4002152904823555618}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2081799706
 GameObject:
   m_ObjectHideFlags: 0
@@ -5532,7 +5537,7 @@ AudioSource:
   m_GameObject: {fileID: 112222289441618128}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5768642933463119783, guid: 96bc159fa581f5e4b92f4eda2aff98b8, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -7376,7 +7381,8 @@ MonoBehaviour:
   _generalAudioSource: {fileID: 7640499558858753780}
   _footsAudioSource: {fileID: 2028593242}
   _mouthAudioSource: {fileID: 3976611974841323232}
-  _gunAudioSource: {fileID: 4002152904823555619}
+  _gunGeneralAudioSource: {fileID: 4002152904823555619}
+  _gunShotAudioSource: {fileID: 2074909408}
 --- !u!82 &7640499558858753780
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7386,7 +7392,7 @@ AudioSource:
   m_GameObject: {fileID: 7640499558858753765}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5094983800690410856, guid: 96bc159fa581f5e4b92f4eda2aff98b8, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
