@@ -53,7 +53,7 @@ public class SceneLoader : Singleton<SceneLoader>
                 }
                 else
                 {
-                    Debug.LogWarning("There can be only one background image data pool for each scene.");
+                    Debug.LogWarning("SceneLoader: You can't have more than one background image data pool for a scene.");
                 }
             }
         }
@@ -105,7 +105,7 @@ public class SceneLoader : Singleton<SceneLoader>
         loadingScreen.gameObject.SetActive(true);
         StartCoroutine(GenerateTipsOnLoadingScreen());
         sceneLoadingAsyncOperation = SceneManager.LoadSceneAsync(sceneToLoadBuildIndex);
-        StartCoroutine(BasedOnSceneLoadProgresGenerateInfoOnLoadingScreen());
+        StartCoroutine(BasedOnSceneLoadProgresGenerateDataOnLoadingScreen());
     }
 
     private void SetBackGroundImage(int sceneToLoadBuildIndex)
@@ -123,12 +123,12 @@ public class SceneLoader : Singleton<SceneLoader>
     {
         if(imageDataPoolHashTable.Count == 0)
         {
-            Debug.LogWarning("Loading screen background image data pool is empty.");
+            Debug.LogWarning("SceneLoader: Loading screen background images data is empty.");
             return false;
         }
         if (!imageDataPoolHashTable.ContainsKey(sceneToLoadBuildIndex))
         {
-            Debug.LogWarning("There is no corresponding background image data pool for currently loading scene.");
+            Debug.LogWarning("SceneLoader: There is no corresponding background image data pool for currently loading scene.");
             return false;
         }
 
@@ -144,7 +144,7 @@ public class SceneLoader : Singleton<SceneLoader>
             {
                 if(usedTipsList.Count == 0)
                 {
-                    Debug.LogWarning("Loading screen tips data is empty.");
+                    Debug.LogWarning("SceneLoader: Loading screen tips data is empty.");
                     yield break;
                 }
                 resetTipList();
@@ -174,7 +174,7 @@ public class SceneLoader : Singleton<SceneLoader>
         return nextTipToGenerate;
     }
 
-    private IEnumerator BasedOnSceneLoadProgresGenerateInfoOnLoadingScreen()
+    private IEnumerator BasedOnSceneLoadProgresGenerateDataOnLoadingScreen()
     {
         while (!sceneLoadingAsyncOperation.isDone)
         {

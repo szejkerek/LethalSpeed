@@ -789,14 +789,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableLoadChosenSceneOnGameStart: 1
   firstSceneToLoadOnGameStart: 0
-  additionalTimeOfLoadingScreenBeingActive: 20
+  additionalTimeOfLoadingScreenBeingActive: 10
   loadingScreen: {fileID: 7121116273909802303}
   progressInfoTextField: {fileID: 9114314360889913183}
   tipTextField: {fileID: 9114314360602257096}
   loadingScreenImage: {fileID: 8701615992683803495}
   tipsDataPool:
-  - {fileID: 11400000, guid: 5a5786eb13030cf468a972d054d87dd3, type: 2}
   - {fileID: 11400000, guid: f2e52feb701f09c4db37d3cde0a15142, type: 2}
+  - {fileID: 11400000, guid: 5a5786eb13030cf468a972d054d87dd3, type: 2}
   imageDataPool:
   - {fileID: 11400000, guid: 3d736d6f14c347449b209283000c74a7, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 334978f2b4d93bd4281f9d4c0fa22ff2, type: 2}

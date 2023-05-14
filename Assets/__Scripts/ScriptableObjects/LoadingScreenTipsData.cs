@@ -11,15 +11,15 @@ public class LoadingScreenTipsData : ScriptableObject
     {
         if (TipsList.Count == 0)
         {
-            Debug.LogWarning("List of loading screen tips of one of a LoadingScreenTipsData scriptable objects is empty.");
+            Debug.LogWarning("Scriptable object LoadingScreenTipsData: List<string> TipsList can't be empty.");
             return false;
         }
 
         foreach (string tip in TipsList)
         {
-            if (tip == null)
+            if (tip == "")
             {
-                Debug.LogWarning("Tip string of one of a LoadingScreenTipsData scriptable objects is null.");
+                Debug.LogWarning("Scriptable object LoadingScreenTipsData: List<string> TipsList can't contain empty strings.");
                 return false;
             }
         }

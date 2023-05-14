@@ -15,7 +15,7 @@ public class LoadingScreenImageData : ScriptableObject
     {
         if (LoadinScreenBackgroundImages.Count == 0)
         {
-            Debug.LogWarning("List of loading screen background images of one of a LoadingScreenImageData scriptable objects is empty.");
+            Debug.LogWarning("Scriptable object LoadingScreenImageData: List<Sprite> LoadinScreenBackgroundImages can't be empty.");
             return false;
         }
 
@@ -23,7 +23,7 @@ public class LoadingScreenImageData : ScriptableObject
         {
             if (sprite == null)
             {
-                Debug.LogWarning("Sprite of one of a LoadingScreenImageData scriptable objects is null.");
+                Debug.LogWarning("Scriptable object LoadingScreenImageData: List<Sprite> LoadinScreenBackgroundImages can't contain null references.");
                 return false;
             }
         }
