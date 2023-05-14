@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: MovementSceneImageData
   m_EditorClassIdentifier: 
   <SceneBuildIndex>k__BackingField: 1
-  <LoadinScreenBackgroundImages>k__BackingField: []
+  <LoadinScreenBackgroundImages>k__BackingField:
+  - {fileID: 21300000, guid: 401d9a61219edbf428c9ed983315bd90, type: 3}
+  - {fileID: 21300000, guid: 02645615350590347a12b20e7babbe5f, type: 3}
