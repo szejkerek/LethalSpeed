@@ -38,13 +38,16 @@ public class SceneLoader : Singleton<SceneLoader>
 
         foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
         {
-            if(!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.GetSceneBuildIndex()))
+            if(imageDataToCoopy != null && imageDataToCoopy.IsCorrect())
             {
-                imageDataPoolHashTable.Add(imageDataToCoopy.GetSceneBuildIndex(), imageDataToCoopy.LoadinScreenBackground);
-            }
-            else
-            {
-                Debug.LogWarning("There can be only one background image data pool for each scene.");
+                if (!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.GetSceneBuildIndex()))
+                {
+                    imageDataPoolHashTable.Add(imageDataToCoopy.GetSceneBuildIndex(), imageDataToCoopy.LoadinScreenBackgroundImages);
+                }
+                else
+                {
+                    Debug.LogWarning("There can be only one background image data pool for each scene.");
+                }
             }
         }
     }
@@ -109,11 +112,6 @@ public class SceneLoader : Singleton<SceneLoader>
         if (!imageDataPoolHashTable.ContainsKey(sceneToLoadBuildIndex))
         {
             Debug.LogWarning("There is no corresponding background image data pool for currently loading scene.");
-            return false;
-        }
-        if (imageDataPoolHashTable[sceneToLoadBuildIndex].Count == 0)
-        {
-            Debug.LogWarning("Loading screen background image data pool of chosen scene is empty.");
             return false;
         }
 
