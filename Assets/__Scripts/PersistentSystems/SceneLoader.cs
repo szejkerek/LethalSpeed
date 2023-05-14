@@ -13,6 +13,9 @@ public class SceneLoader : Singleton<SceneLoader>
     [SerializeField] private bool enableLoadChosenSceneOnGameStart; //TODO: delete this line, it is used only for testing purposes
     [SerializeField] private SceneBuildIndexes firstSceneToLoadOnGameStart; //TODO: delete this line, it is used only for testing purposes
     [SerializeField] private int additionalTimeOfLoadingScreenBeingActive; //TODO: delete this line, it is used only for testing purposes
+    [SerializeField] private float timeOfTipTextFading; //TODO: delete this line, it is used only for testing purposes
+    [SerializeField] private float timeOfTipTextPersists; //TODO: delete this line, it is used only for testing purposes
+    [SerializeField] private float timeBetweenNextTipTextGeneration; //TODO: delete this line, it is used only for testing purposes
 
     [Header("UI")]
     [SerializeField] private GameObject loadingScreen;
@@ -150,11 +153,11 @@ public class SceneLoader : Singleton<SceneLoader>
                 resetTipList();
             }
 
-            tipTextFieldCanvasGroup.DOFade(1, .5f);
+            tipTextFieldCanvasGroup.DOFade(1, timeOfTipTextFading);
             tipTextField.text = GetRandomTipFromTipsList();
-            yield return new WaitForSeconds(3f);
-            tipTextFieldCanvasGroup.DOFade(0, .5f);
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(timeOfTipTextPersists);
+            tipTextFieldCanvasGroup.DOFade(0, timeOfTipTextFading);
+            yield return new WaitForSeconds(timeBetweenNextTipTextGeneration);
         }
     }
 
