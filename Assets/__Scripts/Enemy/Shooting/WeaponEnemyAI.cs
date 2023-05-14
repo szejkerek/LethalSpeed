@@ -30,6 +30,7 @@ public class WeaponEnemyAI : MonoBehaviour
     private bool _isReloading = false;
 
     private Enemy _enemy;
+    private AudioEnemyAI _enemyAudio;
     private Rigidbody _weaponRigidbody;
     private Collider _weaponCollider;
     private VisionEnemyAI _visionEnemyAI;
@@ -43,8 +44,8 @@ public class WeaponEnemyAI : MonoBehaviour
         _weaponCollider = _weaponObject.GetComponent<Collider>();
         _visionEnemyAI = GetComponent<VisionEnemyAI>();
         _enemy = GetComponent<Enemy>();
+        _enemyAudio = GetComponent<AudioEnemyAI>();
         _weaponRigidbody.isKinematic = true;
-        _weaponCollider.isTrigger = true;
 
         _currentAmmo = _magazineSize;
         SetUpBulletPool();
@@ -58,7 +59,7 @@ public class WeaponEnemyAI : MonoBehaviour
             return Instantiate(_bulletPrefab, _barrelTip.position, Quaternion.LookRotation(direction));
         }, bullet =>
         {
-            Vector3 direction = _enemy.Player.PlayerCamera.transform.position + Vector3.up * _yOffsetFromCamera - _barrelTip.position;
+            Vector3 direction = (_enemy.Player.PlayerCamera.transform.position + Vector3.up * _yOffsetFromCamera - _barrelTip.position).normalized;
             bullet.transform.position = _barrelTip.position;
             bullet.transform.rotation = Quaternion.LookRotation(direction);
             bullet.Init(_enemy, direction, _bulletSpeed, DestroyBullet, 5f);
@@ -80,7 +81,7 @@ public class WeaponEnemyAI : MonoBehaviour
         if (_timer <= 0)
         {
             SpawnBullet();
-            _enemy.EnemyAudioLib.Pistol.PlayRandomized(_enemy.AudioSource);
+            _enemyAudio.EnemyAudioLib.Pistol.PlayRandomized(_enemyAudio.GunShotAudioSource);
             _timer = 1 / _firerate;
         }
 
@@ -97,7 +98,6 @@ public class WeaponEnemyAI : MonoBehaviour
     {
         _weaponObject.transform.SetParent(null);
         _weaponRigidbody.isKinematic = false;
-        _weaponCollider.isTrigger = false;
     }
 
     private void DestroyBullet(Bullet bullet)
@@ -113,7 +113,7 @@ public class WeaponEnemyAI : MonoBehaviour
     {
         _isReloading = true;
         _enemy.Animator.SetBool("Reload", _isReloading);
-        _enemy.EnemyAudioLib.Reload.PlayRandomized(_enemy.AudioSource);
+        _enemyAudio.EnemyAudioLib.Reload.PlayRandomized(_enemyAudio.GunGeneralAudioSource);
         yield return new WaitForSeconds(_reloadTime);
         _currentAmmo = _magazineSize;
         _timer = 0;

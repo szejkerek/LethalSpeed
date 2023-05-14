@@ -9,7 +9,6 @@ public class ReloadingStateEnemyAI : StateEnemyAI
 
     public override void EnterState()
     {
-        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _context.LocomotionEnemyAI.ResetPath();
         _context.WeaponEnemyAI.TriggerReload();
     }
@@ -35,7 +34,7 @@ public class ReloadingStateEnemyAI : StateEnemyAI
     {
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.grey;
-        debugEnemyAIText.stateName = "Reloading";
+        debugEnemyAIText.stateName = stateName;
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

@@ -12,7 +12,6 @@ public class FleeStateEnemyAI : StateEnemyAI
     float _fleeDuration;
     public override void EnterState()
     {
-        Debug.Log($"{_context.gameObject.name} entered {stateName} state.");
         _fleeDuration = 0;
         _context.LocomotionEnemyAI.VelocityModifier = -1;
         _context.LocomotionEnemyAI.NavMeshAgent.updateRotation = false;
@@ -61,7 +60,7 @@ public class FleeStateEnemyAI : StateEnemyAI
     {
         DebugEnemyAIText debugEnemyAIText;
         debugEnemyAIText.titleColor = Color.cyan;
-        debugEnemyAIText.stateName = "Flee";
+        debugEnemyAIText.stateName = stateName;
         debugEnemyAIText.info = "";
         return debugEnemyAIText;
     }

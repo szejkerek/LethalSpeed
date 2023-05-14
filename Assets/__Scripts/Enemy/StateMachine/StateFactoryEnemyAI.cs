@@ -12,7 +12,6 @@ public class StateFactoryEnemyAI
     public StateEnemyAI SeekPlayer()    => new SeekingPlayerStateEnemyAI(_context, this, "SeekPlayer");
     public StateEnemyAI Ragdoll()       => new RagdollStateEnemyAI(_context, this, "Ragdoll");
     public StateEnemyAI ShootPlayer()   => new ShootingPlayerStateEnemyAI(_context, this, "ShootPlayer");
-    public StateEnemyAI Crouch()        => new CrouchingStateEnemyAI(_context, this, "Crouch");
     public StateEnemyAI Reload()        => new ReloadingStateEnemyAI(_context, this, "Reload");
     public StateEnemyAI Patrol()        => new PatrollingStateEnemyAI(_context, this, "Patrol");
     public StateEnemyAI Flee()          => new FleeStateEnemyAI(_context, this, "WalkBackward");
