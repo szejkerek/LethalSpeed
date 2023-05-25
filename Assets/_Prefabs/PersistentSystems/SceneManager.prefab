@@ -787,9 +787,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a94f36746dd8f48bfd2eada021ec15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableLoadChosenSceneOnGameStart: 1
+  enableLoadChosenSceneOnGameStart: 0
   firstSceneToLoadOnGameStart: 0
-  additionalTimeOfLoadingScreenBeingActive: 10
+  additionalTimeOfLoadingScreenBeingActive: 3
   timeOfTipTextFading: 0.5
   timeOfTipTextPersists: 3
   timeBetweenNextTipTextGeneration: 0.5
