@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
 {
@@ -10,6 +11,15 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject ChooseSaveSlotPanel;
     [SerializeField] private GameObject ChooseLevelPanel;
     [SerializeField] private GameObject OptionPanel;
+
+    protected void Awake()
+    {
+        MainMenuPanel.SetActive(true);
+        ChooseSaveSlotPanel.SetActive(false);
+        ChooseLevelPanel.SetActive(false);
+        OptionPanel.SetActive(false);
+    }
+
     public void StartGameButton()
     {
         ChooseSaveSlotPanel.SetActive(true);
