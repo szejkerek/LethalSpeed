@@ -14,6 +14,8 @@ public class MenuManager : MonoBehaviour
 
     protected void Awake()
     {
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
         MainMenuPanel.SetActive(true);
         ChooseSaveSlotPanel.SetActive(false);
         ChooseLevelPanel.SetActive(false);
@@ -36,6 +38,11 @@ public class MenuManager : MonoBehaviour
     {
         ChooseLevelPanel.SetActive(true);
         MainMenuPanel.SetActive(false);
+    }
+
+    public void LoadLevelByBuildIndex(int levelBuildIndex)
+    {
+        SceneLoader.Instance.LoadNewSceneByBuildIndex(levelBuildIndex);
     }
 
     public void QuitChooseLevelButton()
