@@ -789,7 +789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableLoadChosenSceneOnGameStart: 1
   firstSceneToLoadOnGameStart: 0
-  additionalTimeOfLoadingScreenBeingActive: 3
+  additionalTimeOfLoadingScreenBeingActive: 1
   timeOfTipTextFading: 0.5
   timeOfTipTextPersists: 3
   timeBetweenNextTipTextGeneration: 0.5

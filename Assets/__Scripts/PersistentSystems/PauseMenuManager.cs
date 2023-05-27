@@ -7,6 +7,8 @@ public class PauseMenuManager : Singleton<PauseMenuManager>
 {
     private bool isPaused;
     [SerializeField] private GameObject PauseMenuCanvas;
+    [SerializeField] private GameObject PauseMenuPanel;
+    [SerializeField] private GameObject OptionsPanel;
 
     protected override void Awake()
     {
@@ -27,10 +29,14 @@ public class PauseMenuManager : Singleton<PauseMenuManager>
         {
             if(isPaused == true) 
             {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 Play();
             }
             else
             {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 Stop();
             }
         }
@@ -48,5 +54,34 @@ public class PauseMenuManager : Singleton<PauseMenuManager>
         Time.timeScale = .0f;
         PauseMenuCanvas.SetActive(true);
         isPaused = true;
+    }
+
+    public void ResumeButton()
+    {
+        Play();
+    }
+
+    public void OptionButton()
+    {
+        OptionsPanel.SetActive(true);
+        PauseMenuPanel.SetActive(false);
+    }
+
+    public void QuitOptionButton()
+    {
+        OptionsPanel.SetActive(false);
+        PauseMenuPanel.SetActive(true);
+    }
+
+    public void MainMenuButton()
+    {
+        Play();
+        SceneLoader.Instance.LoadNewSceneByBuildIndex((int)SceneBuildIndexes.Menu);
+    }
+
+    public void QuitButton()
+    {
+        Application.Quit();
+        Debug.Log("Application closed.");
     }
 }
