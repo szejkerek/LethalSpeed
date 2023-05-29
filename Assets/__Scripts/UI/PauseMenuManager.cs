@@ -36,6 +36,11 @@ public class PauseMenuManager : MonoBehaviour
         }
     }
 
+    public bool IsPaused()
+    {
+        return isPaused;
+    }
+
     private void Play()
     {
         Time.timeScale = 1.0f;
@@ -55,6 +60,11 @@ public class PauseMenuManager : MonoBehaviour
         Play();
     }
 
+    public void ResetButton()
+    {
+        SceneLoader.Instance.ReloadScene();
+    }
+
     public void OptionButton()
     {
         OptionsPanel.SetActive(true);
@@ -69,7 +79,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void MainMenuButton()
     {
-        Play();
+        Time.timeScale = 1.0f;
         SceneLoader.Instance.LoadNewSceneByBuildIndex((int)SceneBuildIndexes.Menu);
     }
 
