@@ -3,28 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenuManager : Singleton<PauseMenuManager>
+public class PauseMenuManager : MonoBehaviour
 {
     private bool isPaused;
     [SerializeField] private GameObject PauseMenuCanvas;
     [SerializeField] private GameObject PauseMenuPanel;
     [SerializeField] private GameObject OptionsPanel;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         Time.timeScale = 1.0f;
         isPaused = false;
         PauseMenuCanvas.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            return;
-        }
-
         if(Input.GetKeyUp(KeyCode.Escape)) 
         {
             if(isPaused == true) 
