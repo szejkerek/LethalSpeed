@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class ResetLevelManager : MonoBehaviour
 {
-    [SerializeField] private PauseMenuManager pauseMenuMenager = null;
+    [SerializeField] private PauseMenuManager pauseMenuMenager;
+
+    private void Awake()
+    {
+        pauseMenuMenager = null;
+    }
     void Update()
     {
         if (pauseMenuMenager != null && pauseMenuMenager.IsPaused())
         {
             return;
         }
-
-        pauseMenuMenager.IsPaused();
 
         if (Input.GetKeyUp(KeyCode.R))
         {
