@@ -6,19 +6,15 @@ public class ResetLevelManager : MonoBehaviour
 {
     [SerializeField] private PauseMenuManager pauseMenuMenager;
 
-    private void Awake()
-    {
-        pauseMenuMenager = null;
-    }
     void Update()
     {
-        if (pauseMenuMenager != null && pauseMenuMenager.IsPaused())
-        {
-            return;
-        }
-
         if (Input.GetKeyUp(KeyCode.R))
         {
+            if (pauseMenuMenager != null && pauseMenuMenager.IsPaused())
+            {
+                return;
+            }
+
             SceneLoader.Instance.ReloadScene();
         }
     }
