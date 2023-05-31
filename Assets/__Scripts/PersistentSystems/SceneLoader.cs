@@ -38,6 +38,7 @@ public class SceneLoader : Singleton<SceneLoader>
     protected override void Awake()
     {
         base.Awake();
+        loadingScreen.SetActive(false);
         progressBar = loadingScreen.GetComponentInChildren<Slider>();
         tipTextFieldCanvasGroup = tipTextField.GetComponent<CanvasGroup>();
         PopulateImageDataPoolHashTable();
