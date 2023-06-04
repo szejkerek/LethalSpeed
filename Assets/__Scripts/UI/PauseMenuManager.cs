@@ -2,31 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    private bool isPaused = false;
-    [SerializeField] private GameObject PauseMenuCanvas;
-    [SerializeField] private GameObject PauseMenuPanel;
-    [SerializeField] private GameObject OptionsPanel;
+    private bool _isPaused = false;
+
+    [Header("UI")]
+    [SerializeField] private GameObject _pauseMenuCanvas;
+    [SerializeField] private GameObject _pauseMenuPanel;
+    [SerializeField] private GameObject _optionsPanel;
+
+    [Header("Butons")]
+    [SerializeField] private Button _resetButton;
+    [SerializeField] private Button _quitButton;
+    [SerializeField] private Button _resumeButton;
+    [SerializeField] private Button _optionsButton;
+    [SerializeField] private Button _mainMenuButton;
+    [SerializeField] private Button _backOptionsButton;
+
+    public bool IsPaused { get => _isPaused; }
 
     private void Awake()
     {
         Time.timeScale = 1.0f;
-        PauseMenuCanvas.SetActive(false);
+        _pauseMenuCanvas.SetActive(false);     
     }
 
-    private void Update()
+    private void Start()
     {
-        if(Input.GetKeyUp(KeyCode.Escape))
-        {
-            TooglePasueMenu();
-        }
+        AssignUIButtons();
+    }
+
+    private void AssignUIButtons()
+    {
+        _resetButton.onClick.AddListener(OnResetButtonClick);
+        _quitButton.onClick.AddListener(OnQuitButtonClick);
+        _resumeButton.onClick.AddListener(OnResetButtonClick);
+        _optionsButton.onClick.AddListener(OnOptionButtonClick);
+        _mainMenuButton.onClick.AddListener(OnMainMenuButtonClick);
+        _backOptionsButton.onClick.AddListener(OnBackOptionButtonClick);
     }
 
     public void TooglePasueMenu()
     {
-        if (isPaused == true)
+        if (_isPaused == true)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -40,54 +60,52 @@ public class PauseMenuManager : MonoBehaviour
         }
     }
 
-    public bool IsPaused()
-    {
-        return isPaused;
-    }
 
     private void EnableGame()
     {
         Time.timeScale = 1.0f;
-        PauseMenuCanvas.SetActive(false);
-        isPaused = false;
+        _pauseMenuCanvas.SetActive(false);
+        _isPaused = false;
     }
 
     private void DisableGame() 
     {
         Time.timeScale = .0f;
-        PauseMenuCanvas.SetActive(true);
-        isPaused = true;
+        _pauseMenuCanvas.SetActive(true);
+        _isPaused = true;
     }
 
-    public void ResumeButton()
+
+
+    public void OnResumeButtonClick()
     {
         EnableGame();
     }
 
-    public void ResetButton()
+    public void OnResetButtonClick()
     {
-        SceneLoader.Instance.ReloadScene();
+        GameManager.Instance.ResetGame();
     }
 
-    public void OptionButton()
+    public void OnOptionButtonClick()
     {
-        OptionsPanel.SetActive(true);
-        PauseMenuPanel.SetActive(false);
+        _optionsPanel.SetActive(true);
+        _pauseMenuPanel.SetActive(false);
     }
 
-    public void QuitOptionButton()
+    public void OnBackOptionButtonClick()
     {
-        OptionsPanel.SetActive(false);
-        PauseMenuPanel.SetActive(true);
+        _optionsPanel.SetActive(false);
+        _pauseMenuPanel.SetActive(true);
     }
 
-    public void MainMenuButton()
+    public void OnMainMenuButtonClick()
     {
         Time.timeScale = 1.0f;
         SceneLoader.Instance.LoadNewSceneByBuildIndex((int)SceneBuildIndexes.Menu);
     }
 
-    public void QuitButton()
+    public void OnQuitButtonClick()
     {
         Application.Quit();
         Debug.Log("Application closed.");

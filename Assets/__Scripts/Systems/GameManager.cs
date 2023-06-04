@@ -3,25 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PauseMenuManager))]
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     private PauseMenuManager pauseMenuMenager;
 
-    private void Awake()
+    protected void Awake()
     {
+        base.Awake();
         pauseMenuMenager = GetComponent<PauseMenuManager>();
     }
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.R))
+        GetPressedKeys();
+    }
+
+    private void GetPressedKeys()
+    {
+        if (Input.GetKeyDown(KeyBinds.resetButton))
         {
-            if (pauseMenuMenager != null && pauseMenuMenager.IsPaused())
+            if (pauseMenuMenager.IsPaused)
             {
                 return;
             }
 
-            SceneLoader.Instance.ReloadScene();
+            ResetGame();
         }
+        else if (Input.GetKeyDown(KeyBinds.pasueButton))
+        {
+            pauseMenuMenager.TooglePasueMenu();
+        }
+    }
+
+    public void ResetGame()
+    {
+        SceneLoader.Instance.ReloadScene();
     }
 }

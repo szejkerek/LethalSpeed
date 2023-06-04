@@ -1225,7 +1225,7 @@ GameObject:
   - component: {fileID: 1462680698532632314}
   - component: {fileID: 5819974110419333147}
   m_Layer: 0
-  m_Name: GrayOutPanel
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
