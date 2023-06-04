@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -787,15 +787,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a94f36746dd8f48bfd2eada021ec15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableLoadChosenSceneOnGameStart: 0
-  firstSceneToLoadOnGameStart: 1
-  additionalTimeOfLoadingScreenBeingActive: 0
+  enableLoadChosenSceneOnGameStart: 1
+  firstSceneToLoadOnGameStart: 0
+  additionalTimeOfLoadingScreenBeingActive: 1
+  timeOfTipTextFading: 0.5
+  timeOfTipTextPersists: 3
+  timeBetweenNextTipTextGeneration: 0.5
   loadingScreen: {fileID: 7121116273909802303}
   progressInfoTextField: {fileID: 9114314360889913183}
   tipTextField: {fileID: 9114314360602257096}
   loadingScreenImage: {fileID: 8701615992683803495}
   tipsDataPool:
-  - {fileID: 11400000, guid: 5a5786eb13030cf468a972d054d87dd3, type: 2}
   - {fileID: 11400000, guid: f2e52feb701f09c4db37d3cde0a15142, type: 2}
+  - {fileID: 11400000, guid: 5a5786eb13030cf468a972d054d87dd3, type: 2}
   imageDataPool:
   - {fileID: 11400000, guid: 3d736d6f14c347449b209283000c74a7, type: 2}
+  - {fileID: 11400000, guid: 334978f2b4d93bd4281f9d4c0fa22ff2, type: 2}

@@ -1,5 +1,6 @@
 public enum SceneBuildIndexes
 {
-    MenuTest,
-    MovementScene
+    Menu,
+    PrototypeLevel1,
+    PrototypeLevel2
 }
