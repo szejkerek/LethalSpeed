@@ -10,19 +10,18 @@ using System;
 public class SceneLoader : Singleton<SceneLoader>
 {
     [Header("Development")]
-    [SerializeField] private bool enableLoadChosenSceneOnGameStart; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private SceneBuildIndexes firstSceneToLoadOnGameStart; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private int additionalTimeOfLoadingScreenBeingActive; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private float timeOfTipTextFading; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private float timeOfTipTextPersists; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private float timeBetweenNextTipTextGeneration; //TODO: delete this line, it is used only for testing purposes
+    [SerializeField] private bool startUpWithMenu; 
+    [SerializeField] private SceneBuildIndexes startUpScene; 
+    [SerializeField] private int additionalLoadingTime; 
+    [SerializeField] private float textFadeTime; 
+    [SerializeField] private float tipPersistTime; 
+    [SerializeField] private float nextTipGenerationTime; 
 
     [Header("UI")]
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private TMP_Text progressInfoTextField;
     [SerializeField] private TMP_Text tipTextField;
     [SerializeField] private Image loadingScreenImage;
-
 
     [Header("Loading screen data")]
     [SerializeField] private List<LoadingScreenTipsData> tipsDataPool;
@@ -43,6 +42,11 @@ public class SceneLoader : Singleton<SceneLoader>
         tipTextFieldCanvasGroup = tipTextField.GetComponent<CanvasGroup>();
         PopulateImageDataPoolHashTable();
         PopulateTipsList();
+
+        if (startUpWithMenu)
+        {
+            LoadNewSceneByBuildIndex((int)startUpScene);
+        }
     }
 
     private void PopulateImageDataPoolHashTable()
@@ -71,13 +75,6 @@ public class SceneLoader : Singleton<SceneLoader>
             {
                 tipsList.AddRange(tipsDataToCopy.TipsList);
             }
-        }
-    }
-    private void Start()
-    {
-        if (enableLoadChosenSceneOnGameStart)
-        {
-            LoadNewSceneByBuildIndex((int)firstSceneToLoadOnGameStart);
         }
     }
 
@@ -151,18 +148,18 @@ public class SceneLoader : Singleton<SceneLoader>
                     Debug.LogWarning("SceneLoader: Loading screen tips data is empty.");
                     yield break;
                 }
-                resetTipList();
+                ResetTipList();
             }
 
-            tipTextFieldCanvasGroup.DOFade(1, timeOfTipTextFading);
+            tipTextFieldCanvasGroup.DOFade(1, textFadeTime);
             tipTextField.text = GetRandomTipFromTipsList();
-            yield return new WaitForSeconds(timeOfTipTextPersists);
-            tipTextFieldCanvasGroup.DOFade(0, timeOfTipTextFading);
-            yield return new WaitForSeconds(timeBetweenNextTipTextGeneration);
+            yield return new WaitForSeconds(tipPersistTime);
+            tipTextFieldCanvasGroup.DOFade(0, textFadeTime);
+            yield return new WaitForSeconds(nextTipGenerationTime);
         }
     }
 
-    private void resetTipList()
+    private void ResetTipList()
     {
         tipsList.AddRange(usedTipsList);
         usedTipsList.Clear();
@@ -186,7 +183,7 @@ public class SceneLoader : Singleton<SceneLoader>
             yield return null;
         }
 
-        yield return new WaitForSeconds(additionalTimeOfLoadingScreenBeingActive); //TODO: delete this line, it is used only for testing purposes
+        yield return new WaitForSeconds(additionalLoadingTime); //TODO: delete this line, it is used only for testing purposes
         ResetLoadingScreenToDefaultState();
     }
 
@@ -207,6 +204,6 @@ public class SceneLoader : Singleton<SceneLoader>
         progressBar.value = 0;
         tipTextField.text = null;
         tipTextFieldCanvasGroup.alpha = 0f;
-        resetTipList();
+        ResetTipList();
     }
 }
