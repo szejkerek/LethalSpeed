@@ -38,7 +38,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         _resetButton.onClick.AddListener(OnResetButtonClick);
         _quitButton.onClick.AddListener(OnQuitButtonClick);
-        _resumeButton.onClick.AddListener(OnResetButtonClick);
+        _resumeButton.onClick.AddListener(OnResumeButtonClick);
         _optionsButton.onClick.AddListener(OnOptionButtonClick);
         _mainMenuButton.onClick.AddListener(OnMainMenuButtonClick);
         _backOptionsButton.onClick.AddListener(OnBackOptionButtonClick);
@@ -74,8 +74,6 @@ public class PauseMenuManager : MonoBehaviour
         _pauseMenuCanvas.SetActive(true);
         _isPaused = true;
     }
-
-
 
     public void OnResumeButtonClick()
     {
