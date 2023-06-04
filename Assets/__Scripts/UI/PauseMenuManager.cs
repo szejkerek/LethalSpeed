@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    private bool isPaused;
+    private bool isPaused = false;
     [SerializeField] private GameObject PauseMenuCanvas;
     [SerializeField] private GameObject PauseMenuPanel;
     [SerializeField] private GameObject OptionsPanel;
@@ -13,26 +13,30 @@ public class PauseMenuManager : MonoBehaviour
     private void Awake()
     {
         Time.timeScale = 1.0f;
-        isPaused = false;
         PauseMenuCanvas.SetActive(false);
     }
 
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Escape)) 
+        if(Input.GetKeyUp(KeyCode.Escape))
         {
-            if(isPaused == true) 
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                Play();
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                Stop();
-            }
+            TooglePasueMenu();
+        }
+    }
+
+    public void TooglePasueMenu()
+    {
+        if (isPaused == true)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            EnableGame();
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            DisableGame();
         }
     }
 
@@ -41,14 +45,14 @@ public class PauseMenuManager : MonoBehaviour
         return isPaused;
     }
 
-    private void Play()
+    private void EnableGame()
     {
         Time.timeScale = 1.0f;
         PauseMenuCanvas.SetActive(false);
         isPaused = false;
     }
 
-    private void Stop() 
+    private void DisableGame() 
     {
         Time.timeScale = .0f;
         PauseMenuCanvas.SetActive(true);
@@ -57,7 +61,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void ResumeButton()
     {
-        Play();
+        EnableGame();
     }
 
     public void ResetButton()

@@ -360,7 +360,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3668047307986371534}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
         m_MethodName: OptionButton
         m_Mode: 1
@@ -381,9 +381,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5673740112618919431}
-  - component: {fileID: 3668047307986371534}
   m_Layer: 0
-  m_Name: PauseMenuManager
+  m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,21 +404,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3668047307986371534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2005930809196786794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd1c5416d51412c4faea4548ca2418e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PauseMenuCanvas: {fileID: 162202838979120329}
-  PauseMenuPanel: {fileID: 7153090503784632854}
-  OptionsPanel: {fileID: 410552601807890467}
 --- !u!1 &2348301156250724270
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,7 +526,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3668047307986371534}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
         m_MethodName: MainMenuButton
         m_Mode: 1
@@ -1478,7 +1462,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3668047307986371534}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
         m_MethodName: QuitButton
         m_Mode: 1
@@ -1612,7 +1596,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3668047307986371534}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
         m_MethodName: ResetButton
         m_Mode: 1
@@ -1746,7 +1730,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3668047307986371534}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
         m_MethodName: ResumeButton
         m_Mode: 1
@@ -1768,7 +1752,7 @@ PrefabInstance:
     - target: {fileID: 878967999401206790, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3668047307986371534}
+      objectReference: {fileID: 0}
     - target: {fileID: 878967999401206790, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: QuitOptionButton
@@ -1870,10 +1854,5 @@ PrefabInstance:
 --- !u!224 &410552601807890460 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 878968000225912399, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
-  m_PrefabInstance: {fileID: 684595348835503699}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &410552601807890467 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 878968000225912432, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
   m_PrefabInstance: {fileID: 684595348835503699}
   m_PrefabAsset: {fileID: 0}

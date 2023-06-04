@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResetLevelManager : MonoBehaviour
+[RequireComponent(typeof(PauseMenuManager))]
+public class GameManager : MonoBehaviour
 {
-    [SerializeField] private PauseMenuManager pauseMenuMenager;
+    private PauseMenuManager pauseMenuMenager;
+
+    private void Awake()
+    {
+        pauseMenuMenager = GetComponent<PauseMenuManager>();
+    }
 
     void Update()
     {
