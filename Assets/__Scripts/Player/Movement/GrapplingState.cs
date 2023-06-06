@@ -11,8 +11,8 @@ public struct GrappleProperties
     public float GrappleAimError;
     public bool ShouldResetDash;
 
-    [HideInInspector] public LineRenderer HookLineRenderer;
-    [HideInInspector] public Transform HookGunTip;
+    public LineRenderer HookLineRenderer;
+    public Transform HookGunTip;
 }
 
 public class GrapplingState : MovementState
