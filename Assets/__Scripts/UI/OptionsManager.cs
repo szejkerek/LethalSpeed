@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class OptionsManager : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] Slider _masterVolumeSlider;
-    [SerializeField] Slider _SFXVolumeSlider;
-    [SerializeField] Slider _musicVolumeSlider;
-    [SerializeField] Slider _dialogsVolumeSlider;
+    [SerializeField] Scrollbar _masterVolumeSlider;
+    [SerializeField] Scrollbar _SFXVolumeSlider;
+    [SerializeField] Scrollbar _musicVolumeSlider;
+    [SerializeField] Scrollbar _dialogsVolumeSlider;
     [SerializeField] Button _applyChangesButton;
 
     private OptionsData OptionsData = new OptionsData();
