@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IDataService : MonoBehaviour
+public interface IDataService
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    bool SaveData<T>(string RelativePath, T Data, bool Encrypted);
+    T LoadData<T>(string RelativePath, bool Encrypted);
 }
