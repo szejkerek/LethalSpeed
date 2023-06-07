@@ -40,5 +40,6 @@ public class OptionsManager : MonoBehaviour
         OptionsData.SFXVolume = this._SFXVolumeSlider.value;
         OptionsData.MusicVolume = this._musicVolumeSlider.value;
         OptionsData.DialogsVolume = this._dialogsVolumeSlider.value;
+        SerializeJson();
     }
 }
