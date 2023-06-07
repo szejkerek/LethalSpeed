@@ -21,6 +21,15 @@ public class OptionsManager : MonoBehaviour
         AssignUIButtons();
     }
 
+    private void Awake()
+    {
+        DeserializeJson();
+        _masterVolumeSlider.value = OptionsData.MasterVolume;
+        _SFXVolumeSlider.value = OptionsData.SFXVolume;
+        _musicVolumeSlider.value = OptionsData.MusicVolume;
+        _dialogsVolumeSlider.value = OptionsData.DialogsVolume;
+    }
+
     private void AssignUIButtons()
     {
         _applyChangesButton.onClick.AddListener(OnApplyChangesButtonClick);
@@ -32,6 +41,11 @@ public class OptionsManager : MonoBehaviour
         {
             Debug.LogError("Could not save file!");
         }
+    }
+
+    public void DeserializeJson() 
+    {
+        this.OptionsData = DataService.LoadData<OptionsData>("/options-data.json", EncryptionEnabled);
     }
 
     private void OnApplyChangesButtonClick()
