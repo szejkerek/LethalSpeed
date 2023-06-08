@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/EnemyAITest.unity
-    guid: c3cd486800dfdcf459de360e808676ec
+    path: Assets/Scenes/Menu.unity
+    guid: e07ea2ed3d842dc47935f89dca3aae61
   - enabled: 1
-    path: Assets/Scenes/MenuTest.unity
-    guid: b36ddc47599e04e40a3a44500f09db1c
+    path: Assets/Scenes/PrototypeLevel.unity
+    guid: c4f222a9b4465a04dbf87b4478ea4e8b
   - enabled: 1
-    path: Assets/Scenes/MovementScene.unity
-    guid: 7e3de16a82bc5044b835a9d5e2cdd178
+    path: Assets/Scenes/PrototypeLevel2.unity
+    guid: f272272da3c9e6941a54ac935516d1ba
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: d1faf8a578054434e8214472ac58a648, type: 2}
