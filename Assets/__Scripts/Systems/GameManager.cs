@@ -7,7 +7,7 @@ public class GameManager : Singleton<GameManager>
 {
     private PauseMenuManager pauseMenuMenager;
 
-    protected void Awake()
+    protected override void Awake()
     {
         base.Awake();
         pauseMenuMenager = GetComponent<PauseMenuManager>();
