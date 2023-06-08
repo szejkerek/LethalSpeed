@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &27440638 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 878967999401206790, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+  m_PrefabInstance: {fileID: 878968000974854127}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &70183958
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,19 +352,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 256677367}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025079271}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: QuitButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &256677367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,19 +474,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 295777501}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025079271}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: LoadLevelByBuildIndex
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &295777501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -793,19 +780,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 372553696}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025079271}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: LoadLevelByBuildIndex
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &372553696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1315,19 +1290,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 667211715}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025079271}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: QuitChooseSaveSlotButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &667211715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1648,6 +1611,17 @@ MonoBehaviour:
   ChooseSaveSlotPanel: {fileID: 987760162}
   ChooseLevelPanel: {fileID: 1360275119}
   OptionPanel: {fileID: 1433153951}
+  _startButton: {fileID: 1215372803}
+  _chooseLevelButton: {fileID: 1516739020}
+  _optionsButton: {fileID: 1346688239}
+  _quitButton: {fileID: 256677366}
+  _quitChooseSaveSlotButton: {fileID: 667211714}
+  _quitChooseLevelButton: {fileID: 1349489079}
+  _quitOptionsButton: {fileID: 27440638}
+  _levelButtons:
+  - {fileID: 372553695}
+  - {fileID: 1100222593}
+  - {fileID: 295777500}
 --- !u!224 &1025079272
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1751,19 +1725,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1100222594}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025079271}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: LoadLevelByBuildIndex
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1100222594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1885,19 +1847,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1215372804}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025079271}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: StartGameButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1215372804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2019,19 +1969,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1346688240}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025079271}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: OptionButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1346688240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2153,19 +2091,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1349489080}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025079271}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: QuitChooseLevelButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1349489080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2461,19 +2387,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1516739021}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025079271}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: ChooseLevelButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1516739021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3198,10 +3112,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2107675808}
     m_Modifications:
-    - target: {fileID: 878967999401206790, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1025079271}
     - target: {fileID: 878968000225912399, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3289,6 +3199,54 @@ PrefabInstance:
     - target: {fileID: 878968000225912432, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
       propertyPath: m_Name
       value: OptionsPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857541166802143862, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857541166802143862, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857541166802143862, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175045591704536263, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175045591704536263, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175045591704536263, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696477352019154617, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696477352019154617, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696477352019154617, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5557744480589076534, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5557744480589076534, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5557744480589076534, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f3be91b3c0315b4b8f1b6bb8bc77d4c, type: 3}
