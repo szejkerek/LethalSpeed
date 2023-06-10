@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour
 
         if (col.TryGetComponent(out HitBox hitBox))
         {
-            hitBox.TakeHit();
+            hitBox.TakeHit(Vector3.zero);
         }
 
         SpawnImpactEffect(col, CalculateNormal());

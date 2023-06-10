@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerHitbox : HitBox
 {
     [HideInInspector] public Player Player;
-    public override void TakeHit()
+    public override void TakeHit(Vector3 direction)
     {
         Player.PlayerDeath();
     }

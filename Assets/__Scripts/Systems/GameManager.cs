@@ -7,7 +7,7 @@ public class GameManager : Singleton<GameManager>
 {
     private PauseMenuManager pauseMenuMenager;
 
-    protected void Awake()
+    protected override void Awake()
     {
         base.Awake();
         pauseMenuMenager = GetComponent<PauseMenuManager>();
@@ -20,7 +20,7 @@ public class GameManager : Singleton<GameManager>
 
     private void GetPressedKeys()
     {
-        if (Input.GetKeyDown(KeyBinds.resetButton))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             if (pauseMenuMenager.IsPaused)
             {
@@ -29,7 +29,7 @@ public class GameManager : Singleton<GameManager>
 
             ResetGame();
         }
-        else if (Input.GetKeyDown(KeyBinds.pasueButton))
+        else if (Input.GetKeyDown(KeyCode.Escape))
         {
             pauseMenuMenager.TooglePasueMenu();
         }
