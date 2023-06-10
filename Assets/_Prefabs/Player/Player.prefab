@@ -1208,9 +1208,10 @@ MonoBehaviour:
   AttackLayer:
     serializedVersion: 2
     m_Bits: 6144
-  AttackCooldown: 0.7
-  AttackDelay: 0.3
+  AttackCooldown: 0.8
+  AttackDelay: 0.25
   AttackDistance: 2
+  hitForce: 50
 --- !u!1 &8390397062662812737
 GameObject:
   m_ObjectHideFlags: 0

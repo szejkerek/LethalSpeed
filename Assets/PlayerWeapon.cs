@@ -47,7 +47,7 @@ public class PlayerWeapon : MonoBehaviour
             if (hit.transform.TryGetComponent(out HitBox hitBox))
             {
                 Vector3 direction = hit.point - Helpers.Camera.transform.position;
-                hitBox.TakeHit(direction * hitForce);
+                hitBox.TakeHit(direction * hitForce * 100f);
             }
         }
         _isAttacking = false;

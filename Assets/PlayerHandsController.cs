@@ -20,7 +20,7 @@ public class PlayerHandsController : MonoBehaviour
         _playerWeapon = GetComponent<PlayerWeapon>();
         Idle = new LockableAnimation("WeaponIdle", _rightArmAnimator);
         Attack1 = new LockableAnimation("WeaponAttack1", _rightArmAnimator, AttackAnimation: true);
-
+        Debug.Log(Attack1.ClipTime);
         _rightLockedTill = 0;
         _rightCurrentState = Idle;
         _playerWeapon.onAttack += () => _attacked = true;
@@ -32,7 +32,7 @@ public class PlayerHandsController : MonoBehaviour
         _attacked = false;
 
         if (state == _rightCurrentState) return;
-        _rightArmAnimator.CrossFade(state.AnimationHash, 0.2f, 0);
+        _rightArmAnimator.CrossFade(state.AnimationHash, 0.1f, 0);
         _rightCurrentState = state;
     }
 
