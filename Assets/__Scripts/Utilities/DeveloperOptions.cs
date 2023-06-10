@@ -15,7 +15,7 @@ public class DeveloperOptions : MonoBehaviour
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         foreach (Enemy enemy in enemies)
         {
-            enemy.Die();
+            enemy.Die(Vector3.zero);
         }
     }
 

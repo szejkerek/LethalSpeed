@@ -6,8 +6,8 @@ public class HitboxEnemyAI : HitBox
 {
     [HideInInspector]
     public Enemy Enemy;
-    public override void TakeHit()
+    public override void TakeHit(Vector3 direction)
     {
-        Enemy.Die();
+        Enemy.Die(direction);
     }
 }

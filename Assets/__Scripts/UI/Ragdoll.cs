@@ -7,13 +7,21 @@ public class Ragdoll : MonoBehaviour
     void Awake()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
-        if (TryGetComponent<Animator>(out Animator animator))
+        if (TryGetComponent(out Animator animator))
         {
             _animator = animator;
         }
 
         SetRagdoll(active: false);
     }
+    public void ApplyForce(Vector3 force)
+    {
+        foreach (Rigidbody rigidbody in _rigidbodies)
+        {
+            rigidbody.AddForce(force);
+        }
+    }
+
     public void SetRagdoll(bool active = true)
     {
         foreach (Rigidbody rigidbody in _rigidbodies)

@@ -24,9 +24,10 @@ public class Enemy : MonoBehaviour
         SetUpRig();
     }
 
-    public void Die()
+    public void Die(Vector3 direction)
     {
         _stateMachine.CurrentState.SwitchState(_stateMachine.StatesFactory.Ragdoll());
+        _stateMachine.Ragdoll.ApplyForce(direction);
     }
 
     private void ApplyHitboxToLimbs()

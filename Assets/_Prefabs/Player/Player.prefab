@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 305794230351838053}
   - component: {fileID: 3364037240107552881}
   - component: {fileID: 1455645151514839933}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: MovementDebug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4080995252440955990}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EnemyTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 8818424513610240515}
   - component: {fileID: 8744628775049820011}
   - component: {fileID: 1582288891749013089}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlayerCameraView
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 4489284171585197128}
   - component: {fileID: 7447926386249021635}
   - component: {fileID: 3610378510539283199}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6049746290809626671}
   - component: {fileID: 3845972236151078384}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CameraHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,7 +541,7 @@ GameObject:
   - component: {fileID: 2994628517643553486}
   - component: {fileID: 8007940108652986074}
   - component: {fileID: 537612682701939128}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: DebugInfoCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +751,7 @@ GameObject:
   - component: {fileID: 7557082738277567732}
   - component: {fileID: 7829635796398178091}
   - component: {fileID: 7332631590269579060}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: KeyBinds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -893,7 +893,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7975385519971890260}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -927,7 +927,7 @@ GameObject:
   - component: {fileID: 7975385520071846154}
   - component: {fileID: 7975385520071846157}
   - component: {fileID: 7975385520071846156}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1205,6 +1205,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62babffa2ee601e459d4fc63c7c8a1a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttackLayer:
+    serializedVersion: 2
+    m_Bits: 6144
+  AttackCooldown: 0.7
+  AttackDelay: 0.3
+  AttackDistance: 2
 --- !u!1 &8390397062662812737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,7 +1220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8873208690326271987}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
