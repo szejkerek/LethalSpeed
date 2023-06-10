@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour
     public RigWeightController AimAtTargetRigController => _aimAtTargetRigController;
 
     StateMachineEnemyAI _stateMachine;
+
+    [SerializeField] GameObject bloodEffect;
+
     private void Awake()
     {
         _player = FindObjectOfType<Player>();
@@ -24,10 +27,19 @@ public class Enemy : MonoBehaviour
         SetUpRig();
     }
 
-    public void Die(Vector3 direction)
+    public void Die(Vector3 direction, Vector3 hitPoint)
     {
         _stateMachine.CurrentState.SwitchState(_stateMachine.StatesFactory.Ragdoll());
         _stateMachine.Ragdoll.ApplyForce(direction);
+        SpawnBloodSplash(direction, hitPoint);
+    }
+
+    private void SpawnBloodSplash(Vector3 direction, Vector3 hitPoint)
+    {
+        Vector3 rotation = Quaternion.LookRotation(-direction, Vector3.up).eulerAngles;
+        rotation.x = 0;
+        GameObject bloodSplash = Instantiate(bloodEffect, hitPoint, Quaternion.Euler(rotation));
+        Destroy(bloodSplash, 3f);
     }
 
     private void ApplyHitboxToLimbs()

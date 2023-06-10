@@ -698,6 +698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495395f68e60de34582e13726089e190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodEffect: {fileID: 6499225918988786302, guid: b2e99e60295a59746823a61787520de1, type: 3}
 --- !u!114 &2104238312635957057
 MonoBehaviour:
   m_ObjectHideFlags: 0

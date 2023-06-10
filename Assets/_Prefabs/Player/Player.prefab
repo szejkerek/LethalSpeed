@@ -1211,7 +1211,8 @@ MonoBehaviour:
   AttackCooldown: 0.8
   AttackDelay: 0.25
   AttackDistance: 2
-  hitForce: 50
+  AttackRadius: 0.15
+  hitForce: 55
 --- !u!1 &8390397062662812737
 GameObject:
   m_ObjectHideFlags: 0

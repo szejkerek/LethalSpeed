@@ -5,5 +5,5 @@ using UnityEngine;
 
 public abstract class HitBox : MonoBehaviour
 {
-    public abstract void TakeHit(Vector3 direction); 
+    public abstract void TakeHit(Vector3 direction, Vector3 hitPoint); 
 }

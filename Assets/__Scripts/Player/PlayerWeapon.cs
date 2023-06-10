@@ -13,6 +13,7 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] float AttackCooldown = 1.5f;
     [SerializeField] float AttackDelay = 0.3f;
     [SerializeField] float AttackDistance = 2f;
+    [SerializeField] float AttackRadius = 1f;
     [SerializeField] private float hitForce = 100f;
 
     bool _isAttacking = false;
@@ -42,12 +43,14 @@ public class PlayerWeapon : MonoBehaviour
     private void ResetAttack() => _readyToAttack = true;
     private void PerformAttack()
     {
-        if(Physics.Raycast(Helpers.Camera.transform.position, Helpers.Camera.transform.forward, out RaycastHit hit, AttackDistance, AttackLayer))
+        if(Physics.SphereCast(Helpers.Camera.transform.position, AttackRadius, Helpers.Camera.transform.forward, out RaycastHit hit, AttackDistance, AttackLayer))
         {
             if (hit.transform.TryGetComponent(out HitBox hitBox))
             {
                 Vector3 direction = hit.point - Helpers.Camera.transform.position;
-                hitBox.TakeHit(direction * hitForce * 100f);
+
+                const float multiplier = 100f;
+                hitBox.TakeHit(direction * hitForce * multiplier, hit.point);
             }
         }
         _isAttacking = false;
