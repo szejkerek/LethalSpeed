@@ -14,25 +14,25 @@ public class JsonDataService : IDataService
     public bool SaveData<T>(string RelativePath, T Data, bool Encrypted)
     {
         string path = Application.persistentDataPath + RelativePath;
+        string encryptedRelativeDataPath = RelativePath.Insert(RelativePath.IndexOf("/") + 1, "encrypted-");
+        string encryptedDataPath = Application.persistentDataPath + encryptedRelativeDataPath;
 
         try
         {
             if (File.Exists(path))
             {
-                Debug.Log("Data exists. Deleting old file and writing new one!");
                 File.Delete(path);
             }
-            else
-            {
-                Debug.Log("Writing file for the first time!");
-            }
-            using FileStream stream = File.Create(path);
+
             if (Encrypted) 
             {
+                using FileStream stream = File.Create(encryptedDataPath);
                 WriteEncrypedData(Data, stream);
+                stream.Close();
             }
             else 
             {
+                using FileStream stream = File.Create(path);
                 stream.Close();
                 File.WriteAllText(path, JsonConvert.SerializeObject(Data));
             }
@@ -63,8 +63,10 @@ public class JsonDataService : IDataService
     public T LoadData<T>(string RelativePath, bool Encrypted)
     {
         string path = Application.persistentDataPath + RelativePath;
+        string encryptedRelativeDataPath = RelativePath.Insert(RelativePath.IndexOf("/") + 1, "encrypted-");
+        string encryptedDataPath = Application.persistentDataPath + encryptedRelativeDataPath;
 
-        if(!File.Exists(path)) 
+        if (!File.Exists(path)) 
         {
             Debug.LogError($"Cannot Load file at {path}. File does not exist!");
             throw new FileNotFoundException($"{path} does not exist!");
@@ -75,7 +77,7 @@ public class JsonDataService : IDataService
             T data;
             if (Encrypted)
             {
-                data = ReadEncryptedData<T>(path);
+                data = ReadEncryptedData<T>(encryptedDataPath);
             }
             else
             {
