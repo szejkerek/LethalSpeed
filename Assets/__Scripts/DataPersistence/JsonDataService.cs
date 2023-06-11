@@ -3,10 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 
 public class JsonDataService : IDataService
 {
+    private string KEY = "dbrgzvazsdasdfa";
+    private string IV = "asdfasdfadsf";
     public bool SaveData<T>(string RelativePath, T Data, bool Encrypted)
     {
         string path = Application.persistentDataPath + RelativePath;
@@ -23,8 +27,16 @@ public class JsonDataService : IDataService
                 Debug.Log("Writing file for the first time!");
             }
             using FileStream stream = File.Create(path);
-            stream.Close();
-            File.WriteAllText(path, JsonConvert.SerializeObject(Data));
+            if (Encrypted) 
+            {
+                WriteEncrypedData(Data, stream);
+            }
+            else 
+            {
+                stream.Close();
+                File.WriteAllText(path, JsonConvert.SerializeObject(Data));
+            }
+
             return true;
         }
         catch(Exception e)
@@ -33,6 +45,21 @@ public class JsonDataService : IDataService
             return false;
         }
 
+    }
+
+    private void WriteEncrypedData<T> (T Data, FileStream stream)
+    {
+        using Aes aesProvider = Aes.Create();
+        aesProvider.Key = Convert.FromBase64String(KEY);
+        aesProvider.IV = Convert.FromBase64String(IV);
+        using ICryptoTransform cryptoTransform = aesProvider.CreateEncryptor();
+        using CryptoStream cryptoStream = new CryptoStream(
+            stream,
+            cryptoTransform,
+            CryptoStreamMode.Write
+            );
+
+        cryptoStream.Write(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(Data)));
     }
     public T LoadData<T>(string RelativePath, bool Encrypted)
     {
