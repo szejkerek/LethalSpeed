@@ -14,7 +14,7 @@ public class OptionsManager : MonoBehaviour
 
     private OptionsData OptionsData = new OptionsData();
     private IDataService DataService = new JsonDataService();
-    private bool EncryptionEnabled;
+    public bool EncryptionEnabled;
 
     private void Start()
     {

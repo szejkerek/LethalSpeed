@@ -9,8 +9,8 @@ using UnityEngine;
 
 public class JsonDataService : IDataService
 {
-    private string KEY = "dbrgzvazsdasdfa";
-    private string IV = "asdfasdfadsf";
+    private string KEY = "LsS/KatJ5yue1nb5N31Y0R9GsHWEDTJDACbocL8Ee9E=";
+    private string IV = "lxHpSqDH94tbbdJFymlsXw==";
     public bool SaveData<T>(string RelativePath, T Data, bool Encrypted)
     {
         string path = Application.persistentDataPath + RelativePath;
@@ -58,10 +58,6 @@ public class JsonDataService : IDataService
             cryptoTransform,
             CryptoStreamMode.Write
         );
-
-        //Debug.Log($"IV: {Convert.ToBase64String(aesProvider.IV)}");
-        //Debug.Log($"KEY: {Convert.ToBase64String(aesProvider.Key)}");
-
         cryptoStream.Write(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(Data)));
     }
     public T LoadData<T>(string RelativePath, bool Encrypted)
