@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class PlayerWeapon : MonoBehaviour
 {
-
+    public static event Action onHitRegistered;
     public event Action onAttack;
 
     [SerializeField] LayerMask AttackLayer;
@@ -19,8 +19,15 @@ public class PlayerWeapon : MonoBehaviour
     bool _isAttacking = false;
     bool _readyToAttack = true;
 
+    bool _enableInputs = true;
+
+    public bool EnableInputs { get => _enableInputs; set => _enableInputs = value; }
+
     private void Update()
     {
+        if (!_enableInputs)
+            return;
+
         if (Input.GetKey(KeyCode.Mouse0))
         {
             Attack();
@@ -51,6 +58,7 @@ public class PlayerWeapon : MonoBehaviour
 
                 const float multiplier = 100f;
                 hitBox.TakeHit(direction * hitForce * multiplier, hit.point);
+                onHitRegistered?.Invoke();
             }
         }
         _isAttacking = false;

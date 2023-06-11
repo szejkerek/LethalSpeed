@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerWeapon))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("General")]
@@ -73,7 +74,10 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode SwingKey => _swingKey;
 
     [HideInInspector]
-    public PlayerCamera _playerCamera;
+    public PlayerCamera PlayerCamera;
+
+    [HideInInspector]
+    public PlayerWeapon PlayerWeapon;
 
     [Space]
     public Transform orientation;
@@ -106,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 Velocity { get { return _rb.velocity; } set { _rb.velocity = value; } }
     public Vector3 FlatVelocity => Vector3.ProjectOnPlane(_rb.velocity, Vector3.up);
 
+    
 
     public void ChangeMovementState(MovementState movementState)
     {
@@ -117,9 +122,8 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _playerCamera = FindObjectOfType<Player>().PlayerCamera;
-        _grappleProps.HookLineRenderer = _playerCamera.GetComponentInChildren<LineRenderer>();
-        _grappleProps.HookGunTip = _grappleProps.HookLineRenderer.transform.GetChild(0).transform;
+        PlayerCamera = GetComponent<Player>().PlayerCamera;
+        PlayerWeapon = GetComponent<PlayerWeapon>();
     }
 
     void Start()
@@ -139,13 +143,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
         _isGrounded = Physics.CheckSphere(transform.position, 0.25f, _groundMask);
         _isStuckCrouched = Physics.Raycast(transform.position, Vector3.up, _playerHeight * 0.8f, _groundMask) 
             && (transform.localScale.y == CrouchProps.ScaleY || transform.localScale.y == SlideProps.ScaleY);
         _justLanded = _isGrounded && !_wasGroundedLastFrame;
 
         GetInput();
-
         _movementState.Update();
         _wasGroundedLastFrame = _isGrounded;
 

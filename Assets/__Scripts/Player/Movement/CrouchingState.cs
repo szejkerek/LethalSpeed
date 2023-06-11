@@ -19,7 +19,7 @@ public class CrouchingState : MovementState
         _pm.Rigidbody.drag = _pm.GroundProps.Friction;
 
         _pm.transform.DOScaleY(_pm.CrouchProps.ScaleY, 0.25f);
-        _pm._playerCamera.SetCameraPosition(crouching: true);
+        _pm.PlayerCamera.SetCrouchingCamera();
     }
 
     public void Update()
@@ -36,7 +36,7 @@ public class CrouchingState : MovementState
     public void End()
     {
         _pm.transform.DOScaleY(_pm.OriginalScaleY, 0.25f);
-        _pm._playerCamera.SetCameraPosition(crouching: false);
+        _pm.PlayerCamera.SetCrouchingCamera(crouching: false);
     }
 
     public void CheckForModeChange()
