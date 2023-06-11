@@ -30,7 +30,6 @@ public class GameManager : Singleton<GameManager>
     private void OnDestroy()
     {
         Player.onPlayerGetHit -= HandlePlayerDeath;
-        _player.SetPlayerInteraction(enabled: true);
         _deathScreen.SetActive(false);
     }
 
@@ -64,7 +63,6 @@ public class GameManager : Singleton<GameManager>
 
     private void HandlePlayerDeath()
     {
-        _player.SetPlayerInteraction(enabled: false);
         _deathScreen.SetActive(true);
     }
 }

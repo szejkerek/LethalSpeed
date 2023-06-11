@@ -21,13 +21,8 @@ public class Player : MonoBehaviour
 
     public void PlayerDeath()
     {
-        onPlayerGetHit?.Invoke();       
-    }
-
-    public void SetPlayerInteraction(bool enabled)
-    {
-        //_playerMovement.enabled = enabled;
-       //_playerWeapon.enabled = enabled;
+        onPlayerGetHit?.Invoke();
+        _playerMovement.ChangeMovementState(new DeathState());
     }
 
     private void ApplyHitboxToLimbs()

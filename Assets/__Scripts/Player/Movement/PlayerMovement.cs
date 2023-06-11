@@ -106,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 Velocity { get { return _rb.velocity; } set { _rb.velocity = value; } }
     public Vector3 FlatVelocity => Vector3.ProjectOnPlane(_rb.velocity, Vector3.up);
 
+    
 
     public void ChangeMovementState(MovementState movementState)
     {
@@ -139,13 +140,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
         _isGrounded = Physics.CheckSphere(transform.position, 0.25f, _groundMask);
         _isStuckCrouched = Physics.Raycast(transform.position, Vector3.up, _playerHeight * 0.8f, _groundMask) 
             && (transform.localScale.y == CrouchProps.ScaleY || transform.localScale.y == SlideProps.ScaleY);
         _justLanded = _isGrounded && !_wasGroundedLastFrame;
 
         GetInput();
-
         _movementState.Update();
         _wasGroundedLastFrame = _isGrounded;
 
