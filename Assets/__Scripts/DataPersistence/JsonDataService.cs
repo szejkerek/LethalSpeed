@@ -47,17 +47,20 @@ public class JsonDataService : IDataService
 
     }
 
-    private void WriteEncrypedData<T> (T Data, FileStream stream)
+    private void WriteEncrypedData<T> (T Data, FileStream Stream)
     {
         using Aes aesProvider = Aes.Create();
         aesProvider.Key = Convert.FromBase64String(KEY);
         aesProvider.IV = Convert.FromBase64String(IV);
         using ICryptoTransform cryptoTransform = aesProvider.CreateEncryptor();
         using CryptoStream cryptoStream = new CryptoStream(
-            stream,
+            Stream,
             cryptoTransform,
             CryptoStreamMode.Write
-            );
+        );
+
+        //Debug.Log($"IV: {Convert.ToBase64String(aesProvider.IV)}");
+        //Debug.Log($"KEY: {Convert.ToBase64String(aesProvider.Key)}");
 
         cryptoStream.Write(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(Data)));
     }
@@ -73,7 +76,15 @@ public class JsonDataService : IDataService
 
         try
         {
-            T data = JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
+            T data;
+            if (Encrypted)
+            {
+                data = ReadEncryptedData<T>(path);
+            }
+            else
+            {
+                data = JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
+            }
             return data;
         }
         catch (Exception e) 
@@ -81,5 +92,26 @@ public class JsonDataService : IDataService
             Debug.LogError($"Failed to load data due to: {e.Message} {e.StackTrace}"); 
             throw e;
         }
+    }
+
+    private T ReadEncryptedData<T>(string Path)
+    {
+        byte[] fileBytes = File.ReadAllBytes(Path);
+        using Aes aesProvider = Aes.Create();
+        aesProvider.Key = Convert.FromBase64String(KEY);
+        aesProvider.IV = Convert.FromBase64String(IV);
+        using ICryptoTransform cryptoTransform = aesProvider.CreateDecryptor(
+            aesProvider.Key, 
+            aesProvider.IV
+        );
+        using MemoryStream decryptionStream = new MemoryStream(fileBytes);
+        using CryptoStream cryptoStream = new CryptoStream(
+            decryptionStream,
+            cryptoTransform,
+            CryptoStreamMode.Read
+        );
+        using StreamReader reader = new StreamReader(cryptoStream);
+        string result = reader.ReadToEnd();
+        return JsonConvert.DeserializeObject<T>(result);
     }
 }
