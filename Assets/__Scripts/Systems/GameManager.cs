@@ -5,24 +5,46 @@ using UnityEngine;
 [RequireComponent(typeof(PauseMenuManager))]
 public class GameManager : Singleton<GameManager>
 {
-    private PauseMenuManager pauseMenuMenager;
+    [SerializeField] private GameObject _deathScreen;
+
+    private PauseMenuManager _pauseMenuMenager;
+    private Player _player;
 
     protected override void Awake()
     {
         base.Awake();
-        pauseMenuMenager = GetComponent<PauseMenuManager>();
+        _pauseMenuMenager = GetComponent<PauseMenuManager>();
+        _player = FindFirstObjectByType<Player>();
+        _deathScreen.SetActive(false);
+
+        if (_player is null)
+        {
+            Debug.LogError("Failed to find Player in scene");
+        }
+        else
+        {
+            Player.onPlayerGetHit += HandlePlayerDeath;
+        }
     }
+
+    private void OnDestroy()
+    {
+        Player.onPlayerGetHit -= HandlePlayerDeath;
+        _player.SetPlayerInteraction(enabled: true);
+        _deathScreen.SetActive(false);
+    }
+
 
     void Update()
     {
-        GetPressedKeys();
+        GatherGameCommands();
     }
 
-    private void GetPressedKeys()
+    private void GatherGameCommands()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (pauseMenuMenager.IsPaused)
+            if (_pauseMenuMenager.IsPaused)
             {
                 return;
             }
@@ -31,12 +53,18 @@ public class GameManager : Singleton<GameManager>
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pauseMenuMenager.TooglePasueMenu();
+            _pauseMenuMenager.TooglePasueMenu();
         }
     }
 
     public void ResetGame()
     {
         SceneLoader.Instance.ReloadScene();
+    }
+
+    private void HandlePlayerDeath()
+    {
+        _player.SetPlayerInteraction(enabled: false);
+        _deathScreen.SetActive(true);
     }
 }
