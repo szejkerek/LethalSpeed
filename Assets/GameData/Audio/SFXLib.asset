@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f40b52d7ce8b04a86d34539004887b, type: 3}
   m_Name: SFXLib
   m_EditorClassIdentifier: 
-  <TestSound>k__BackingField: {fileID: 0}
-  <TestSound2>k__BackingField: {fileID: 0}
+  <Hitmarker>k__BackingField: {fileID: 8300000, guid: 82746257a6ec2504ab54ed880143593b, type: 3}
