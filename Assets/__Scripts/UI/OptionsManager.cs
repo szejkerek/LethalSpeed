@@ -37,10 +37,7 @@ public class OptionsManager : MonoBehaviour
 
     public void SerializeJson()
     {
-        if(!DataService.SaveData("/options-data.json", OptionsData, EncryptionEnabled))
-        {
-            Debug.LogError("Could not save file!");
-        }
+        DataService.SaveData("/options-data.json", OptionsData, EncryptionEnabled);
     }
 
     public void DeserializeJson() 

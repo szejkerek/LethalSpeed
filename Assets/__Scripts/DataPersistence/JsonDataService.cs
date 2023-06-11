@@ -11,7 +11,7 @@ public class JsonDataService : IDataService
 {
     private string KEY = "LsS/KatJ5yue1nb5N31Y0R9GsHWEDTJDACbocL8Ee9E=";
     private string IV = "lxHpSqDH94tbbdJFymlsXw==";
-    public bool SaveData<T>(string RelativePath, T Data, bool Encrypted)
+    public void SaveData<T>(string RelativePath, T Data, bool Encrypted)
     {
         string path = Application.persistentDataPath + RelativePath;
         string encryptedRelativeDataPath = RelativePath.Insert(RelativePath.IndexOf("/") + 1, "encrypted-");
@@ -36,13 +36,11 @@ public class JsonDataService : IDataService
                 stream.Close();
                 File.WriteAllText(path, JsonConvert.SerializeObject(Data));
             }
-
-            return true;
         }
         catch(Exception e)
         {
             Debug.LogError($"Unable to save data due to: {e.Message} {e.StackTrace}");
-            return false;
+            throw e;
         }
 
     }
