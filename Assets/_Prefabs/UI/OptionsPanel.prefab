@@ -49,6 +49,7 @@ MonoBehaviour:
   _musicVolumeSlider: {fileID: 7716523836832868058}
   _dialogsVolumeSlider: {fileID: 8971180551249645736}
   _applyChangesButton: {fileID: 3227215279450987855}
+  EncryptionEnabled: 0
 --- !u!1 &213766520737433471
 GameObject:
   m_ObjectHideFlags: 0
