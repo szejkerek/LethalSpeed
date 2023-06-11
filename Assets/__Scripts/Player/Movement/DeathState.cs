@@ -29,8 +29,6 @@ public class DeathState : MovementState
 
         _playerWeapon = _playerMovement.PlayerWeapon;
         _playerWeapon.EnableInputs = false;
-
-        //_pc.SetFOV(70.0f);
     }
 
     public void Update()

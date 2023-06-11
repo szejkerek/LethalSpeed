@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class PlayerWeapon : MonoBehaviour
 {
-
+    public static event Action onHitRegistered;
     public event Action onAttack;
 
     [SerializeField] LayerMask AttackLayer;
@@ -58,6 +58,7 @@ public class PlayerWeapon : MonoBehaviour
 
                 const float multiplier = 100f;
                 hitBox.TakeHit(direction * hitForce * multiplier, hit.point);
+                onHitRegistered?.Invoke();
             }
         }
         _isAttacking = false;
