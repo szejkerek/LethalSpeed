@@ -26,7 +26,8 @@ public class PauseMenuManager : MonoBehaviour
     private void Awake()
     {
         Time.timeScale = 1.0f;
-        _pauseMenuCanvas.SetActive(false);     
+        _pauseMenuCanvas.SetActive(false);
+        _optionsPanel.SetActive(false);
     }
 
     private void Start()
