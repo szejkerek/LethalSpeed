@@ -19,8 +19,15 @@ public class PlayerWeapon : MonoBehaviour
     bool _isAttacking = false;
     bool _readyToAttack = true;
 
+    bool _enableInputs = true;
+
+    public bool EnableInputs { get => _enableInputs; set => _enableInputs = value; }
+
     private void Update()
     {
+        if (!_enableInputs)
+            return;
+
         if (Input.GetKey(KeyCode.Mouse0))
         {
             Attack();

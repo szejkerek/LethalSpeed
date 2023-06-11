@@ -528,7 +528,8 @@ MonoBehaviour:
   _enemyAimTarget: {fileID: 4080995252440955990}
   _sensX: 300
   _sensY: 300
-  _cameraHeight: 0.75
+  _deathHeight: 0.4
+  _crouchHeight: 0.75
 --- !u!1 &4492781545994157503
 GameObject:
   m_ObjectHideFlags: 0

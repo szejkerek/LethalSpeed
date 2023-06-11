@@ -4,6 +4,7 @@ using DG.Tweening;
 public class PlayerCamera : MonoBehaviour
 {
     public Transform EnemyAimTarget => _enemyAimTarget;
+    public bool EnableInputs { get => _enableInputs; set => _enableInputs = value; }
 
     [SerializeField] private Transform _orientation;
     [SerializeField] private Transform _enemyAimTarget;
@@ -16,10 +17,15 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float _sensY;
 
     [Range(0f, 3f)]
-    [SerializeField] private float _cameraHeight;
+    [SerializeField] private float _deathHeight;
+
+    [Range(0f, 3f)]
+    [SerializeField] private float _crouchHeight;
 
     private Player _player;
     private Camera _camera;
+
+    private bool _enableInputs = true;
 
     private float _xRot;
     private float _yRot;
@@ -27,6 +33,7 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 _cameraOffset;
     private Vector3 _cameraStandingOffset;
     private Vector3 _cameraCrouchingOffset;
+    private Vector3 _cameraDeathOffset;
 
     private void Awake()
     {
@@ -41,6 +48,9 @@ public class PlayerCamera : MonoBehaviour
     void Update()
     {
         MoveCamera();
+
+        if (!_enableInputs)
+            return;
 
         float mouseX = Input.GetAxisRaw("Mouse X") * _sensX * Time.deltaTime;
         float mouseY = Input.GetAxisRaw("Mouse Y") * _sensY * Time.deltaTime;
@@ -74,13 +84,24 @@ public class PlayerCamera : MonoBehaviour
     {
         transform.SetParent(null);
         _cameraStandingOffset = transform.position - _player.transform.position;
-        _cameraCrouchingOffset = (Vector3.up * _cameraHeight);
-        SetCameraPosition(crouching: false, duration: 0);
+        _cameraCrouchingOffset = (Vector3.up * _crouchHeight);
+        _cameraDeathOffset = (Vector3.up * _deathHeight);
+        SetCrouchingCamera(crouching: false, duration: 0);
     }
 
-    public void SetCameraPosition(bool crouching = false, float duration = 0.25f)
+    public void SetCrouchingCamera(bool crouching = true, float duration = 0.25f)
     {
-        Vector3 endValue = crouching ? _cameraCrouchingOffset : _cameraStandingOffset;
+        MoveCameraToOffset(_cameraCrouchingOffset, crouching, duration);
+    }
+
+    public void SetDeathCamera(bool dead = true, float duration = 0.55f)
+    {
+        MoveCameraToOffset(_cameraDeathOffset, dead, duration);
+    }
+
+    private void MoveCameraToOffset(Vector3 newOffset, bool enable, float duration)
+    {
+        Vector3 endValue = enable ? newOffset : _cameraStandingOffset;
 
         DOTween.To(() => _cameraOffset, x => _cameraOffset = x, endValue, duration);
     }

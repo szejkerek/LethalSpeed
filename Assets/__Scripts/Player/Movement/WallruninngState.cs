@@ -35,7 +35,7 @@ public class WallrunningState : MovementState
 
         _wallrunningTime = _pm.WallrunProps.MaxWallrunningTime;
 
-        _pc = _pm._playerCamera;
+        _pc = _pm.PlayerCamera;
         _pc.SetFOV(70.0f);
 
         if(_pm.WallrunProps.ShouldResetDash)
