@@ -5,15 +5,21 @@ using UnityEngine;
 [RequireComponent(typeof(PauseMenuManager))]
 public class GameManager : Singleton<GameManager>
 {
+    
     [SerializeField] private GameObject _deathScreen;
 
     private PauseMenuManager _pauseMenuMenager;
+    private CrosshairManager _crosshairManager;
     private Player _player;
+
+    public bool EnableQuickRestarts { get => _enableQuickRestarts; set => _enableQuickRestarts = value; }
+    private bool _enableQuickRestarts = true;
 
     protected override void Awake()
     {
         base.Awake();
         _pauseMenuMenager = GetComponent<PauseMenuManager>();
+        _crosshairManager = GetComponent<CrosshairManager>();
         _player = FindFirstObjectByType<Player>();
         _deathScreen.SetActive(false);
 
@@ -31,6 +37,8 @@ public class GameManager : Singleton<GameManager>
     {
         Player.onPlayerGetHit -= HandlePlayerDeath;
         _deathScreen.SetActive(false);
+        Helpers.DisableCursor();
+        _enableQuickRestarts = true;
     }
 
 
@@ -43,11 +51,8 @@ public class GameManager : Singleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (_pauseMenuMenager.IsPaused)
-            {
+            if (_pauseMenuMenager.IsPaused || !_enableQuickRestarts)
                 return;
-            }
-
             ResetGame();
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
@@ -64,5 +69,9 @@ public class GameManager : Singleton<GameManager>
     private void HandlePlayerDeath()
     {
         _deathScreen.SetActive(true);
+        _pauseMenuMenager.EnableInputs = false;
+        _enableQuickRestarts = false;
+        _crosshairManager.ShowCrosshair(enabled: false);
+        Helpers.EnableCursor();
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PauseMenuManager : MonoBehaviour
 {
     private bool _isPaused = false;
+    private bool _enableInputs = true;
 
     [Header("UI")]
     [SerializeField] private GameObject _pauseMenuCanvas;
@@ -22,6 +23,7 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private Button _backOptionsButton;
 
     public bool IsPaused { get => _isPaused; }
+    public bool EnableInputs { get => _enableInputs; set => _enableInputs = value; }
 
     private void Awake()
     {
@@ -46,20 +48,20 @@ public class PauseMenuManager : MonoBehaviour
 
     public void TooglePasueMenu()
     {
+        if (!_enableInputs)
+            return;
+
         if (_isPaused == true)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            Helpers.DisableCursor();
             EnableGame();
         }
         else
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            Helpers.EnableCursor();
             DisableGame();
         }
     }
-
 
     private void EnableGame()
     {

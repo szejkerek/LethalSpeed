@@ -15,15 +15,21 @@ public class CrosshairManager : MonoBehaviour
         PlayerWeapon.onHitRegistered += ShowHitmarker;
         _hitmarker.SetActive(false);
     }
+
     private void OnDestroy()
     {
         PlayerWeapon.onHitRegistered -= ShowHitmarker;
     }
 
+    public void ShowCrosshair(bool enabled)
+    {
+        _crosshairCanvas.SetActive(enabled);
+    }
+
     void ShowHitmarker()
     {
         StartCoroutine(EnableHitmarkerForTime());
-        AudioManager.Instance.PlayGlobalSound(AudioManager.Instance.SFXLib.Hitmarker);
+        AudioManager.Instance.PlayGlobalSound(AudioManager.Instance.SFXLib.Hitmarker, 0.2f);
     }
 
     private IEnumerator EnableHitmarkerForTime()
