@@ -11,6 +11,30 @@ public class JsonDataService : IDataService
 {
     private string KEY = "LsS/KatJ5yue1nb5N31Y0R9GsHWEDTJDACbocL8Ee9E=";
     private string IV = "lxHpSqDH94tbbdJFymlsXw==";
+
+    public void InitializeData<T>(string RelativePath, T Data, bool Encrypted)
+    {
+        string path = Application.persistentDataPath + RelativePath;
+        string encryptedRelativeDataPath = RelativePath.Insert(RelativePath.IndexOf("/") + 1, "encrypted-");
+        string encryptedDataPath = Application.persistentDataPath + encryptedRelativeDataPath;
+
+        if(Encrypted)
+        {
+            if (!File.Exists(encryptedDataPath))
+            {
+                SaveData<T>(RelativePath, Data, Encrypted);
+            }
+        }
+        else
+        {
+            if (!File.Exists(path))
+            {
+                SaveData<T>(RelativePath, Data, Encrypted);
+            }
+        }
+
+
+    }
     public void SaveData<T>(string RelativePath, T Data, bool Encrypted)
     {
         string path = Application.persistentDataPath + RelativePath;
