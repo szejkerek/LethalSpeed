@@ -12,17 +12,18 @@ public class OptionsManager : MonoBehaviour
     [SerializeField] Scrollbar _dialogsVolumeSlider;
     [SerializeField] Button _applyChangesButton;
 
-    private OptionsData OptionsData = new OptionsData();
-    private IDataService DataService = new JsonDataService();
+    private OptionsData DefaultOptionsData;
+    private OptionsData OptionsData;
+    private IDataService DataService;
     public bool EncryptionEnabled;
-
-    private void Start()
-    {
-        AssignUIButtons();
-    }
 
     private void Awake()
     {
+        DefaultOptionsData = new OptionsData(1, 1, 1, 1);
+        OptionsData = new OptionsData();
+        DataService = new JsonDataService();
+        InitializeJson();
+        AssignUIButtons();
         DeserializeJson();
         _masterVolumeSlider.value = OptionsData.MasterVolume;
         _SFXVolumeSlider.value = OptionsData.SFXVolume;
@@ -33,6 +34,11 @@ public class OptionsManager : MonoBehaviour
     private void AssignUIButtons()
     {
         _applyChangesButton.onClick.AddListener(OnApplyChangesButtonClick);
+    }
+
+    public void InitializeJson()
+    {
+        DataService.InitializeData("/options-data.json", DefaultOptionsData, EncryptionEnabled);
     }
 
     public void SerializeJson()
