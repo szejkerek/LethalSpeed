@@ -10,4 +10,13 @@ public class OptionsData
     public float SFXVolume;
     public float MusicVolume;
     public float DialogsVolume;
+
+    public OptionsData() { }
+    public OptionsData(float pMasterVolume, float pSFXVolume, float pMusicVolume, float pDialogsVolume) 
+    {
+        MasterVolume = pMasterVolume;
+        SFXVolume = pSFXVolume;
+        MusicVolume = pMusicVolume;
+        DialogsVolume = pDialogsVolume;
+    }
 }
