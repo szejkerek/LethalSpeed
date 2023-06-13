@@ -194,7 +194,7 @@ public class SceneLoader : Singleton<SceneLoader>
         totalSceneProgress += Mathf.Clamp01(sceneLoadingAsyncOperation.progress / .9f);
         progressBar.value = totalSceneProgress;
         progressInfoTextField.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
-    }
+    } 
 
     private void ResetLoadingScreenToDefaultState()
     {
