@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : Singleton<AudioManager>
 {
@@ -10,9 +11,11 @@ public class AudioManager : Singleton<AudioManager>
     [Header("AudioSoundData")]
     [SerializeField] private SFXLib _sfxLib;
     [SerializeField] private MusicLib _musicLib;
+    [SerializeField] private AudioMixer _mixers;
 
     public SFXLib SFXLib { get => _sfxLib;}
     public MusicLib MusicLib { get => _musicLib;}
+    public AudioMixer Mixers { get => _mixers; }
 
     public void PlayGlobalMusic(AudioClip clip)
     {

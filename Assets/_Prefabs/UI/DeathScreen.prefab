@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 7678127238786915322}
   - component: {fileID: 9220504709174143283}
   m_Layer: 5
-  m_Name: RespawnButton
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -645,7 +645,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESPAWN
+  m_text: RESTART
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ad29ec223a2de2847a3147bb9ba0617e, type: 2}
   m_sharedMaterial: {fileID: 7292843199212527483, guid: ad29ec223a2de2847a3147bb9ba0617e, type: 2}
@@ -970,5 +970,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19ba369c742efa408bdaf016c4815ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartButton: {fileID: 7678127238786915322}
-  mainMenuButton: {fileID: 4993711017697215178}

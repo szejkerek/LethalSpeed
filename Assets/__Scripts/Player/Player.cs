@@ -6,11 +6,17 @@ public class Player : MonoBehaviour
 {
     public static event Action onPlayerGetHit;
 
+    [Header("Developer settings")]
+    [SerializeField] private bool _enableGodmode = false;
+    [Space(10)]
     [SerializeField] private PlayerCamera _playerCamera;
+
     public PlayerCamera PlayerCamera { get => _playerCamera; set => _playerCamera = value; }
+    public bool IsPlayerDead => isPlayerDead;
 
     private PlayerMovement _playerMovement;
     private PlayerWeapon _playerWeapon;
+    bool isPlayerDead = false;
 
     private void Awake()
     {
@@ -21,8 +27,11 @@ public class Player : MonoBehaviour
 
     public void PlayerDeath()
     {
+        if (isPlayerDead || _enableGodmode)
+            return;
         onPlayerGetHit?.Invoke();
         _playerMovement.ChangeMovementState(new DeathState());
+        isPlayerDead = true;
     }
 
     private void ApplyHitboxToLimbs()
