@@ -660,6 +660,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerDisplay: {fileID: 4021039749126574603}
+  _startingTime: 2
+  _countDown: 0
+  _timerLimit: 5
+  _timeOutColor: {r: 1, g: 1, b: 1, a: 0}
+  _hasLimit: 0
 --- !u!1001 &4724159507894324962
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,14 +13,15 @@ public class TimerManager : MonoBehaviour
     [SerializeField] bool _countDown;
 
     [Header("Limit Settings")]
-    [SerializeField] private bool _hasLimit;
     [SerializeField] private float _timerLimit;
+    [SerializeField] private Color _timeOutColor;
+    [SerializeField] private bool _hasLimit;
 
-    private float _timerTime;
+    private float _currentTimerTime;
 
     private void Awake()
     {
-        _timerTime = _startingTime;
+        _currentTimerTime = _startingTime;
     }
     void Update()
     {
@@ -30,11 +31,18 @@ public class TimerManager : MonoBehaviour
 
     private void CountTime()
     {
-        _timerTime = _countDown ? _timerTime -= Time.deltaTime : _timerTime += Time.deltaTime;
+        _currentTimerTime = _countDown ? _currentTimerTime -= Time.deltaTime : _currentTimerTime += Time.deltaTime;
+
+        if(_hasLimit && ((_countDown && _currentTimerTime <= _timerLimit) || (!_countDown && _currentTimerTime >= _timerLimit)))
+        {
+            _currentTimerTime = _timerLimit;
+            _timerDisplay.color = _timeOutColor;
+            enabled = false;
+        }
     }
 
     private void DisplayTime()
     {
-        _timerDisplay.text = string.Format("{0}", _timerTime);
+        _timerDisplay.text = string.Format("{0}", _currentTimerTime);
     }
 }
