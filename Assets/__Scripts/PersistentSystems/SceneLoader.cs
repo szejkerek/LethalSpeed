@@ -83,24 +83,24 @@ public class SceneLoader : Singleton<SceneLoader>
         int sceneToUnloadBuildIndex = SceneManager.GetActiveScene().buildIndex;
         int sceneToLoadBuildIndex = sceneToUnloadBuildIndex + 1;
 
-        UnloadSceneAndLoadNewOneByName(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
+        UnloadSceneAndLoadNewOneByBuildIndex(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
     }
 
     public void ReloadScene()
     {
         int sceneToReloadBuildIndex = SceneManager.GetActiveScene().buildIndex;
 
-        UnloadSceneAndLoadNewOneByName(sceneToReloadBuildIndex, sceneToReloadBuildIndex);
+        UnloadSceneAndLoadNewOneByBuildIndex(sceneToReloadBuildIndex, sceneToReloadBuildIndex);
     }
 
     public void LoadNewSceneByBuildIndex(int sceneToLoadBuildIndex)
     {
         int sceneToUnloadBuildIndex = SceneManager.GetActiveScene().buildIndex; 
 
-        UnloadSceneAndLoadNewOneByName(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
+        UnloadSceneAndLoadNewOneByBuildIndex(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
     }
 
-    public void UnloadSceneAndLoadNewOneByName(int sceneToUnloadBuildIndex, int sceneToLoadBuildIndex)
+    public void UnloadSceneAndLoadNewOneByBuildIndex(int sceneToUnloadBuildIndex, int sceneToLoadBuildIndex)
     {
         SetBackGroundImage(sceneToLoadBuildIndex);
         loadingScreen.gameObject.SetActive(true);
