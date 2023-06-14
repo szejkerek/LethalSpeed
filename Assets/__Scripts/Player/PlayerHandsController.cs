@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerHandsController : MonoBehaviour
 {
     private LockableAnimation Idle;
-    private LockableAnimation Attack1;
+    private List<LockableAnimation> Attacks;
 
     [SerializeField] Animator _rightArmAnimator;
     float _rightLockedTill;
@@ -19,7 +20,9 @@ public class PlayerHandsController : MonoBehaviour
     {
         _playerWeapon = GetComponent<PlayerWeapon>();
         Idle = new LockableAnimation("WeaponIdle", _rightArmAnimator);
-        Attack1 = new LockableAnimation("WeaponAttack1", _rightArmAnimator, AttackAnimation: true);
+        Attacks = new List<LockableAnimation>();
+        Attacks.Add(new LockableAnimation("WeaponAttack1", _rightArmAnimator, AttackAnimation: true));
+        Attacks.Add(new LockableAnimation("WeaponAttack2", _rightArmAnimator, AttackAnimation: true));
         _rightLockedTill = 0;
         _rightCurrentState = Idle;
         _playerWeapon.onAttack += () => _attacked = true;
@@ -39,7 +42,7 @@ public class PlayerHandsController : MonoBehaviour
     {
         if (Time.time < _rightLockedTill) return _rightCurrentState;
 
-        if (_attacked) return LockState(Attack1);
+        if (_attacked) return LockState(Attacks.PickRandomElement());
         return Idle;
 
         LockableAnimation LockState(LockableAnimation state)
