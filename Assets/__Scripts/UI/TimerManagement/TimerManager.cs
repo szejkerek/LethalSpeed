@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TimerManager : MonoBehaviour, ITimerManagment
+public class TimerManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private TMP_Text _timerDisplay;
@@ -102,5 +102,10 @@ public class TimerManager : MonoBehaviour, ITimerManagment
     public void StopTimer()
     {
         _timeIsRunning = false;
+    }
+
+    public void ShowTimer(bool enabled = true)
+    {
+        _timerDisplay.gameObject.SetActive(enabled);
     }
 }
