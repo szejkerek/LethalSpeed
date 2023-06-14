@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TimerManager : MonoBehaviour, ITimerTimeGetter, ITimerTimeStarter, ITimerTimeStoper
+public class TimerManager : MonoBehaviour, ITimerManagment
 {
     [Header("UI")]
     [SerializeField] private TMP_Text _timerDisplay;
