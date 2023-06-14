@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,19 +10,43 @@ public class TimerManager : MonoBehaviour
     [SerializeField] private TMP_Text _timerDisplay;
 
     [Header("Timer Settings")]
-    [SerializeField] float _startingTime;
     [SerializeField] bool _countDown;
+    [SerializeField] float _startingTime;
 
     [Header("Limit Settings")]
+    [SerializeField] private bool _hasLimit;
     [SerializeField] private float _timerLimit;
     [SerializeField] private Color _timeOutColor;
-    [SerializeField] private bool _hasLimit;
+
+    [Header("Format Settings")]
+    [SerializeField] private int _decimalPlacesWithoutFormating;
+    [SerializeField] private bool _hasFormat;
+    [SerializeField] private TimerFormats _format;
+    private Dictionary<TimerFormats, string> _timerFormats;
 
     private float _currentTimerTime;
+    private enum TimerFormats
+    {
+        SecondsMilliseconds,
+        MinutesSeconds,
+        MinutesSecondsMilliseconds,
+        HoursMinutes,
+        HoursMinutesSeconds
+    }
 
     private void Awake()
     {
         _currentTimerTime = _startingTime;
+        _timerFormats = new Dictionary<TimerFormats, string>();
+        InitializeTimeFormats();
+    }
+
+    private void InitializeTimeFormats()
+    {
+        _timerFormats.Add(TimerFormats.SecondsMilliseconds, "{2:D2} : {3:D2}");
+        _timerFormats.Add(TimerFormats.MinutesSecondsMilliseconds, "{1:D2} : {2:D2} : {3:D2}");
+        _timerFormats.Add(TimerFormats.HoursMinutes, "{0:D2} : {1:D2}");
+        _timerFormats.Add(TimerFormats.HoursMinutesSeconds, "{0:D2} : {1:D2} : {2:D2}");
     }
     void Update()
     {
@@ -36,6 +61,7 @@ public class TimerManager : MonoBehaviour
         if(_hasLimit && ((_countDown && _currentTimerTime <= _timerLimit) || (!_countDown && _currentTimerTime >= _timerLimit)))
         {
             _currentTimerTime = _timerLimit;
+             DisplayTime();
             _timerDisplay.color = _timeOutColor;
             enabled = false;
         }
@@ -43,6 +69,18 @@ public class TimerManager : MonoBehaviour
 
     private void DisplayTime()
     {
-        _timerDisplay.text = string.Format("{0}", _currentTimerTime);
+        int milliseconds = Mathf.FloorToInt(_currentTimerTime * 100) % 100;
+        int seconds = Mathf.FloorToInt(_currentTimerTime) % 60;
+        int minutes = Mathf.FloorToInt(_currentTimerTime / 60) % 60;
+        int hours = Mathf.FloorToInt(_currentTimerTime / 60 / 60);
+
+        if(_hasFormat)
+        {
+            _timerDisplay.text = string.Format(_timerFormats[_format], hours, minutes, seconds, milliseconds);
+        }
+        else
+        {
+            _timerDisplay.text = Math.Round(_currentTimerTime, _decimalPlacesWithoutFormating).ToString();
+        }
     }
 }
