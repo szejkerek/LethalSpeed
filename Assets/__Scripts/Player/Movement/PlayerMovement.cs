@@ -97,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
     private float _dashCooldown;
     private bool _canDash;
     private Rigidbody _rb;
+    private RopeRenderer _ropeRenderer;
 
     public bool IsGrounded => _isGrounded;
     public bool WasGrounded => _wasGroundedLastFrame;
@@ -109,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody Rigidbody => _rb;
     public Vector3 Velocity { get { return _rb.velocity; } set { _rb.velocity = value; } }
     public Vector3 FlatVelocity => Vector3.ProjectOnPlane(_rb.velocity, Vector3.up);
+    public RopeRenderer RopeRenderer => _ropeRenderer;
 
     
 
@@ -124,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         PlayerCamera = GetComponent<Player>().PlayerCamera;
         PlayerWeapon = GetComponent<PlayerWeapon>();
+        _ropeRenderer = GetComponent<RopeRenderer>();
     }
 
     void Start()
