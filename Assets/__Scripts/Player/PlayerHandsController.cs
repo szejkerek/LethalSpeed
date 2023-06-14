@@ -16,11 +16,8 @@ public class PlayerHandsController : MonoBehaviour
     bool _attacked = false;
     bool _death = false;
 
-    PlayerWeapon _playerWeapon;
-
     private void Awake()
     {
-        _playerWeapon = GetComponent<PlayerWeapon>();
         Idle = new LockableAnimation("WeaponIdle", _rightArmAnimator);
         Death = new LockableAnimation("WeaponDeath", _rightArmAnimator);
         Attacks = new List<LockableAnimation>() { 
@@ -29,7 +26,7 @@ public class PlayerHandsController : MonoBehaviour
 
         _rightLockedTill = 0;
         _rightCurrentState = Idle;
-        _playerWeapon.onAttack += () => _attacked = true;
+        PlayerWeapon.onAttack += () => _attacked = true;
         Player.onPlayerGetHit += () => _death = true;
     }
 
