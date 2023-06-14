@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 6909547410931098778}
   - component: {fileID: 4021039749126574603}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TimerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: TIMER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -660,11 +660,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerDisplay: {fileID: 4021039749126574603}
-  _startingTime: 2
   _countDown: 0
-  _timerLimit: 5
-  _timeOutColor: {r: 1, g: 1, b: 1, a: 0}
+  _startingTime: 0
   _hasLimit: 0
+  _timerLimit: 0
+  _timeOutColor: {r: 1, g: 1, b: 1, a: 1}
+  _decimalPlacesWithoutFormating: 0
+  _hasFormat: 0
+  _format: 0
 --- !u!1001 &4724159507894324962
 PrefabInstance:
   m_ObjectHideFlags: 0
