@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class PlayerWeapon : MonoBehaviour
 {
     public static event Action onHitRegistered;
-    public event Action onAttack;
+    public static event Action onAttack;
 
     [SerializeField] LayerMask AttackLayer;
     [SerializeField] float AttackCooldown = 1.5f;

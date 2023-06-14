@@ -50,6 +50,7 @@ MonoBehaviour:
   _soundSource: {fileID: 1263492367531283957}
   _sfxLib: {fileID: 11400000, guid: 0f7f9716b9076e74a8bbf7b0dbff7626, type: 2}
   _musicLib: {fileID: 11400000, guid: 862980b3feaefe34c88f4c12e6d83ecf, type: 2}
+  _mixers: {fileID: 24100000, guid: 96bc159fa581f5e4b92f4eda2aff98b8, type: 2}
 --- !u!1 &7291443241144581938
 GameObject:
   m_ObjectHideFlags: 0
