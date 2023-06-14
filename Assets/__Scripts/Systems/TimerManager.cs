@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TimerManager : MonoBehaviour, ITimerManagment
+public class TimerManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private TMP_Text _timerDisplay;
@@ -22,34 +22,18 @@ public class TimerManager : MonoBehaviour, ITimerManagment
     [Header("Format Settings")]
     [SerializeField] private int _decimalPlacesWithoutFormating;
     [SerializeField] private bool _hasFormat;
-    [SerializeField] private TimerFormats _format;
-    private Dictionary<TimerFormats, string> _timerFormats;
+    [SerializeField] private TimeFormater.TimeFormats _format;
 
+    private TimeFormater _timeFormater;
     private float _currentTimerTime;
-    private enum TimerFormats
-    {
-        SecondsMilliseconds,
-        MinutesSeconds,
-        MinutesSecondsMilliseconds,
-        HoursMinutes,
-        HoursMinutesSeconds
-    }
 
     private void Awake()
     {
         _currentTimerTime = _startingTime;
-        _timerFormats = new Dictionary<TimerFormats, string>();
-        InitializeTimeFormats();
+        _timeFormater = new TimeFormater();
         DisplayTime();
     }
 
-    private void InitializeTimeFormats()
-    {
-        _timerFormats.Add(TimerFormats.SecondsMilliseconds, "{2:D2} : {3:D2}");
-        _timerFormats.Add(TimerFormats.MinutesSecondsMilliseconds, "{1:D2} : {2:D2} : {3:D2}");
-        _timerFormats.Add(TimerFormats.HoursMinutes, "{0:D2} : {1:D2}");
-        _timerFormats.Add(TimerFormats.HoursMinutesSeconds, "{0:D2} : {1:D2} : {2:D2}");
-    }
     void Update()
     {
         if(_timeIsRunning)
@@ -74,14 +58,9 @@ public class TimerManager : MonoBehaviour, ITimerManagment
 
     private void DisplayTime()
     {
-        int milliseconds = Mathf.FloorToInt(_currentTimerTime * 100) % 100;
-        int seconds = Mathf.FloorToInt(_currentTimerTime) % 60;
-        int minutes = Mathf.FloorToInt(_currentTimerTime / 60) % 60;
-        int hours = Mathf.FloorToInt(_currentTimerTime / 60 / 60);
-
         if(_hasFormat)
         {
-            _timerDisplay.text = string.Format(_timerFormats[_format], hours, minutes, seconds, milliseconds);
+            _timerDisplay.text = _timeFormater.FormatTime(_format, _currentTimerTime);
         }
         else
         {
@@ -102,5 +81,10 @@ public class TimerManager : MonoBehaviour, ITimerManagment
     public void StopTimer()
     {
         _timeIsRunning = false;
+    }
+
+    public void ShowTimer(bool enabled = true)
+    {
+        _timerDisplay.gameObject.SetActive(enabled);
     }
 }
