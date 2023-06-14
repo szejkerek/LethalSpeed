@@ -10,8 +10,9 @@ public class TimerManager : MonoBehaviour
     [SerializeField] private TMP_Text _timerDisplay;
 
     [Header("Timer Settings")]
-    [SerializeField] bool _countDown;
-    [SerializeField] float _startingTime;
+    [SerializeField] private bool _timeIsRunning;
+    [SerializeField] private bool _countDown;
+    [SerializeField] private float _startingTime;
 
     [Header("Limit Settings")]
     [SerializeField] private bool _hasLimit;
@@ -39,6 +40,7 @@ public class TimerManager : MonoBehaviour
         _currentTimerTime = _startingTime;
         _timerFormats = new Dictionary<TimerFormats, string>();
         InitializeTimeFormats();
+        DisplayTime();
     }
 
     private void InitializeTimeFormats()
@@ -50,8 +52,11 @@ public class TimerManager : MonoBehaviour
     }
     void Update()
     {
-        CountTime();
-        DisplayTime();
+        if(_timeIsRunning)
+        {
+            CountTime();
+            DisplayTime();
+        }
     }
 
     private void CountTime()
@@ -63,7 +68,7 @@ public class TimerManager : MonoBehaviour
             _currentTimerTime = _timerLimit;
              DisplayTime();
             _timerDisplay.color = _timeOutColor;
-            enabled = false;
+            _timeIsRunning = false;
         }
     }
 
@@ -82,5 +87,19 @@ public class TimerManager : MonoBehaviour
         {
             _timerDisplay.text = Math.Round(_currentTimerTime, _decimalPlacesWithoutFormating).ToString();
         }
+    }
+    public void StartTime()
+    {
+        _timeIsRunning = true;
+    }
+
+    public void StopTime()
+    {
+        _timeIsRunning = false;
+    }
+
+    public float GetTime()
+    {
+        return _currentTimerTime;
     }
 }
