@@ -31,7 +31,7 @@ public class PlayerHandsController : MonoBehaviour
         _attacked = false;
 
         if (state == _rightCurrentState) return;
-        _rightArmAnimator.CrossFade(state.AnimationHash, 0.1f, 0);
+        _rightArmAnimator.Play(state.AnimationHash, 0);
         _rightCurrentState = state;
     }
 
@@ -44,7 +44,7 @@ public class PlayerHandsController : MonoBehaviour
 
         LockableAnimation LockState(LockableAnimation state)
         {
-            _rightLockedTill = Time.time + state.ClipTime + 0.05f;
+            _rightLockedTill = Time.time + state.ClipTime + 0.1f;
             return state;
         }
     }
