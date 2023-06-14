@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TimerManager : MonoBehaviour
+public class TimerManager : MonoBehaviour, ITimerTimeGetter, ITimerTimeStarter, ITimerTimeStoper
 {
     [Header("UI")]
     [SerializeField] private TMP_Text _timerDisplay;
@@ -88,18 +88,19 @@ public class TimerManager : MonoBehaviour
             _timerDisplay.text = Math.Round(_currentTimerTime, _decimalPlacesWithoutFormating).ToString();
         }
     }
-    public void StartTime()
+
+    public float GetTimerTime()
+    {
+        return _currentTimerTime;
+    }
+
+    public void StartTimer()
     {
         _timeIsRunning = true;
     }
 
-    public void StopTime()
+    public void StopTimer()
     {
         _timeIsRunning = false;
-    }
-
-    public float GetTime()
-    {
-        return _currentTimerTime;
     }
 }
