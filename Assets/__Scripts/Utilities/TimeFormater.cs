@@ -7,7 +7,7 @@ using static TimeFormater;
 
 public class TimeFormater : MonoBehaviour
 {
-    private Dictionary<TimeFormats, string> _timerFormats;
+    private Dictionary<TimeFormats, string> _timeFormats;
 
     public enum TimeFormats
     {
@@ -18,17 +18,19 @@ public class TimeFormater : MonoBehaviour
         HoursMinutesSeconds
     }
 
-    private void Awake()
+    public TimeFormater()
     {
+        _timeFormats = new Dictionary<TimeFormats, string>();
         InitializeTimeFormats();
     }
 
     private void InitializeTimeFormats()
     {
-        _timerFormats.Add(TimeFormats.SecondsMilliseconds, "{2:D2} : {3:D2}");
-        _timerFormats.Add(TimeFormats.MinutesSecondsMilliseconds, "{1:D2} : {2:D2} : {3:D2}");
-        _timerFormats.Add(TimeFormats.HoursMinutes, "{0:D2} : {1:D2}");
-        _timerFormats.Add(TimeFormats.HoursMinutesSeconds, "{0:D2} : {1:D2} : {2:D2}");
+        _timeFormats.Add(TimeFormats.SecondsMilliseconds, "{2:D2} : {3:D2}");
+        _timeFormats.Add(TimeFormats.MinutesSeconds, "{1:D2} : {2:D2}");
+        _timeFormats.Add(TimeFormats.MinutesSecondsMilliseconds, "{1:D2} : {2:D2} : {3:D2}");
+        _timeFormats.Add(TimeFormats.HoursMinutes, "{0:D2} : {1:D2}");
+        _timeFormats.Add(TimeFormats.HoursMinutesSeconds, "{0:D2} : {1:D2} : {2:D2}");
     }
 
     public string FormatTime (TimeFormats fromat, float time)
@@ -37,7 +39,8 @@ public class TimeFormater : MonoBehaviour
         int seconds = Mathf.FloorToInt(time) % 60;
         int minutes = Mathf.FloorToInt(time / 60) % 60;
         int hours = Mathf.FloorToInt(time / 60 / 60);
-        return string.Format(_timerFormats[fromat], hours, minutes, seconds, milliseconds);
+        string formatedTime = string.Format(_timeFormats[fromat], hours, minutes, seconds, milliseconds);
+        return formatedTime;
     }
 
 }
