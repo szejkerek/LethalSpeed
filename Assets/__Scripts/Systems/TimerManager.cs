@@ -22,26 +22,15 @@ public class TimerManager : MonoBehaviour
     [Header("Format Settings")]
     [SerializeField] private int _decimalPlacesWithoutFormating;
     [SerializeField] private bool _hasFormat;
-    [SerializeField] private TimerFormats _format;
-    private Dictionary<TimerFormats, string> _timerFormats;
+    [SerializeField] private TimeFormater.TimeFormats _format;
 
     private TimeFormater _timeFormater;
     private float _currentTimerTime;
-    //private enum TimerFormats
-    //{
-    //    SecondsMilliseconds,
-    //    MinutesSeconds,
-    //    MinutesSecondsMilliseconds,
-    //    HoursMinutes,
-    //    HoursMinutesSeconds
-    //}
 
     private void Awake()
     {
         _currentTimerTime = _startingTime;
         _timeFormater = new TimeFormater();
-        _timerFormats = new Dictionary<TimerFormats, string>();
-        InitializeTimeFormats();
         DisplayTime();
     }
 
@@ -71,7 +60,7 @@ public class TimerManager : MonoBehaviour
     {
         if(_hasFormat)
         {
-            _timeFormater.FormatTime(TimeFormater.TimeFormats.MinutesSecondsMilliseconds, _currentTimerTime);
+            _timerDisplay.text = _timeFormater.FormatTime(_format, _currentTimerTime);
         }
         else
         {
