@@ -7,13 +7,21 @@ using UnityEngine.UI;
 public class EndOfLevelScreenManager : MonoBehaviour
 {
     [Header("UI")]
+    [SerializeField] private GameObject _endOfLevelCanvas;
     [SerializeField] private Button _nextLevelButton;
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private TMP_Text _finalTimeText;
 
-    [SerializeField] private TimerManager _timer;
+    [Header("UI Settings")]
+    [SerializeField] private string _defaultFinalTimeText;
+    [SerializeField] private TimeFormater.TimeFormats _timeFormat;
+
+    private TimerManager _timer;
+    private TimeFormater _timeFormater;
     private void Awake()
     {
+        _timer = GetComponent<TimerManager>();
+        _finalTimeText.text = _defaultFinalTimeText;
         AsignButton();
     }
 
