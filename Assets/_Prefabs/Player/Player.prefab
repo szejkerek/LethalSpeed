@@ -964,7 +964,7 @@ MonoBehaviour:
     KeepPreviousMomentum: 1
   _grappleProps:
     MaxDistance: 100
-    GrappleDelay: 0.1
+    GrappleDelay: 0.25
     GrappleForce: 3
     AfterGrappleForce: 2
     GrappleSurfaceMask:
@@ -972,8 +972,6 @@ MonoBehaviour:
       m_Bits: 256
     GrappleAimError: 5
     ShouldResetDash: 1
-    HookLineRenderer: {fileID: 3937126645902316730}
-    HookGunTip: {fileID: 7297212916858649013}
   _swingProps:
     MaxDistance: 100
     Acceleration: 15
@@ -1134,11 +1132,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 1906316541010335867, guid: 9d3e3ffbacdc9104097ac8d876657ec3, type: 3}
   m_PrefabInstance: {fileID: 144338214156275320}
   m_PrefabAsset: {fileID: 0}
---- !u!120 &3937126645902316730 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 3793069943306001090, guid: 9d3e3ffbacdc9104097ac8d876657ec3, type: 3}
-  m_PrefabInstance: {fileID: 144338214156275320}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4181717111003699498 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4037683060198659922, guid: 9d3e3ffbacdc9104097ac8d876657ec3, type: 3}
@@ -1155,8 +1148,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e68e98cabe4ddf4694a5fb9030958c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &7297212916858649013 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7441110602183669709, guid: 9d3e3ffbacdc9104097ac8d876657ec3, type: 3}
-  m_PrefabInstance: {fileID: 144338214156275320}
-  m_PrefabAsset: {fileID: 0}
