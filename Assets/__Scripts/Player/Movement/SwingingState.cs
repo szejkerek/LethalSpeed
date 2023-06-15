@@ -80,7 +80,7 @@ public class SwingingState : MovementState
     public void Update()
     {
         _minSwingingTime -= Time.deltaTime;
-        _ropeRenderer.DrawRope(_joint != null, _hookGunTip.position, _swingPoint);
+        _ropeRenderer.DrawRope(_joint != null, _swingPoint);
         
         if (_initialSpeed > _pm.CurrentMaxSpeed)
         {

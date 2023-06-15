@@ -36,11 +36,11 @@ public class RopeRenderer : MonoBehaviour
             lr.positionCount = 0;
     }
 
-    public void DrawRope(bool isGrappling, Vector3 start, Vector3 end)
+    public void DrawRope(bool isGrappling, Vector3 end)
     {
         if (lr.positionCount == 0)
         {
-            currentGrapplePosition = start;
+            currentGrapplePosition = transform.position;
             rope.Velocity = velocity;
             lr.positionCount = quality + 1;
         }
@@ -50,7 +50,7 @@ public class RopeRenderer : MonoBehaviour
         rope.Update(Time.deltaTime);
 
         var grapplePoint = end;
-        var gunTipPosition = start;
+        var gunTipPosition = transform.position;
         var up = Quaternion.LookRotation((grapplePoint - gunTipPosition).normalized) * Vector3.up;
 
         currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 12f);
