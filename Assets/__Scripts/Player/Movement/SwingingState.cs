@@ -51,6 +51,7 @@ public class SwingingState : MovementState
         {
             _swingPoint = swingRayHit.transform.position;
             _lr.enabled = true;
+            _lr.positionCount = 2;
             _lr.SetPosition(1, _swingPoint);
 
             _joint = _pm.gameObject.AddComponent<SpringJoint>();
