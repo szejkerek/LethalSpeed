@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndOfLevelScreenManager : MonoBehaviour
@@ -20,7 +21,9 @@ public class EndOfLevelScreenManager : MonoBehaviour
     private TimeFormater _timeFormater;
     private void Awake()
     {
+        _endOfLevelCanvas.SetActive(false);
         _timer = GetComponent<TimerManager>();
+        _timeFormater = new TimeFormater();
         _finalTimeText.text = _defaultFinalTimeText;
         AsignButton();
     }
@@ -33,7 +36,18 @@ public class EndOfLevelScreenManager : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        SceneLoader.Instance.LoadNextSceneInBuilder();
+        //TO DO: Move check if there is next scene in builder logic to SceneLoader
+        int currentIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextIndex = currentIndex + 1;
+
+        if (nextIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneLoader.Instance.LoadNextSceneInBuilder();
+        }
+        else
+        {
+            SceneLoader.Instance.LoadNewSceneByBuildIndex((int)SceneBuildIndexes.Menu);
+        }
     }
 
     private void LoadMainMenu()
@@ -46,10 +60,12 @@ public class EndOfLevelScreenManager : MonoBehaviour
         if (enable) 
         {
             InitializeEndOfLevelCanvasData();
+            Helpers.EnableCursor();
             _endOfLevelCanvas.SetActive(enable);
         }
         else 
         {
+            Helpers.DisableCursor();
             _endOfLevelCanvas.SetActive(enable);
         }
     }
