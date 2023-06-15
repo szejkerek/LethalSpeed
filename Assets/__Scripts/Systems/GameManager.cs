@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class GameManager : Singleton<GameManager>
     private PauseMenuManager _pauseMenuMenager;
     private CrosshairManager _crosshairManager;
     private DeathScreenManager _deathScreenManager;
+    private EndOfLevelScreenManager _endOfLevelScreenManager;
+    private TimerManager _timerManager;
     private Player _player;
 
     public bool EnableQuickRestarts { get => _enableQuickRestarts; set => _enableQuickRestarts = value; }
@@ -19,7 +22,10 @@ public class GameManager : Singleton<GameManager>
         _pauseMenuMenager = GetComponent<PauseMenuManager>();
         _crosshairManager = GetComponent<CrosshairManager>();
         _deathScreenManager = GetComponent<DeathScreenManager>();
+        _endOfLevelScreenManager = GetComponent<EndOfLevelScreenManager>();
+        _timerManager = GetComponent<TimerManager>();
         _player = FindFirstObjectByType<Player>();
+        EndZone.OnEndZonePlayerEnter += HandleFinishLevel;
 
         if (_player is null)
         {
@@ -34,6 +40,7 @@ public class GameManager : Singleton<GameManager>
     private void OnDestroy()
     {
         Player.onPlayerGetHit -= HandlePlayerDeath;
+        EndZone.OnEndZonePlayerEnter -= HandleFinishLevel;
         Helpers.DisableCursor();
         _enableQuickRestarts = true;
         _deathScreenManager.ResetGameSpeed();
@@ -71,5 +78,15 @@ public class GameManager : Singleton<GameManager>
         _enableQuickRestarts = false;
         _crosshairManager.ShowCrosshair(enabled: false);
         Helpers.EnableCursor();
+    }
+
+    private void HandleFinishLevel()
+    {
+        _pauseMenuMenager.EnableInputs = false;
+        _crosshairManager.ShowCrosshair(false);
+        _timerManager.ShowTimer(false);
+        _timerManager.StopTimer();
+        Time.timeScale = 0;
+        _endOfLevelScreenManager.ShowEndOfLevelCanvas();
     }
 }
