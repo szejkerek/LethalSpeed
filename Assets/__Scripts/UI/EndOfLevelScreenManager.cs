@@ -33,8 +33,23 @@ public class EndOfLevelScreenManager : MonoBehaviour
         SceneLoader.Instance.LoadNewSceneByBuildIndex((int)SceneBuildIndexes.Menu);
     }
 
-    public void FinishLevel()
+    public void ShowEndOfLevelCanvas(bool enable = true)
     {
-         
+        if (enable) 
+        {
+            InitializeEndOfLevelCanvasData();
+            _endOfLevelCanvas.SetActive(enable);
+        }
+        else 
+        {
+            _endOfLevelCanvas.SetActive(enable);
+        }
+    }
+
+    public void InitializeEndOfLevelCanvasData()
+    {
+        float finalTime = _timer.GetTimerTime();
+        string finalTimeFormated = _timeFormater.FormatTime(_timeFormat, finalTime);
+        _finalTimeText.text = _finalTimeText.text + finalTimeFormated;  
     }
 }
