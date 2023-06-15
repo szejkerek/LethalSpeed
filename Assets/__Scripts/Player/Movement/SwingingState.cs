@@ -41,7 +41,6 @@ public class SwingingState : MovementState
         _pm.Rigidbody.drag = 0.0f;
 
         _pc = _pm.PlayerCamera;
-        _hookGunTip = _pm.GrappleProps.HookGunTip;
         _ropeRenderer = _pm.RopeRenderer;
 
         RaycastHit swingRayHit;

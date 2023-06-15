@@ -141,8 +141,6 @@ public class PlayerMovement : MonoBehaviour
 
         _canDash = true;
         _dashCooldown = 1.0f;
-
-        _grappleProps.HookLineRenderer.enabled = false;
     }
 
     void Update()
