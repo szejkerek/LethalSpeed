@@ -79,8 +79,10 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public PlayerWeapon PlayerWeapon;
 
-    [Space]
-    public Transform orientation;
+    [Space(5f)]
+ 
+    [SerializeField] private RopeRenderer _ropeRenderer;
+    [SerializeField] private Transform _orientation;
 
     private MovementState _movementState;
     public MovementState CurrentMovementState => _movementState;
@@ -97,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
     private float _dashCooldown;
     private bool _canDash;
     private Rigidbody _rb;
-    private RopeRenderer _ropeRenderer;
+
 
     public bool IsGrounded => _isGrounded;
     public bool WasGrounded => _wasGroundedLastFrame;
@@ -111,8 +113,8 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 Velocity { get { return _rb.velocity; } set { _rb.velocity = value; } }
     public Vector3 FlatVelocity => Vector3.ProjectOnPlane(_rb.velocity, Vector3.up);
     public RopeRenderer RopeRenderer => _ropeRenderer;
+    public Transform Orientation => _orientation;
 
-    
 
     public void ChangeMovementState(MovementState movementState)
     {
@@ -126,7 +128,6 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         PlayerCamera = GetComponent<Player>().PlayerCamera;
         PlayerWeapon = GetComponent<PlayerWeapon>();
-        _ropeRenderer = GetComponent<RopeRenderer>();
     }
 
     void Start()
@@ -199,6 +200,6 @@ public class PlayerMovement : MonoBehaviour
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
         
-        _wishDir = orientation.forward * _verticalInput + orientation.right * _horizontalInput;
+        _wishDir = Orientation.forward * _verticalInput + Orientation.right * _horizontalInput;
     }
 }

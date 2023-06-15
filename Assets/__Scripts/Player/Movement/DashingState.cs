@@ -37,7 +37,7 @@ public class DashingState : MovementState
     {
         if(!_dashForceApplied)
         {
-            Vector3 dashDir = normalizedWishDir == Vector3.zero ? _pm.orientation.forward : normalizedWishDir;
+            Vector3 dashDir = normalizedWishDir == Vector3.zero ? _pm.Orientation.forward : normalizedWishDir;
 
             _pm.Velocity = Vector3.zero;
             _pm.Rigidbody.AddForce(dashDir * _pm.DashProps.DashForce, ForceMode.Impulse);

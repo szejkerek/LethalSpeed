@@ -22,34 +22,25 @@ public class RopeRenderer : MonoBehaviour
 
     void Awake()
     {
-        lr = GetComponent<LineRenderer>();
         rope = new Rope();
+        lr = GetComponent<LineRenderer>();     
+        RestartRope();
+    }
+
+    public void RestartRope()
+    {
+
         rope.Target = 0;
         rope.Reset();
         if (lr.positionCount > 0)
             lr.positionCount = 0;
     }
 
-    //Called after Update
-    //void LateUpdate()
-    //{
-    //    DrawRope(true, Vector3.zero, new Vector3(20,20,20));
-    //}
-
-    void DrawRope(bool isGrappling, Vector3 start, Vector3 end)
+    public void DrawRope(bool isGrappling, Vector3 start, Vector3 end)
     {
-        //If not grappling, don't draw rope
-        if (!isGrappling)
-        {
-            currentGrapplePosition = start;
-            rope.Reset();
-            if (lr.positionCount > 0)
-                lr.positionCount = 0;
-            return;
-        }
-
         if (lr.positionCount == 0)
         {
+            currentGrapplePosition = start;
             rope.Velocity = velocity;
             lr.positionCount = quality + 1;
         }

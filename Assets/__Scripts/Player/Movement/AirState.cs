@@ -101,7 +101,7 @@ public class AirState : MovementState
 
         RaycastHit wallRayHit;
 
-        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, _pm.orientation.right, out wallRayHit, 0.8f, _pm.WallrunProps.WallMask)
+        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, _pm.Orientation.right, out wallRayHit, 0.8f, _pm.WallrunProps.WallMask)
             && !Input.GetKey(_pm.CrouchKey) && (Input.GetKeyDown(_pm.JumpKey) || _jumpCommandBuffer >= 0.0f))
         {
             _pm.ChangeMovementState(new WallrunningState(wallRayHit.normal, _pm.Velocity.magnitude));
@@ -109,7 +109,7 @@ public class AirState : MovementState
             return;
         }
         
-        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, -_pm.orientation.right, out wallRayHit, 0.8f, _pm.WallrunProps.WallMask)
+        if(Physics.Raycast(_pm.transform.position + Vector3.up * _pm.PlayerHeight / 2.0f, -_pm.Orientation.right, out wallRayHit, 0.8f, _pm.WallrunProps.WallMask)
             && !Input.GetKey(_pm.CrouchKey) && (Input.GetKeyDown(_pm.JumpKey) || _jumpCommandBuffer >= 0.0f))
         {
             _pm.ChangeMovementState(new WallrunningState(wallRayHit.normal, _pm.Velocity.magnitude));
@@ -140,7 +140,7 @@ public class AirState : MovementState
         }
 
         if (Input.GetKeyDown(_pm.JumpKey) 
-            && Physics.Raycast(_pm.transform.position + Vector3.up * (_pm.PlayerHeight) + _pm.orientation.forward * (0.5f + _pm.LedgeClimbingProps.MinDistance),
+            && Physics.Raycast(_pm.transform.position + Vector3.up * (_pm.PlayerHeight) + _pm.Orientation.forward * (0.5f + _pm.LedgeClimbingProps.MinDistance),
             Vector3.down, out RaycastHit rayHit, _pm.LedgeClimbingProps.RayPierceDistance, _pm.GroundMask))
         {
             _pm.ChangeMovementState(new LedgeClimbingState(rayHit));
