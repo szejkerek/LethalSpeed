@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Timeline;
 using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
-using static TimeFormater;
 
-public class TimeFormater : MonoBehaviour
+public class TimeFormater
 {
     private Dictionary<TimeFormats, string> _timeFormats;
 
