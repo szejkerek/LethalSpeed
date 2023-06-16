@@ -33,8 +33,7 @@ public class GrapplingState : MovementState
 
         _preGrapple = true;
 
-        if(Physics.SphereCast(_pc.transform.position, _pm.GrappleProps.GrappleAimError,
-            _pc.transform.forward, out RaycastHit grappleRayHit, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
+        if(_pm.PlayerVision.GrappleObjectRaycast(out RaycastHit grappleRayHit))
         {
             _grappleTargetPoint = grappleRayHit.transform.position;
             _startGrapplingDelay = _pm.GrappleProps.GrappleDelay;

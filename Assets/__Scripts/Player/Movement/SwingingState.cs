@@ -43,10 +43,7 @@ public class SwingingState : MovementState
         _pc = _pm.PlayerCamera;
         _ropeRenderer = _pm.RopeRenderer;
 
-        RaycastHit swingRayHit;
-
-        if(Physics.SphereCast(_pc.transform.position, _pm.SwingProps.SwingAimError,
-            _pc.transform.forward, out swingRayHit, _pm.SwingProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask))
+        if(_pm.PlayerVision.SwingObjectRaycast(out RaycastHit swingRayHit))
         {
             _swingPoint = swingRayHit.transform.position;
 
@@ -100,7 +97,7 @@ public class SwingingState : MovementState
 
     public void End()
     {
-        MonoBehaviour.Destroy(_joint);
+        Object.Destroy(_joint);
     }
 
     public void CheckForModeChange()

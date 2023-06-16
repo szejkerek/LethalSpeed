@@ -73,10 +73,6 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode GrappleKey => _grappleKey;
     public KeyCode SwingKey => _swingKey;
 
-
-    [HideInInspector]
-    public PlayerWeapon PlayerWeapon;
-
     [Space(5f)]
  
     [SerializeField] private RopeRenderer _ropeRenderer;
@@ -98,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
     private bool _canDash;
     private Rigidbody _rb;
     private PlayerCamera _playerCamera;
+    private PlayerVision _playerVision;
+    private PlayerWeapon _playerWeapon;
 
 
     public bool IsGrounded => _isGrounded;
@@ -114,6 +112,8 @@ public class PlayerMovement : MonoBehaviour
     public RopeRenderer RopeRenderer => _ropeRenderer;
     public Transform Orientation => _orientation;
     public PlayerCamera PlayerCamera => _playerCamera;
+    public PlayerVision PlayerVision => _playerVision;
+    public PlayerWeapon PlayerWeapon => _playerWeapon;
 
 
     public void ChangeMovementState(MovementState movementState)
@@ -127,7 +127,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _playerCamera = GetComponent<Player>().PlayerCamera;
-        PlayerWeapon = GetComponent<PlayerWeapon>();
+        _playerWeapon = GetComponent<PlayerWeapon>();
+        _playerVision = GetComponent<PlayerVision>();
     }
 
     void Start()
