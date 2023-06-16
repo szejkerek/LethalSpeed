@@ -844,6 +844,7 @@ GameObject:
   - component: {fileID: 7975385521685648149}
   - component: {fileID: 8757365507892586898}
   - component: {fileID: 4658737756791918588}
+  - component: {fileID: 2021152937}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -992,8 +993,6 @@ MonoBehaviour:
   _dashKey: 304
   _grappleKey: 113
   _swingKey: 324
-  PlayerCamera: {fileID: 0}
-  PlayerWeapon: {fileID: 0}
   _ropeRenderer: {fileID: 6869204083873946363}
   _orientation: {fileID: 7975385519971890260}
 --- !u!114 &8757365507892586898
@@ -1030,6 +1029,21 @@ MonoBehaviour:
   AttackDistance: 2
   AttackRadius: 0.15
   hitForce: 55
+--- !u!114 &2021152937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975385521685648151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d45d9d52366dfa439a863387f710cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionBlockers:
+    serializedVersion: 2
+    m_Bits: 2241
 --- !u!1001 &144338214156275320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1037,6 +1051,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7202311452728960652}
     m_Modifications:
+    - target: {fileID: 3793069943306001090, guid: 9d3e3ffbacdc9104097ac8d876657ec3, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.2541046
+      objectReference: {fileID: 0}
     - target: {fileID: 4037683060198659922, guid: 9d3e3ffbacdc9104097ac8d876657ec3, type: 3}
       propertyPath: m_RootOrder
       value: 0
