@@ -964,7 +964,7 @@ MonoBehaviour:
     KeepPreviousMomentum: 1
   _grappleProps:
     MaxDistance: 100
-    GrappleDelay: 0.25
+    GrappleDelay: 0.15
     GrappleForce: 3
     AfterGrappleForce: 2
     GrappleSurfaceMask:

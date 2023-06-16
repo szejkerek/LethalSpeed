@@ -73,8 +73,6 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode GrappleKey => _grappleKey;
     public KeyCode SwingKey => _swingKey;
 
-    [HideInInspector]
-    public PlayerCamera PlayerCamera;
 
     [HideInInspector]
     public PlayerWeapon PlayerWeapon;
@@ -99,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
     private float _dashCooldown;
     private bool _canDash;
     private Rigidbody _rb;
+    private PlayerCamera _playerCamera;
 
 
     public bool IsGrounded => _isGrounded;
@@ -114,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 FlatVelocity => Vector3.ProjectOnPlane(_rb.velocity, Vector3.up);
     public RopeRenderer RopeRenderer => _ropeRenderer;
     public Transform Orientation => _orientation;
+    public PlayerCamera PlayerCamera => _playerCamera;
 
 
     public void ChangeMovementState(MovementState movementState)
@@ -126,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        PlayerCamera = GetComponent<Player>().PlayerCamera;
+        _playerCamera = GetComponent<Player>().PlayerCamera;
         PlayerWeapon = GetComponent<PlayerWeapon>();
     }
 

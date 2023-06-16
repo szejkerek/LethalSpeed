@@ -16,7 +16,6 @@ public class GrapplingState : MovementState
 {
     private PlayerMovement _pm;
     private PlayerCamera _pc;
-    private Transform _grappleGunTip;
     private Vector3 _grappleTargetPoint;
     private Vector3 _trajectory;
     private RopeRenderer _ropeRenderer;
@@ -34,10 +33,8 @@ public class GrapplingState : MovementState
 
         _preGrapple = true;
 
-        RaycastHit grappleRayHit;
-
         if(Physics.SphereCast(_pc.transform.position, _pm.GrappleProps.GrappleAimError,
-            _pc.transform.forward, out grappleRayHit, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
+            _pc.transform.forward, out RaycastHit grappleRayHit, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
         {
             _grappleTargetPoint = grappleRayHit.transform.position;
             _startGrapplingDelay = _pm.GrappleProps.GrappleDelay;
@@ -100,7 +97,7 @@ public class GrapplingState : MovementState
 
     public void CheckForModeChange()
     {
-        if(!_preGrapple && (_grappleTargetPoint - _pm.transform.position).magnitude < 5.0f)
+        if(!_preGrapple &&(_grappleTargetPoint - _pm.transform.position).magnitude < 5.0f )
         {
             _pm.Velocity = _pm.Velocity.normalized * _pm.GroundProps.MaxSpeed * (Input.GetKey(_pm.GrappleKey) ? _pm.GrappleProps.AfterGrappleForce : 1.0f);
             StopGrappling();

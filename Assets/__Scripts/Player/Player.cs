@@ -15,14 +15,12 @@ public class Player : MonoBehaviour
     public bool IsPlayerDead => isPlayerDead;
 
     private PlayerMovement _playerMovement;
-    private PlayerWeapon _playerWeapon;
     bool isPlayerDead = false;
 
     private void Awake()
     {
         ApplyHitboxToLimbs();
         _playerMovement = GetComponent<PlayerMovement>();
-        _playerWeapon = GetComponent<PlayerWeapon>();
     }
 
     public void PlayerDeath()

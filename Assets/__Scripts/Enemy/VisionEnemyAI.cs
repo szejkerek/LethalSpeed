@@ -134,7 +134,6 @@ public class VisionEnemyAI : MonoBehaviour
         if (!isBlockedForward) sidePartsCount++;
         if (!isBlockedBack) sidePartsCount++;
 
-        //bool blocked = isBlockedMiddle && isBlockedTop && isBlockedBottom && isBlockedLeft && isBlockedRight && isBlockedForward && isBlockedBack;
         return seeCorePart || sidePartsCount > 1;
     }
 
