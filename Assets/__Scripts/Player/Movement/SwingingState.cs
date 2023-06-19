@@ -19,7 +19,7 @@ public class SwingingState : MovementState
     private PlayerMovement _pm;
     private PlayerCamera _pc;
     private Transform _hookGunTip;
-    private LineRenderer _lr;
+    private RopeRenderer _ropeRenderer;
 
     private Vector3 _swingPoint;
     private SpringJoint _joint;
@@ -41,17 +41,11 @@ public class SwingingState : MovementState
         _pm.Rigidbody.drag = 0.0f;
 
         _pc = _pm.PlayerCamera;
-        _hookGunTip = _pm.GrappleProps.HookGunTip;
-        _lr = _pm.GrappleProps.HookLineRenderer;
+        _ropeRenderer = _pm.RopeRenderer;
 
-        RaycastHit swingRayHit;
-
-        if(Physics.SphereCast(_pc.transform.position, _pm.SwingProps.SwingAimError,
-            _pc.transform.forward, out swingRayHit, _pm.SwingProps.MaxDistance, _pm.SwingProps.SwingSurfaceMask))
+        if(_pm.PlayerVision.SwingObjectRaycast(out RaycastHit swingRayHit))
         {
             _swingPoint = swingRayHit.transform.position;
-            _lr.enabled = true;
-            _lr.SetPosition(1, _swingPoint);
 
             _joint = _pm.gameObject.AddComponent<SpringJoint>();
             _joint.autoConfigureConnectedAnchor = false;
@@ -82,7 +76,7 @@ public class SwingingState : MovementState
     public void Update()
     {
         _minSwingingTime -= Time.deltaTime;
-        _lr.SetPosition(0, _hookGunTip.position);
+        _ropeRenderer.DrawRope(_joint != null, _swingPoint);
         
         if (_initialSpeed > _pm.CurrentMaxSpeed)
         {
@@ -103,14 +97,14 @@ public class SwingingState : MovementState
 
     public void End()
     {
-        _lr.enabled = false;
-        MonoBehaviour.Destroy(_joint);
+        Object.Destroy(_joint);
     }
 
     public void CheckForModeChange()
     {
         if(!Input.GetKey(_pm.SwingKey))
         {
+            _ropeRenderer.RestartRope();
             _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundProps.Friction : 0.0f;
             _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.FlatVelocity.magnitude));
 
@@ -119,6 +113,7 @@ public class SwingingState : MovementState
 
         if(_pm.Velocity.magnitude < 0.25f && Vector3.Dot((_pm.transform.position - _swingPoint).normalized, Vector3.down) > 0.98f && _minSwingingTime < 0.0f)
         {
+            _ropeRenderer.RestartRope();
             _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundProps.Friction : 0.0f;
             _pm.ChangeMovementState(_pm.IsGrounded ? new RunningState() : new AirState(_pm.FlatVelocity.magnitude));
 

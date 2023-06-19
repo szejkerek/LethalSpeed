@@ -10,19 +10,15 @@ public struct GrappleProperties
     public LayerMask GrappleSurfaceMask;
     public float GrappleAimError;
     public bool ShouldResetDash;
-
-    public LineRenderer HookLineRenderer;
-    public Transform HookGunTip;
 }
 
 public class GrapplingState : MovementState
 {
     private PlayerMovement _pm;
     private PlayerCamera _pc;
-    private Transform _grappleGunTip;
     private Vector3 _grappleTargetPoint;
     private Vector3 _trajectory;
-    private LineRenderer _lr;
+    private RopeRenderer _ropeRenderer;
     private bool _preGrapple;
 
     private float _startGrapplingDelay;
@@ -33,19 +29,13 @@ public class GrapplingState : MovementState
         _pm.CurrentMaxSpeed = pm.GroundProps.MaxSpeed;
 
         _pc = _pm.PlayerCamera;
-        _grappleGunTip = _pm.GrappleProps.HookGunTip;
-        _lr = _pm.GrappleProps.HookLineRenderer;
+        _ropeRenderer = _pm.RopeRenderer;
 
         _preGrapple = true;
 
-        RaycastHit grappleRayHit;
-
-        if(Physics.SphereCast(_pc.transform.position, _pm.GrappleProps.GrappleAimError,
-            _pc.transform.forward, out grappleRayHit, _pm.GrappleProps.MaxDistance, _pm.GrappleProps.GrappleSurfaceMask))
+        if(_pm.PlayerVision.GrappleObjectRaycast(out RaycastHit grappleRayHit))
         {
             _grappleTargetPoint = grappleRayHit.transform.position;
-            _lr.enabled = true;
-            _lr.SetPosition(1, _grappleTargetPoint);
             _startGrapplingDelay = _pm.GrappleProps.GrappleDelay;
 
             if (_pm.SwingProps.ShouldResetDash)
@@ -61,8 +51,9 @@ public class GrapplingState : MovementState
 
     public void Update()
     {
-        _lr.SetPosition(0, _grappleGunTip.position);
         _startGrapplingDelay -= Time.deltaTime;
+
+        _ropeRenderer.DrawRope(!_preGrapple, _grappleTargetPoint);
 
         if(_startGrapplingDelay <= 0.0f && _preGrapple)
         {
@@ -105,7 +96,7 @@ public class GrapplingState : MovementState
 
     public void CheckForModeChange()
     {
-        if(!_preGrapple && (_grappleTargetPoint - _pm.transform.position).magnitude < 5.0f)
+        if(!_preGrapple &&(_grappleTargetPoint - _pm.transform.position).magnitude < 5.0f )
         {
             _pm.Velocity = _pm.Velocity.normalized * _pm.GroundProps.MaxSpeed * (Input.GetKey(_pm.GrappleKey) ? _pm.GrappleProps.AfterGrappleForce : 1.0f);
             StopGrappling();
@@ -133,7 +124,7 @@ public class GrapplingState : MovementState
     private void StopGrappling()
     {
         _preGrapple = true;
-        _lr.enabled = false;
+        _ropeRenderer.RestartRope();
 
         _pm.Rigidbody.useGravity = true;
         _pm.Rigidbody.drag = _pm.IsGrounded ? _pm.GroundProps.Friction : 0.0f;
