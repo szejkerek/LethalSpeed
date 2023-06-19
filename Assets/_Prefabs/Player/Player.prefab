@@ -900,7 +900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f8c96765599114ca691a3fe95eaa28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enableGodmode: 0
+  _enableGodmode: 1
   _playerCamera: {fileID: 3845972236151078384}
 --- !u!114 &1167500344532207329
 MonoBehaviour:
@@ -1067,6 +1067,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7202311452728960652}
     m_Modifications:
+    - target: {fileID: 3101138538554453119, guid: 9d3e3ffbacdc9104097ac8d876657ec3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3793069943306001090, guid: 9d3e3ffbacdc9104097ac8d876657ec3, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
       value: 0.2541046
