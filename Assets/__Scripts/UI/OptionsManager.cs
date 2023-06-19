@@ -21,7 +21,6 @@ public class OptionsManager : MonoBehaviour
         OptionsData DefaultOptionsData = new OptionsData(1, 1, 1, 1);
         IDataService DataService = new JsonDataService();
         _optionsSavingManager = new SavingManager<OptionsData>(DataService, DefaultOptionsData, "/options-data.json", _encryptionEnabled);
-        _optionsSavingManager.InitializeJson();
         LoadData();
         AssignUIButtons();
     }
