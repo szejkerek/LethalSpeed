@@ -61,12 +61,14 @@ public class EndOfLevelScreenManager : MonoBehaviour
         {
             InitializeEndOfLevelCanvasData();
             Helpers.EnableCursor();
+            Time.timeScale = 0;
             _endOfLevelCanvas.SetActive(enable);
         }
         else 
         {
             Helpers.DisableCursor();
-            _endOfLevelCanvas.SetActive(enable);
+            Time.timeScale = 1;
+            _endOfLevelCanvas.SetActive(!enable);
         }
     }
 
