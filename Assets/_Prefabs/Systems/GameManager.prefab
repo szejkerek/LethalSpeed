@@ -1325,6 +1325,7 @@ GameObject:
   - component: {fileID: 401104561081865806}
   - component: {fileID: 1351746682142783892}
   - component: {fileID: 5398960984550502179}
+  - component: {fileID: 8969674732712877885}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1416,9 +1417,9 @@ MonoBehaviour:
   _deathScreen: {fileID: 4164884439341573842}
   restartButton: {fileID: 3098940545632195864}
   mainMenuButton: {fileID: 343029745947986984}
-  slowingDownTime: 3
-  targetTimeScale: 0.35
-  volumeDecressePower: 35
+  slowingDownTime: 8
+  targetTimeScale: 0.5
+  volumeDecressePower: 30
 --- !u!114 &1351746682142783892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1459,6 +1460,18 @@ MonoBehaviour:
   _finalTimeText: {fileID: 1298329849}
   _defaultFinalTimeText: 'Final time: '
   _timeFormat: 2
+--- !u!114 &8969674732712877885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9171490836232300373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b752045b6ffd6844dafd0cf3a83d935b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4724159507894324962
 PrefabInstance:
   m_ObjectHideFlags: 0
