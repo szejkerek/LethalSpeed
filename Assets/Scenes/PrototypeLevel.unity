@@ -9524,10 +9524,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7975385521685648149, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
-      propertyPath: _wallrunProps.WallrunJumpForce
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 7975385521685648151, guid: 54cb9c9b737836042b21fe3ccc12e7d7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -10968,10 +10964,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4730505349978457843, guid: 45fadd1cb3938f14e8d34a2c75fe5d2f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5143351306957411566, guid: 45fadd1cb3938f14e8d34a2c75fe5d2f, type: 3}
       propertyPath: m_RootOrder
       value: 4

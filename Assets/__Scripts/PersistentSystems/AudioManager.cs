@@ -28,9 +28,15 @@ public class AudioManager : Singleton<AudioManager>
         _musicSource.Play();
     }
 
-    public void PlayGlobalSound(AudioClip clip, float vol = 1)
+    public void PlayGlobalSound(AudioClip clip, float vol = 1, bool randomPitch = false)
     {
+        if (randomPitch)
+            _soundSource.pitch = Random.Range(0.8f, 1.2f);
+
         _soundSource.PlayOneShot(clip, vol);
+
+        if (randomPitch)
+            _soundSource.pitch = 1;
     }
 
 }

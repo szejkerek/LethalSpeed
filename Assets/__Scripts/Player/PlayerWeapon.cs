@@ -18,10 +18,14 @@ public class PlayerWeapon : MonoBehaviour
 
     bool _isAttacking = false;
     bool _readyToAttack = true;
-
     bool _enableInputs = true;
+    PlayerAudio playerAudio;
 
     public bool EnableInputs { get => _enableInputs; set => _enableInputs = value; }
+    private void Awake()
+    {
+        playerAudio = GetComponent<PlayerAudio>();
+    }
 
     private void Update()
     {
@@ -41,6 +45,7 @@ public class PlayerWeapon : MonoBehaviour
         _isAttacking = true;
         _readyToAttack = false;
 
+        playerAudio.PlaySwordWoosh();
         Invoke(nameof(ResetAttack), AttackCooldown);
         Invoke(nameof(PerformAttack), AttackDelay);
         

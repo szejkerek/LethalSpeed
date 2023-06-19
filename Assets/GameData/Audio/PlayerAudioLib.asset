@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59de8e96d6e7d2d4fa480c26f34778e3, type: 3}
+  m_Name: PlayerAudioLib
+  m_EditorClassIdentifier: 
+  <SwordWoosh>k__BackingField:
+  - {fileID: 8300000, guid: 811c03a975e412d4fa347fb9296423f0, type: 3}
+  - {fileID: 8300000, guid: 488743cab41bba948a78dcea20f8717f, type: 3}
