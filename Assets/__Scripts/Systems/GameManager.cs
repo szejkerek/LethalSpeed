@@ -89,7 +89,11 @@ public class GameManager : Singleton<GameManager>
         _timerManager.ShowTimer(false);
         _timerManager.StopTimer();
         _playerWeapon.EnableInputs = false;
-        Time.timeScale = 0;
+        Invoke(nameof(ShowEndScreen), 0.40f);
+    }
+
+    void ShowEndScreen()
+    {
         _endOfLevelScreenManager.ShowEndOfLevelCanvas();
     }
 }
