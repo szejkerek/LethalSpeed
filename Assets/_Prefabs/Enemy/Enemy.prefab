@@ -817,6 +817,7 @@ MonoBehaviour:
   _firerate: 0.75
   _magazineSize: 5
   _reloadTime: 3.5
+  shotVariation: 0.25
 --- !u!114 &2104238312635957081
 MonoBehaviour:
   m_ObjectHideFlags: 0
