@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject bloodEffect;
 
     bool isDead = false;
+    AudioEnemyAI _audio;
     Player _player;
     Animator _animator;
     RigWeightController _aimAtTargetRigController;
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _player = FindObjectOfType<Player>();
+        _audio = GetComponent<AudioEnemyAI>();
         _stateMachine = GetComponent<StateMachineEnemyAI>();
         _animator = GetComponent<Animator>();
         _aimAtTargetRigController = GetComponentInChildren<RigWeightController>();
@@ -37,6 +39,7 @@ public class Enemy : MonoBehaviour
             return;
 
         isDead = true;
+        _audio.PlayDeathSound();
         _stateMachine.CurrentState.SwitchState(_stateMachine.StatesFactory.Ragdoll());
         OnEnemyDeath?.Invoke();
     }
