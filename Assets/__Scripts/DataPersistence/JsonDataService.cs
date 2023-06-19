@@ -43,19 +43,22 @@ public class JsonDataService : IDataService
 
         try
         {
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
-
             if (Encrypted) 
             {
+                if (File.Exists(encryptedDataPath))
+                {
+                    File.Delete(encryptedDataPath);
+                }
                 using FileStream stream = File.Create(encryptedDataPath);
                 WriteEncrypedData(Data, stream);
                 stream.Close();
             }
             else 
             {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
                 using FileStream stream = File.Create(path);
                 stream.Close();
                 File.WriteAllText(path, JsonConvert.SerializeObject(Data));

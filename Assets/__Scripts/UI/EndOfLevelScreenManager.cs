@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndOfLevelScreenManager : MonoBehaviour
@@ -30,29 +27,8 @@ public class EndOfLevelScreenManager : MonoBehaviour
 
     private void AsignButton()
     {
-        _nextLevelButton.onClick.AddListener(LoadNextLevel);
-        _mainMenuButton.onClick.AddListener(LoadMainMenu);
-    }
-
-    private void LoadNextLevel()
-    {
-        //TO DO: Move check if there is next scene in builder logic to SceneLoader
-        int currentIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextIndex = currentIndex + 1;
-
-        if (nextIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            SceneLoader.Instance.LoadNextLevel();
-        }
-        else
-        {
-            SceneLoader.Instance.LoadMenu();
-        }
-    }
-
-    private void LoadMainMenu()
-    {
-        SceneLoader.Instance.LoadMenu();
+        _nextLevelButton.onClick.AddListener(() => SceneLoader.Instance.LoadNextLevel());
+        _mainMenuButton.onClick.AddListener(() => SceneLoader.Instance.LoadMenu());
     }
 
     public void ShowEndOfLevelCanvas(bool enable = true)

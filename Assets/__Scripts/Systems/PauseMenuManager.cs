@@ -52,35 +52,38 @@ public class PauseMenuManager : MonoBehaviour
         if (!_enableInputs)
             return;
 
-        if (_isPaused == true)
-        {
-            Helpers.DisableCursor();
-            EnableGame();
+        if (_isPaused)
+        {         
+            UnpauseGame();
         }
         else
-        {
-            Helpers.EnableCursor();
-            DisableGame();
+        {            
+            PauseGame();
         }
+        _isPaused = !_isPaused;
+
     }
 
-    private void EnableGame()
+    private void UnpauseGame()
     {
         Time.timeScale = 1.0f;
+        Helpers.DisableCursor();
+        GameManager.Instance.EnableInputs();
         _pauseMenuCanvas.SetActive(false);
-        _isPaused = false;
+        
     }
 
-    private void DisableGame() 
+    private void PauseGame() 
     {
-        Time.timeScale = .0f;
+        Time.timeScale = 0f;
+        Helpers.EnableCursor();
+        GameManager.Instance.EnableInputs(false);
         _pauseMenuCanvas.SetActive(true);
-        _isPaused = true;
     }
 
     public void OnResumeButtonClick()
     {
-        EnableGame();
+        UnpauseGame();
     }
 
     public void OnResetButtonClick()

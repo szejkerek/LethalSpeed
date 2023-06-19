@@ -73,12 +73,18 @@ public class GameManager : Singleton<GameManager>
         SceneLoader.Instance.ReloadScene();
     }
 
+    public void EnableInputs(bool enable = true)
+    {
+        _playerWeapon.EnableInputs = enable;
+    }
+
     private void HandlePlayerDeath()
     {
         _deathScreenManager.ShowDeathScreen();
-        _pauseMenuMenager.EnableInputs = false;
+        _pauseMenuMenager.EnableInputs = false;       
         _enableQuickRestarts = false;
         _crosshairManager.ShowCrosshair(enabled: false);
+        EnableInputs(false);
         Helpers.EnableCursor();
     }
 
@@ -88,7 +94,7 @@ public class GameManager : Singleton<GameManager>
         _crosshairManager.ShowCrosshair(false);
         _timerManager.ShowTimer(false);
         _timerManager.StopTimer();
-        _playerWeapon.EnableInputs = false;
+        EnableInputs(false);
         Invoke(nameof(ShowEndScreen), 0.40f);
     }
 

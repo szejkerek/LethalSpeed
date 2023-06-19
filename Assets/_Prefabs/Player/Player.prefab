@@ -1040,8 +1040,8 @@ MonoBehaviour:
     m_Bits: 6144
   AttackCooldown: 0.8
   AttackDelay: 0.25
-  AttackDistance: 2
-  AttackRadius: 0.15
+  AttackDistance: 2.25
+  AttackRadius: 0.18
   hitForce: 55
 --- !u!114 &2021152937
 MonoBehaviour:

@@ -11,11 +11,11 @@ public class Player : MonoBehaviour
     [Space(10)]
     [SerializeField] private PlayerCamera _playerCamera;
 
-    public PlayerCamera PlayerCamera { get => _playerCamera; set => _playerCamera = value; }
-    public bool IsPlayerDead => isPlayerDead;
-
+    bool isDead = false;
     private PlayerMovement _playerMovement;
-    bool isPlayerDead = false;
+
+    public PlayerCamera PlayerCamera { get => _playerCamera; set => _playerCamera = value; }
+    public bool IsDead => isDead;
 
     private void Awake()
     {
@@ -25,11 +25,11 @@ public class Player : MonoBehaviour
 
     public void PlayerDeath()
     {
-        if (isPlayerDead || _enableGodmode)
+        if (isDead || _enableGodmode)
             return;
         onPlayerGetHit?.Invoke();
         _playerMovement.ChangeMovementState(new DeathState());
-        isPlayerDead = true;
+        isDead = true;
     }
 
     private void ApplyHitboxToLimbs()

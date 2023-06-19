@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
 public class Enemy : MonoBehaviour
 {
-    public Player Player => _player;
+    public static event Action OnEnemyDeath;
+    [SerializeField] GameObject bloodEffect;
+
+    bool isDead = false;
     Player _player;
-
-    RigWeightController _aimAtTargetRigController;
-    public Animator Animator => _animator;
     Animator _animator;
-    public RigWeightController AimAtTargetRigController => _aimAtTargetRigController;
-
+    RigWeightController _aimAtTargetRigController;
     StateMachineEnemyAI _stateMachine;
 
-    [SerializeField] GameObject bloodEffect;
+    public Player Player => _player;
+    public Animator Animator => _animator;
+    public RigWeightController AimAtTargetRigController => _aimAtTargetRigController;
+    public StateMachineEnemyAI StateMachine => _stateMachine;
 
     private void Awake()
     {
@@ -27,11 +28,17 @@ public class Enemy : MonoBehaviour
         SetUpRig();
     }
 
-    public void Die(Vector3 direction, Vector3 hitPoint)
+    public void Hit(Vector3 direction, Vector3 hitPoint)
     {
-        _stateMachine.CurrentState.SwitchState(_stateMachine.StatesFactory.Ragdoll());
         _stateMachine.Ragdoll.ApplyForce(direction);
         SpawnBloodSplash(direction, hitPoint);
+
+        if (isDead)
+            return;
+
+        isDead = true;
+        _stateMachine.CurrentState.SwitchState(_stateMachine.StatesFactory.Ragdoll());
+        OnEnemyDeath?.Invoke();
     }
 
     private void SpawnBloodSplash(Vector3 direction, Vector3 hitPoint)
