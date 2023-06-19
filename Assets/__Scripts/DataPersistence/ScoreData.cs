@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreData
+public class ScoreData : ISerializableClass
 {
-    public Dictionary<int, float> BestTimesForLevels;
+    public Dictionary<SceneBuildIndexes, float> BestTimesForLevels;
 
     public ScoreData() { }
-    public ScoreData(Dictionary<int, float> bestTimesForLevels)
+    public ScoreData(Dictionary<SceneBuildIndexes, float> bestTimesForLevels)
     {
         BestTimesForLevels = bestTimesForLevels;
     }
