@@ -51,7 +51,16 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public void LoadNextLevel()
     {
-        LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        if (nextIndex < SceneManager.sceneCountInBuildSettings || nextIndex >= 0)
+        {
+            LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            LoadMenu();
+        }       
     }
 
     public void LoadMenu()
