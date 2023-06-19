@@ -7,4 +7,5 @@ public class EnemyAudioLib : ScriptableObject
     [field: SerializeField] public Sound Reload { private set; get; }
     [field: SerializeField] public Sound Pistol { private set; get; }
     [field: SerializeField] public List<Sound> Footsteps { private set; get; }
+    [field: SerializeField] public List<Sound> Death { private set; get; }
 }

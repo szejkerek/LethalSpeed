@@ -1042,6 +1042,7 @@ MonoBehaviour:
   AttackDelay: 0.25
   AttackDistance: 2.25
   AttackRadius: 0.18
+  AttackCheck: 0.1
   hitForce: 55
 --- !u!114 &2021152937
 MonoBehaviour:

@@ -28,4 +28,9 @@ public class AudioEnemyAI : MonoBehaviour
             _enemyAudioLib.Footsteps.PlayRandomized(_footsAudioSource);
         }
     }
+
+    public void PlayDeathSound()
+    {
+        _enemyAudioLib.Death.PlayRandomized(_mouthAudioSource);
+    }
 }

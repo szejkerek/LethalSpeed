@@ -48,7 +48,7 @@ public class PlayerWeapon : MonoBehaviour
 
         playerAudio.PlaySwordWoosh();
         Invoke(nameof(ResetAttack), AttackCooldown);
-        Invoke(nameof(PerformAttack), AttackDelay + AttackCheck);
+        Invoke(nameof(PerformAttack), AttackDelay);
         
         onAttack?.Invoke();
     }
@@ -69,11 +69,7 @@ public class PlayerWeapon : MonoBehaviour
             {
                 if (hit.transform.TryGetComponent(out HitBox hitBox))
                 {
-                    Vector3 direction = hit.point - Helpers.Camera.transform.position;
-
-                    const float multiplier = 100f;
-                    hitBox.TakeHit(direction * hitForce * multiplier, hit.point);
-                    onHitRegistered?.Invoke();
+                    DealDamage(hit, hitBox);
                     break;
                 }
             }
@@ -82,5 +78,14 @@ public class PlayerWeapon : MonoBehaviour
             yield return null;
         }
         _isAttacking = false;
+    }
+
+    private void DealDamage(RaycastHit hit, HitBox hitBox)
+    {
+        Vector3 direction = hit.point - Helpers.Camera.transform.position;
+
+        const float multiplier = 100f;
+        hitBox.TakeHit(direction * hitForce * multiplier, hit.point);
+        onHitRegistered?.Invoke();
     }
 }

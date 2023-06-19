@@ -55,3 +55,52 @@ MonoBehaviour:
     maxRange: 10
     pitchVariation: 0.5
     volumeVariation: 0.2
+  <Death>k__BackingField:
+  - audioClip: {fileID: 8300000, guid: 170bc0d08b61a3d4aaeb0d2424660a4d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minRange: 0.5
+    maxRange: 10
+    pitchVariation: 0.5
+    volumeVariation: 0.2
+  - audioClip: {fileID: 8300000, guid: 662a85bfad9901e408353697acc0d0b9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minRange: 0.5
+    maxRange: 4
+    pitchVariation: 0
+    volumeVariation: 0.2
+  - audioClip: {fileID: 8300000, guid: 117e893adfe851f4182f1df966d0a705, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minRange: 0.5
+    maxRange: 4
+    pitchVariation: 0
+    volumeVariation: 0.2
+  - audioClip: {fileID: 8300000, guid: 300d1d50c0c53d446af1a914fafc4662, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minRange: 0.5
+    maxRange: 4
+    pitchVariation: 0
+    volumeVariation: 0.2
+  - audioClip: {fileID: 8300000, guid: 8012a09d285baf94daa1d0b787571778, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minRange: 0.5
+    maxRange: 4
+    pitchVariation: 0
+    volumeVariation: 0.2
+  - audioClip: {fileID: 8300000, guid: 25cf972ac0e905946a9545edebcc06d2, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minRange: 0.5
+    maxRange: 4
+    pitchVariation: 0
+    volumeVariation: 0.2
