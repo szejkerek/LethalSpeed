@@ -900,7 +900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f8c96765599114ca691a3fe95eaa28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enableGodmode: 1
+  _enableGodmode: 0
   _playerCamera: {fileID: 3845972236151078384}
 --- !u!114 &1167500344532207329
 MonoBehaviour:
