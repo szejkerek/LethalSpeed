@@ -14,6 +14,7 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] float AttackDelay = 0.3f;
     [SerializeField] float AttackDistance = 2f;
     [SerializeField] float AttackRadius = 1f;
+    [SerializeField] float AttackCheck = 0.1f;
     [SerializeField] private float hitForce = 100f;
 
     bool _isAttacking = false;
@@ -47,7 +48,7 @@ public class PlayerWeapon : MonoBehaviour
 
         playerAudio.PlaySwordWoosh();
         Invoke(nameof(ResetAttack), AttackCooldown);
-        Invoke(nameof(PerformAttack), AttackDelay);
+        Invoke(nameof(PerformAttack), AttackDelay + AttackCheck);
         
         onAttack?.Invoke();
     }
@@ -55,16 +56,30 @@ public class PlayerWeapon : MonoBehaviour
     private void ResetAttack() => _readyToAttack = true;
     private void PerformAttack()
     {
-        if(Physics.SphereCast(Helpers.Camera.transform.position, AttackRadius, Helpers.Camera.transform.forward, out RaycastHit hit, AttackDistance, AttackLayer))
-        {
-            if (hit.transform.TryGetComponent(out HitBox hitBox))
-            {
-                Vector3 direction = hit.point - Helpers.Camera.transform.position;
+        StartCoroutine(PerformAttackCheck());
+    }
 
-                const float multiplier = 100f;
-                hitBox.TakeHit(direction * hitForce * multiplier, hit.point);
-                onHitRegistered?.Invoke();
+    private IEnumerator PerformAttackCheck()
+    {
+        float timer = 0f;
+
+        while (timer < AttackCheck)
+        {
+            if (Physics.SphereCast(Helpers.Camera.transform.position, AttackRadius, Helpers.Camera.transform.forward, out RaycastHit hit, AttackDistance, AttackLayer))
+            {
+                if (hit.transform.TryGetComponent(out HitBox hitBox))
+                {
+                    Vector3 direction = hit.point - Helpers.Camera.transform.position;
+
+                    const float multiplier = 100f;
+                    hitBox.TakeHit(direction * hitForce * multiplier, hit.point);
+                    onHitRegistered?.Invoke();
+                    break;
+                }
             }
+
+            timer += Time.deltaTime;
+            yield return null;
         }
         _isAttacking = false;
     }
