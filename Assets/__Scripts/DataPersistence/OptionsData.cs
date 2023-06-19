@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 [Serializable]
-public class OptionsData
+public class OptionsData : ISerializableClass
 {
     public float MasterVolume;
     public float SFXVolume;
