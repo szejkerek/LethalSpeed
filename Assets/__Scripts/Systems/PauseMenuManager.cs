@@ -103,7 +103,7 @@ public class PauseMenuManager : MonoBehaviour
     public void OnMainMenuButtonClick()
     {
         Time.timeScale = 1.0f;
-        SceneLoader.Instance.LoadNewSceneByBuildIndex((int)SceneBuildIndexes.Menu);
+        SceneLoader.Instance.LoadMenu();
     }
 
     public void OnQuitButtonClick()

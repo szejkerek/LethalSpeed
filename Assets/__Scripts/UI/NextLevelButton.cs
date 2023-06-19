@@ -14,7 +14,7 @@ public class NextLevelButton : MonoBehaviour
     }
     private void Start()
     {
-        _button.onClick.AddListener(delegate () { SceneLoader.Instance.LoadNextSceneInBuilder(); });
+        _button.onClick.AddListener(delegate () { SceneLoader.Instance.LoadNextLevel(); });
     }
 }
 

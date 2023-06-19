@@ -63,13 +63,13 @@ public class DeathScreenManager : MonoBehaviour
     }
     void OnRestartButtonClick()
     {
-        ResetGameSpeed();
         GameManager.Instance.ResetGame();
+        ResetGameSpeed();
     }
     void OnMainMenuButtonClick()
     {
+        SceneLoader.Instance.LoadMenu();
         ResetGameSpeed();
-        SceneLoader.Instance.LoadNewSceneByBuildIndex(0);
     }
 
 

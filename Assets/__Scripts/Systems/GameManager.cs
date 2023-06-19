@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
     private EndOfLevelScreenManager _endOfLevelScreenManager;
     private TimerManager _timerManager;
     private Player _player;
+    private PlayerWeapon _playerWeapon;
 
     public bool EnableQuickRestarts { get => _enableQuickRestarts; set => _enableQuickRestarts = value; }
     private bool _enableQuickRestarts = true;
@@ -19,12 +20,13 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        _player = FindFirstObjectByType<Player>();
         _pauseMenuMenager = GetComponent<PauseMenuManager>();
         _crosshairManager = GetComponent<CrosshairManager>();
         _deathScreenManager = GetComponent<DeathScreenManager>();
         _endOfLevelScreenManager = GetComponent<EndOfLevelScreenManager>();
         _timerManager = GetComponent<TimerManager>();
-        _player = FindFirstObjectByType<Player>();
+        _playerWeapon = _player.GetComponent<PlayerWeapon>();
         EndZone.OnEndZonePlayerEnter += HandleFinishLevel;
 
         if (_player is null)
@@ -86,6 +88,7 @@ public class GameManager : Singleton<GameManager>
         _crosshairManager.ShowCrosshair(false);
         _timerManager.ShowTimer(false);
         _timerManager.StopTimer();
+        _playerWeapon.EnableInputs = false;
         Time.timeScale = 0;
         _endOfLevelScreenManager.ShowEndOfLevelCanvas();
     }

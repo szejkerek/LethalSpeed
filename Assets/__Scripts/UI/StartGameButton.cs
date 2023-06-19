@@ -15,6 +15,6 @@ public class StartGameButton : MonoBehaviour
     }
     private void Start()
     {
-       _button.onClick.AddListener(delegate () { SceneLoader.Instance.LoadNewSceneByBuildIndex((int)sceneToLoadBuildIndex);});
+       _button.onClick.AddListener(() =>  SceneLoader.Instance.LoadScene(sceneToLoadBuildIndex));
     }
 }

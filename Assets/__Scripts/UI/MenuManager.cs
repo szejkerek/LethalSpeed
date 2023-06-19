@@ -50,7 +50,7 @@ public class MenuManager : MonoBehaviour
         for(int i = 0; i < _levelButtons.Count; i++)
         {
             int levelToStart = i + 1;
-            _levelButtons[i].onClick.AddListener(delegate { OnLoadLevelByBuildIndexButtonClick(levelToStart); });
+            _levelButtons[i].onClick.AddListener(() => OnLoadLevelByBuildIndexButtonClick(levelToStart));
         }
     }
 
@@ -74,7 +74,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnLoadLevelByBuildIndexButtonClick(int levelBuildIndex)
     {
-        SceneLoader.Instance.LoadNewSceneByBuildIndex(levelBuildIndex);
+        SceneLoader.Instance.LoadScene(levelBuildIndex);
     }
 
     public void OnQuitChooseLevelButtonClick()

@@ -10,10 +10,9 @@ public class ResetButton : MonoBehaviour
     private void Awake()
     {
         _button = gameObject.GetComponent<Button>();
-
     }
     private void Start()
     {
-        _button.onClick.AddListener(delegate () { SceneLoader.Instance.ReloadScene(); });
+        _button.onClick.AddListener(() => SceneLoader.Instance.ReloadScene());
     }
 }

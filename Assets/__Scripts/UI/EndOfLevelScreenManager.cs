@@ -42,17 +42,17 @@ public class EndOfLevelScreenManager : MonoBehaviour
 
         if (nextIndex < SceneManager.sceneCountInBuildSettings)
         {
-            SceneLoader.Instance.LoadNextSceneInBuilder();
+            SceneLoader.Instance.LoadNextLevel();
         }
         else
         {
-            SceneLoader.Instance.LoadNewSceneByBuildIndex((int)SceneBuildIndexes.Menu);
+            SceneLoader.Instance.LoadMenu();
         }
     }
 
     private void LoadMainMenu()
     {
-        SceneLoader.Instance.LoadNewSceneByBuildIndex((int)SceneBuildIndexes.Menu);
+        SceneLoader.Instance.LoadMenu();
     }
 
     public void ShowEndOfLevelCanvas(bool enable = true)

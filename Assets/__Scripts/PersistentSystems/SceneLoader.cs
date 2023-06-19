@@ -45,71 +45,41 @@ public class SceneLoader : Singleton<SceneLoader>
 
         if (startUpWithMenu)
         {
-            LoadNewSceneByBuildIndex((int)startUpScene);
+            LoadScene(startUpScene);
         }
     }
 
-    private void PopulateImageDataPoolHashTable()
+    public void LoadNextLevel()
     {
-        foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
-        {
-            if (imageDataToCoopy != null && imageDataToCoopy.IsCorrect())
-            {
-                if (!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.GetSceneBuildIndex()))
-                {
-                    imageDataPoolHashTable.Add(imageDataToCoopy.GetSceneBuildIndex(), imageDataToCoopy.LoadinScreenBackgroundImages);
-                }
-                else
-                {
-                    Debug.LogWarning("SceneLoader: You can't have more than one background image data pool for a scene.");
-                }
-            }
-        }
+        LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    private void PopulateTipsList()
+    public void LoadMenu()
     {
-        foreach (LoadingScreenTipsData tipsDataToCopy in tipsDataPool)
-        {
-            if(tipsDataToCopy != null && tipsDataToCopy.IsCorrect())
-            {
-                tipsList.AddRange(tipsDataToCopy.TipsList);
-            }
-        }
-    }
-
-    public void LoadNextSceneInBuilder()
-    {
-        int sceneToUnloadBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        int sceneToLoadBuildIndex = sceneToUnloadBuildIndex + 1;
-
-        UnloadSceneAndLoadNewOneByBuildIndex(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
+        LoadScene(SceneBuildIndexes.Menu);
     }
 
     public void ReloadScene()
     {
-        int sceneToReloadBuildIndex = SceneManager.GetActiveScene().buildIndex;
-
-        UnloadSceneAndLoadNewOneByBuildIndex(sceneToReloadBuildIndex, sceneToReloadBuildIndex);
+        LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void LoadNewSceneByBuildIndex(int sceneToLoadBuildIndex)
+    public void LoadScene(SceneBuildIndexes scene)
     {
-        int sceneToUnloadBuildIndex = SceneManager.GetActiveScene().buildIndex; 
-
-        UnloadSceneAndLoadNewOneByBuildIndex(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
+        int sceneIndex = (int)scene;
+        LoadScene(sceneIndex);
     }
 
-    public void UnloadSceneAndLoadNewOneByBuildIndex(int sceneToUnloadBuildIndex, int sceneToLoadBuildIndex)
+    public void LoadScene(int sceneIndex)
     {
-        SetBackGroundImage(sceneToLoadBuildIndex);
+        SetBackgroundImage(sceneIndex);
         loadingScreen.gameObject.SetActive(true);
         StartCoroutine(GenerateTipsOnLoadingScreen());
-        sceneLoadingAsyncOperation = SceneManager.LoadSceneAsync(sceneToLoadBuildIndex);
-        StartCoroutine(BasedOnSceneLoadProgresGenerateDataOnLoadingScreen());
+        sceneLoadingAsyncOperation = SceneManager.LoadSceneAsync(sceneIndex);
+        StartCoroutine(StartProgressBar());
     }
 
-    private void SetBackGroundImage(int sceneToLoadBuildIndex)
+    private void SetBackgroundImage(int sceneToLoadBuildIndex)
     {
         if (!IsImageDataPoolCorrect(sceneToLoadBuildIndex))
         {
@@ -152,7 +122,7 @@ public class SceneLoader : Singleton<SceneLoader>
             }
 
             tipTextFieldCanvasGroup.DOFade(1, textFadeTime);
-            tipTextField.text = GetRandomTipFromTipsList();
+            tipTextField.text = GetRandomTip();
             yield return new WaitForSeconds(tipPersistTime);
             tipTextFieldCanvasGroup.DOFade(0, textFadeTime);
             yield return new WaitForSeconds(nextTipGenerationTime);
@@ -165,7 +135,7 @@ public class SceneLoader : Singleton<SceneLoader>
         usedTipsList.Clear();
     }
 
-    private string GetRandomTipFromTipsList()
+    private string GetRandomTip()
     {
         int tipStringIndex;
         tipStringIndex = UnityEngine.Random.Range(0, tipsList.Count);
@@ -175,7 +145,7 @@ public class SceneLoader : Singleton<SceneLoader>
         return nextTipToGenerate;
     }
 
-    private IEnumerator BasedOnSceneLoadProgresGenerateDataOnLoadingScreen()
+    private IEnumerator StartProgressBar()
     {
         while (!sceneLoadingAsyncOperation.isDone)
         {
@@ -184,7 +154,7 @@ public class SceneLoader : Singleton<SceneLoader>
         }
 
         yield return new WaitForSeconds(additionalLoadingTime); //TODO: delete this line, it is used only for testing purposes
-        ResetLoadingScreenToDefaultState();
+        ResetLoadingScreen();
     }
 
     private void GenerateProgresBar()
@@ -196,7 +166,7 @@ public class SceneLoader : Singleton<SceneLoader>
         progressInfoTextField.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
     }
 
-    private void ResetLoadingScreenToDefaultState()
+    private void ResetLoadingScreen()
     {
         loadingScreen.gameObject.SetActive(false);
         loadingScreenImage.sprite = null;
@@ -206,4 +176,34 @@ public class SceneLoader : Singleton<SceneLoader>
         tipTextFieldCanvasGroup.alpha = 0f;
         ResetTipList();
     }
+
+    private void PopulateImageDataPoolHashTable()
+    {
+        foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
+        {
+            if (imageDataToCoopy != null && imageDataToCoopy.IsCorrect())
+            {
+                if (!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.GetSceneBuildIndex()))
+                {
+                    imageDataPoolHashTable.Add(imageDataToCoopy.GetSceneBuildIndex(), imageDataToCoopy.LoadinScreenBackgroundImages);
+                }
+                else
+                {
+                    Debug.LogWarning("SceneLoader: You can't have more than one background image data pool for a scene.");
+                }
+            }
+        }
+    }
+
+    private void PopulateTipsList()
+    {
+        foreach (LoadingScreenTipsData tipsDataToCopy in tipsDataPool)
+        {
+            if (tipsDataToCopy != null && tipsDataToCopy.IsCorrect())
+            {
+                tipsList.AddRange(tipsDataToCopy.TipsList);
+            }
+        }
+    }
+
 }
