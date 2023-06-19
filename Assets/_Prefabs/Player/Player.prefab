@@ -975,6 +975,7 @@ MonoBehaviour:
       m_Bits: 128
     ShouldResetDash: 1
   _dashProps:
+    DashCooldown: 0.75
     DashForce: 80
     KeepPreviousMomentum: 1
   _grappleProps:

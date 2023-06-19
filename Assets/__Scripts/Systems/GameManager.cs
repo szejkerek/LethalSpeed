@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager>
     private PlayerWeapon _playerWeapon;
 
     public bool EnableQuickRestarts { get => _enableQuickRestarts; set => _enableQuickRestarts = value; }
+    public Player Player => _player;
     private bool _enableQuickRestarts = true;
 
     protected override void Awake()

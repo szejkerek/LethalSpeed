@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -141,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
         _originalScaleY = transform.localScale.y;
 
         _canDash = true;
-        _dashCooldown = 1.0f;
+        _dashCooldown = DashProps.DashCooldown;
     }
 
     void Update()
@@ -151,15 +152,9 @@ public class PlayerMovement : MonoBehaviour
         _isStuckCrouched = Physics.Raycast(transform.position, Vector3.up, _playerHeight * 0.8f, _groundMask) 
             && (transform.localScale.y == CrouchProps.ScaleY || transform.localScale.y == SlideProps.ScaleY);
         _justLanded = _isGrounded && !_wasGroundedLastFrame;
-
         GetInput();
         _movementState.Update();
         _wasGroundedLastFrame = _isGrounded;
-
-        if(_justLanded && !_canDash)
-        {
-            Invoke(nameof(ResetDash), _dashCooldown);
-        }
     }
 
     void FixedUpdate()
@@ -179,18 +174,19 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
+    public static event Action OnPlayerDash;
+    public static event Action OnPlayerDashRestored;
     public void JustDashed()
     {
+        OnPlayerDash?.Invoke();
         _canDash = false;
 
-        if(_isGrounded)
-        {
-            Invoke(nameof(ResetDash), _dashCooldown);
-        }
+        Invoke(nameof(ResetDash), _dashCooldown);
     }
 
     public void ResetDash()
     {
+        OnPlayerDashRestored?.Invoke();
         _canDash = true;
     }
 

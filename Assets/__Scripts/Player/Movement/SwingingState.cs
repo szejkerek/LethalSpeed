@@ -17,8 +17,6 @@ public struct SwingProperties
 public class SwingingState : MovementState
 {
     private PlayerMovement _pm;
-    private PlayerCamera _pc;
-    private Transform _hookGunTip;
     private RopeRenderer _ropeRenderer;
 
     private Vector3 _swingPoint;
@@ -40,7 +38,6 @@ public class SwingingState : MovementState
         _pm.Rigidbody.useGravity = true;
         _pm.Rigidbody.drag = 0.0f;
 
-        _pc = _pm.PlayerCamera;
         _ropeRenderer = _pm.RopeRenderer;
 
         if(_pm.PlayerVision.SwingObjectRaycast(out RaycastHit swingRayHit))
