@@ -23,6 +23,7 @@ public class WeaponEnemyAI : MonoBehaviour
     [SerializeField] private float _firerate;
     [SerializeField] private int _magazineSize;
     [SerializeField] private float _reloadTime;
+    [SerializeField]private float shotVariation;
 
     public int MagazineSize => _magazineSize;
     public int CurrentAmmo => _currentAmmo;
@@ -34,16 +35,15 @@ public class WeaponEnemyAI : MonoBehaviour
     private Enemy _enemy;
     private AudioEnemyAI _enemyAudio;
     private Rigidbody _weaponRigidbody;
-    private Collider _weaponCollider;
     private VisionEnemyAI _visionEnemyAI;
     private float _timer;
 
 
     private ObjectPool<Bullet> _bulletPool;
+
     private void Awake()
     {
         _weaponRigidbody = _weaponObject.GetComponent<Rigidbody>();
-        _weaponCollider = _weaponObject.GetComponent<Collider>();
         _visionEnemyAI = GetComponent<VisionEnemyAI>();
         _enemy = GetComponent<Enemy>();
         _enemyAudio = GetComponent<AudioEnemyAI>();
@@ -82,13 +82,18 @@ public class WeaponEnemyAI : MonoBehaviour
 
         if (_timer <= 0)
         {
-            SpawnBullet();
-            SpawnMuzzleFlash();
-            _enemyAudio.EnemyAudioLib.Pistol.PlayRandomized(_enemyAudio.GunShotAudioSource);
+            Invoke(nameof(Shoot), Random.Range(0, shotVariation));
             _timer = 1 / _firerate;
         }
 
         _timer -= Time.deltaTime;
+    }
+
+    private void Shoot()
+    {
+        SpawnBullet();
+        SpawnMuzzleFlash();
+        _enemyAudio.EnemyAudioLib.Pistol.PlayRandomized(_enemyAudio.GunShotAudioSource);   
     }
 
     private void SpawnMuzzleFlash()
