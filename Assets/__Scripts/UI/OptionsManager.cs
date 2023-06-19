@@ -12,23 +12,18 @@ public class OptionsManager : MonoBehaviour
     [SerializeField] Scrollbar _dialogsVolumeSlider;
     [SerializeField] Button _applyChangesButton;
 
-    private OptionsData DefaultOptionsData;
-    private OptionsData OptionsData;
-    private IDataService DataService;
-    public bool EncryptionEnabled;
+    [Header("Data Save Options")]
+    [SerializeField] private bool _encryptionEnabled;
+    private SavingManager<OptionsData> _optionsSavingManager;
 
     private void Awake()
     {
-        DefaultOptionsData = new OptionsData(1, 1, 1, 1);
-        OptionsData = new OptionsData();
-        DataService = new JsonDataService();
-        InitializeJson();
+        OptionsData DefaultOptionsData = new OptionsData(1, 1, 1, 1);
+        IDataService DataService = new JsonDataService();
+        _optionsSavingManager = new SavingManager<OptionsData>(DataService, DefaultOptionsData, "/options-data.json", _encryptionEnabled);
+        _optionsSavingManager.InitializeJson();
+        LoadData();
         AssignUIButtons();
-        DeserializeJson();
-        _masterVolumeSlider.value = OptionsData.MasterVolume;
-        _SFXVolumeSlider.value = OptionsData.SFXVolume;
-        _musicVolumeSlider.value = OptionsData.MusicVolume;
-        _dialogsVolumeSlider.value = OptionsData.DialogsVolume;
     }
 
     private void AssignUIButtons()
@@ -36,27 +31,27 @@ public class OptionsManager : MonoBehaviour
         _applyChangesButton.onClick.AddListener(OnApplyChangesButtonClick);
     }
 
-    public void InitializeJson()
-    {
-        DataService.InitializeData("/options-data.json", DefaultOptionsData, EncryptionEnabled);
-    }
-
-    public void SerializeJson()
-    {
-        DataService.SaveData("/options-data.json", OptionsData, EncryptionEnabled);
-    }
-
-    public void DeserializeJson() 
-    {
-        this.OptionsData = DataService.LoadData<OptionsData>("/options-data.json", EncryptionEnabled);
-    }
-
     private void OnApplyChangesButtonClick()
     {
-        OptionsData.MasterVolume = this._masterVolumeSlider.value;
-        OptionsData.SFXVolume = this._SFXVolumeSlider.value;
-        OptionsData.MusicVolume = this._musicVolumeSlider.value;
-        OptionsData.DialogsVolume = this._dialogsVolumeSlider.value;
-        SerializeJson();
+        SaveData();
+    }
+
+    private void SaveData()
+    {
+        OptionsData optionsDataToSave = new OptionsData(
+            this._masterVolumeSlider.value,
+            this._SFXVolumeSlider.value,
+            this._musicVolumeSlider.value,
+            this._dialogsVolumeSlider.value);
+        _optionsSavingManager.SerializeJson(optionsDataToSave);
+    }
+
+    private void LoadData()
+    {
+        OptionsData optionsDataToLoad = _optionsSavingManager.DeserializeJson();
+        _masterVolumeSlider.value = optionsDataToLoad.MasterVolume;
+        _SFXVolumeSlider.value = optionsDataToLoad.SFXVolume;
+        _musicVolumeSlider.value = optionsDataToLoad.MusicVolume;
+        _dialogsVolumeSlider.value = optionsDataToLoad.DialogsVolume;
     }
 }
