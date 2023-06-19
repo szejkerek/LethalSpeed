@@ -36,6 +36,11 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    void ShowEnemyCountUI(bool enebled = true)
+    {
+
+    }
+
     void HandleEnemyKilled()
     {
         _enemyCurrentCount--;
