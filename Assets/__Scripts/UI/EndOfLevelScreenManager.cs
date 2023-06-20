@@ -25,6 +25,11 @@ public class EndOfLevelScreenManager : MonoBehaviour
         AsignButton();
     }
 
+    private void OnDestroy()
+    {
+        ShowEndOfLevelCanvas(false);
+    }
+
     private void AsignButton()
     {
         _nextLevelButton.onClick.AddListener(() => SceneLoader.Instance.LoadNextLevel());
