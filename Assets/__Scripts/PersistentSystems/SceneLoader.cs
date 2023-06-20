@@ -53,7 +53,7 @@ public class SceneLoader : Singleton<SceneLoader>
     {
         int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
-        if (nextIndex < SceneManager.sceneCountInBuildSettings || nextIndex >= 0)
+        if (nextIndex < SceneManager.sceneCountInBuildSettings && nextIndex >= 0)
         {
             LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
