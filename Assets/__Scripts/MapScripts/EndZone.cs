@@ -1,17 +1,27 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EndZone : MonoBehaviour
 {
     public static event Action OnEndZonePlayerEnter;
+    bool isOpen = false;
+
+    private void Awake()
+    {
+        GetComponent<MeshRenderer>().enabled = false;        
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        isOpen = EnemyManager.Instance.NoEnemiesLeft;
+        if (!isOpen)
+            return;
+
         if (other.CompareTag("Player")) // Assuming the player has a tag "Player"
         {
             OnEndZonePlayerEnter?.Invoke();
         }
     }
+
+   
 }

@@ -3,7 +3,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : Singleton<EnemyManager>
 {
     public static event Action OnAllEnemiesKilled;
 
@@ -12,19 +12,24 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] TMP_Text EnemyCountText;
 
     Enemy[] allEnemies;
+    bool _noEnemiesLeft = false;
     int _enemyOverallCount = 0;
     int _enemyCurrentCount;
     private Vector2 endPos;
     private Vector2 startingPos;
 
+    public bool NoEnemiesLeft => _noEnemiesLeft;
     public int EnemyOverallCount => _enemyOverallCount;
     public int EnemyCurrentCount => _enemyCurrentCount;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         allEnemies = FindObjectsByType<Enemy>(FindObjectsSortMode.InstanceID);
         _enemyOverallCount = allEnemies.Length;
         _enemyCurrentCount = _enemyOverallCount;
+        _noEnemiesLeft = (_enemyCurrentCount == 0); 
+
         endPos = EnemyCountUI.anchoredPosition;
         startingPos = endPos;
         startingPos.x += hideDistance;
@@ -80,6 +85,7 @@ public class EnemyManager : MonoBehaviour
         {
             _enemyCurrentCount = 0;
             ShowEnemyCountUI(false);
+            _noEnemiesLeft = true;
             OnAllEnemiesKilled?.Invoke();
         }
     }
