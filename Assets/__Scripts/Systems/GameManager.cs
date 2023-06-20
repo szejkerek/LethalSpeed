@@ -53,7 +53,6 @@ public class GameManager : Singleton<GameManager>
     void Update()
     {
         GatherGameCommands();
-        Debug.Log(Time.timeScale);
     }
 
     private void GatherGameCommands()
