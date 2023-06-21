@@ -8,6 +8,7 @@ public class TimeFormater
 
     public enum TimeFormats
     {
+        Decimal,
         SecondsMilliseconds,
         MinutesSeconds,
         MinutesSecondsMilliseconds,
@@ -23,6 +24,7 @@ public class TimeFormater
 
     private void InitializeTimeFormats()
     {
+        _timeFormats.Add(TimeFormats.Decimal, "{4:F2}");
         _timeFormats.Add(TimeFormats.SecondsMilliseconds, "{2:D2} : {3:D2}");
         _timeFormats.Add(TimeFormats.MinutesSeconds, "{1:D2} : {2:D2}");
         _timeFormats.Add(TimeFormats.MinutesSecondsMilliseconds, "{1:D2} : {2:D2} : {3:D2}");
@@ -36,7 +38,7 @@ public class TimeFormater
         int seconds = Mathf.FloorToInt(time) % 60;
         int minutes = Mathf.FloorToInt(time / 60) % 60;
         int hours = Mathf.FloorToInt(time / 60 / 60);
-        string formatedTime = string.Format(_timeFormats[fromat], hours, minutes, seconds, milliseconds);
+        string formatedTime = string.Format(_timeFormats[fromat], hours, minutes, seconds, milliseconds, time);
         return formatedTime;
     }
 
