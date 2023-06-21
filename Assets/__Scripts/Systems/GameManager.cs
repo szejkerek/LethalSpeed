@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PauseMenuManager))]
 public class GameManager : Singleton<GameManager>
@@ -27,6 +26,7 @@ public class GameManager : Singleton<GameManager>
         _crosshairManager = GetComponent<CrosshairManager>();
         _deathScreenManager = GetComponent<DeathScreenManager>();
         _endOfLevelScreenManager = GetComponent<EndOfLevelScreenManager>();
+        _scoreManager = GetComponent<ScoreManager>();
         _timerManager = GetComponent<TimerManager>();
         _playerWeapon = _player.GetComponent<PlayerWeapon>();
         EndZone.OnEndZonePlayerEnter += HandleFinishLevel;
@@ -96,8 +96,9 @@ public class GameManager : Singleton<GameManager>
         _crosshairManager.ShowCrosshair(false);
         _timerManager.ShowTimer(false);
         _timerManager.StopTimer();
-        _scoreManager.SetBetterTime(SceneManager.GetActiveScene().buildIndex, _timerManager.GetTimerTime());
         EnableInputs(false);
+        _endOfLevelScreenManager.InitializeEndOfLevelCanvasData();
+        _scoreManager.SetTimeForActiveScene(_timerManager.GetTimerTime());
         Invoke(nameof(ShowEndScreen), 0.40f);
     }
 
