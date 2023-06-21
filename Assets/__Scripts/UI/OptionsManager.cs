@@ -13,14 +13,13 @@ public class OptionsManager : MonoBehaviour
     [SerializeField] Button _applyChangesButton;
 
     [Header("Data Save Options")]
-    [SerializeField] private bool _encryptionEnabled;
-    private SavingManager<OptionsData> _optionsSavingManager;
+    private PersistentDataManager<OptionsData> _optionsSavingManager;
 
     private void Awake()
     {
         OptionsData DefaultOptionsData = new OptionsData(1, 1, 1, 1);
         IDataService DataService = new JsonDataService();
-        _optionsSavingManager = new SavingManager<OptionsData>(DataService, DefaultOptionsData, "/options-data.json", _encryptionEnabled);
+        _optionsSavingManager = new PersistentDataManager<OptionsData>(DataService, DefaultOptionsData, "/options-data.json");
         LoadData();
         AssignUIButtons();
     }
