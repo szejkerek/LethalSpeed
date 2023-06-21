@@ -9,6 +9,7 @@ public class EndOfLevelScreenManager : MonoBehaviour
     [SerializeField] private Button _nextLevelButton;
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private TMP_Text _finalTimeText;
+    [SerializeField] private TMP_Text _bestTimeText;
 
     [Header("UI Settings")]
     [SerializeField] private string _defaultFinalTimeText;
@@ -16,10 +17,13 @@ public class EndOfLevelScreenManager : MonoBehaviour
 
     private TimerManager _timer;
     private TimeFormater _timeFormater;
+    private ScoreManager _scoreManager;
+
     private void Awake()
     {
         _endOfLevelCanvas.SetActive(false);
         _timer = GetComponent<TimerManager>();
+        _scoreManager = GetComponent<ScoreManager>();
         _timeFormater = new TimeFormater();
         _finalTimeText.text = _defaultFinalTimeText;
         AsignButton();
@@ -35,7 +39,6 @@ public class EndOfLevelScreenManager : MonoBehaviour
     {
         if (enable) 
         {
-            InitializeEndOfLevelCanvasData();
             Helpers.EnableCursor();
             Time.timeScale = 0;
             _endOfLevelCanvas.SetActive(enable);
@@ -52,6 +55,28 @@ public class EndOfLevelScreenManager : MonoBehaviour
     {
         float finalTime = _timer.GetTimerTime();
         string finalTimeFormated = _timeFormater.FormatTime(_timeFormat, finalTime);
-        _finalTimeText.text = _finalTimeText.text + finalTimeFormated;  
+        _finalTimeText.text = _finalTimeText.text + finalTimeFormated;
+        ShowBestTime();
+    }
+
+    private void ShowBestTime()
+    {
+        float bestTime = _scoreManager.GetTimeFromActiveScene();
+        float currentTime = _timer.GetTimerTime();
+        float timeDifference = currentTime - bestTime;
+        if (!_scoreManager.TimeWasSetForActiveScene()) 
+        {
+            _bestTimeText.text = "New best time: " + _timeFormater.FormatTime(TimeFormater.TimeFormats.MinutesSecondsMilliseconds, currentTime);
+        }
+        else if(timeDifference < 0)
+        {
+            _bestTimeText.text = "New best time: " + _timeFormater.FormatTime(TimeFormater.TimeFormats.MinutesSecondsMilliseconds, currentTime)
+                + " " + _timeFormater.FormatTime(TimeFormater.TimeFormats.Decimal, timeDifference);
+        }
+        else
+        {
+            _bestTimeText.text = "Best Time: " + _timeFormater.FormatTime(TimeFormater.TimeFormats.MinutesSecondsMilliseconds, bestTime)
+                + " +" + _timeFormater.FormatTime(TimeFormater.TimeFormats.Decimal, timeDifference);
+        }
     }
 }
