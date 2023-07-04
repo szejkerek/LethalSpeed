@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerVision : MonoBehaviour
 {
     [SerializeField] LayerMask visionBlockers;
+    [SerializeField] float raycastCheckDelay;
+
+    private float _delayTimer = 0.0f;
 
     private PlayerMovement _playerMovement;
     private PlayerCamera _playerCamera;
@@ -21,14 +24,14 @@ public class PlayerVision : MonoBehaviour
 
     public bool GrappleObjectRaycast(out RaycastHit hit, bool applyMaterial = false)
     {
-        float maxDistance = grappleProperties.MaxDistance;
         if (ObjectRaycast(grappleProperties.GrappleAimError, grappleProperties.MaxDistance, grappleProperties.GrappleSurfaceMask, out RaycastHit grappleRayHit))
         {
             if (applyMaterial)
                 ApplyOutline(grappleRayHit);
 
             hit = grappleRayHit;
-            return IsInVision(maxDistance);
+            float dist = Vector3.Distance(_playerMovement.transform.position, grappleRayHit.point);
+            return IsInVision(dist);
         }
         else
         { 
@@ -39,14 +42,14 @@ public class PlayerVision : MonoBehaviour
 
     public bool SwingObjectRaycast(out RaycastHit hit, bool applyMaterial = false)
     {
-        float maxDistance = swingProperties.MaxDistance;
         if (ObjectRaycast(swingProperties.SwingAimError, swingProperties.MaxDistance, swingProperties.SwingSurfaceMask, out RaycastHit swingRayHit))
         {
             if (applyMaterial)
                 ApplyOutline(swingRayHit);
 
             hit = swingRayHit;
-            return IsInVision(maxDistance);
+            float dist = Vector3.Distance(_playerMovement.transform.position, swingRayHit.point);
+            return IsInVision(dist);
         }
         else
         {
@@ -63,7 +66,7 @@ public class PlayerVision : MonoBehaviour
 
     bool IsInVision(float maxDistance)
     {
-        bool isBlokced = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, maxDistance, visionBlockers);
+        bool isBlokced = Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out RaycastHit hit, maxDistance, visionBlockers);
 
         return !isBlokced;
     }
@@ -78,7 +81,12 @@ public class PlayerVision : MonoBehaviour
 
     void Update()
     {
-        GrappleObjectRaycast(out _, applyMaterial: true);
-        SwingObjectRaycast(out _, applyMaterial: true);
+        if(_delayTimer >= raycastCheckDelay)
+        {
+            GrappleObjectRaycast(out _, applyMaterial: true);
+            SwingObjectRaycast(out _, applyMaterial: true);
+        }
+
+        _delayTimer += Time.deltaTime;
     }
 }
