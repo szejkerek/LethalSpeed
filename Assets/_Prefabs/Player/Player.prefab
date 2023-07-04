@@ -1060,6 +1060,7 @@ MonoBehaviour:
   visionBlockers:
     serializedVersion: 2
     m_Bits: 2241
+  raycastCheckDelay: 0.1
 --- !u!1001 &144338214156275320
 PrefabInstance:
   m_ObjectHideFlags: 0
