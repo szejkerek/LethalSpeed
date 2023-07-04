@@ -38,6 +38,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Depth: 0.01
+    - _DepthOpacity: 1
+    - _NoiceSpeed: 0.003
+    - _NoiseStrenght: 72.21
+    - _NoiseValue: 1.39
+    - _OffsetSpeed: 4
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors: []
