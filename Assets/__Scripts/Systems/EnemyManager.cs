@@ -8,7 +8,7 @@ public class EnemyManager : Singleton<EnemyManager>
     public static event Action OnAllEnemiesKilled;
 
     [SerializeField] RectTransform EnemyCountUI;
-    [SerializeField] float hideDistance = 150f;
+    [SerializeField] float uiHideDistance = 150f;
     [SerializeField] TMP_Text EnemyCountText;
 
     Enemy[] allEnemies;
@@ -32,7 +32,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
         endPos = EnemyCountUI.anchoredPosition;
         startingPos = endPos;
-        startingPos.x += hideDistance;
+        startingPos.x += uiHideDistance;
         EnemyCountUI.anchoredPosition = startingPos;
         EnemyCountText.text = EnemyOverallCount.ToString();
 
