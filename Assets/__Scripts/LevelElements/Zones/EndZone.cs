@@ -10,7 +10,10 @@ public class EndZone : Zone
     {
         isOpen = EnemyManager.Instance.NoEnemiesLeft;
         if (!isOpen)
+        {
+            Debug.Log("Kill all enemies!!!");
             return;
+        }
 
         if (other.CompareTag("Player")) // Assuming the player has a tag "Player"
         {
