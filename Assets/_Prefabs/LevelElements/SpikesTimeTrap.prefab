@@ -414,7 +414,7 @@ MonoBehaviour:
   _activeTime: 2.01
   _delay: 0.1
   _clip: {fileID: 8300000, guid: dc3919f3f6326f644b6b4bc687d8ff79, type: 3}
-  _damageTime: 0.21
+  _damageTime: 0.25
   _outDuration: 0.51
   _inDuration: 0.98
 --- !u!82 &1740257443395769548

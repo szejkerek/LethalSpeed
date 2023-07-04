@@ -42,6 +42,7 @@ public class TrapSpike : MonoBehaviour
 
     private IEnumerator ActivateTrapRoutine(Collider other)
     {
+        yield return new WaitForSeconds(0.1f);
         isTrapActive = true;
         transform.DOMoveY(transform.position.y + 0.25f, _outDuration);
         PlaySpikeSound();
