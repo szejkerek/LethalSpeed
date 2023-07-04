@@ -719,8 +719,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: 0.007659748, z: 4}
-  m_Center: {x: 0, y: -0.00019893795, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 0.0013021295, z: 0}
 --- !u!1 &188908
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,7 +829,7 @@ GameObject:
   - component: {fileID: 406090}
   - component: {fileID: 6548480}
   - component: {fileID: 20552026}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: floor_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,8 +864,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: 0.08971008, z: 4}
-  m_Center: {x: 0, y: 0.040826242, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: -0.0040288223, z: 0}
 --- !u!205 &20552026
 LODGroup:
   m_ObjectHideFlags: 0
