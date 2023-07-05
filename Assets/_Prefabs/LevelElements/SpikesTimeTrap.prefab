@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 246221308323698028}
   - component: {fileID: 2224996431536201120}
   - component: {fileID: 3803498139407691529}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4743672595197662508
 Transform:
@@ -108,12 +108,12 @@ GameObject:
   - component: {fileID: 6649988752341413441}
   - component: {fileID: 2958964637083436045}
   - component: {fileID: 8334157757777154934}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Borders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6649988752341413441
 Transform:
@@ -191,12 +191,12 @@ GameObject:
   - component: {fileID: 6671023782865069412}
   - component: {fileID: 7133891787253011401}
   - component: {fileID: 8695004355962323027}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpikesBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6671023782865069412
 Transform:
@@ -272,12 +272,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4699532789005938882}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpikesTimeTrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4699532789005938882
 Transform:
@@ -312,12 +312,12 @@ GameObject:
   - component: {fileID: 5094311499409881619}
   - component: {fileID: 5094311499409881618}
   - component: {fileID: 1740257443395769548}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4316122387758665154
 Transform:
