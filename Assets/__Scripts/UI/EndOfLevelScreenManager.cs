@@ -7,6 +7,7 @@ public class EndOfLevelScreenManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject _endOfLevelCanvas;
     [SerializeField] private Button _nextLevelButton;
+    [SerializeField] private Button _restartButton;
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private TMP_Text _finalTimeText;
     [SerializeField] private TMP_Text _bestTimeText;
@@ -37,6 +38,7 @@ public class EndOfLevelScreenManager : MonoBehaviour
     private void AsignButton()
     {
         _nextLevelButton.onClick.AddListener(() => SceneLoader.Instance.LoadNextLevel());
+        _restartButton.onClick.AddListener(() => SceneLoader.Instance.ReloadScene());
         _mainMenuButton.onClick.AddListener(() => SceneLoader.Instance.LoadMenu());
     }
 
