@@ -5,4 +5,5 @@ using UnityEngine;
 public class PlayerAudioLib : ScriptableObject
 {
     [field: SerializeField] public List<AudioClip> SwordWoosh { private set; get; }
+    [field: SerializeField] public List<AudioClip> PlayerDeath { private set; get; }
 }
