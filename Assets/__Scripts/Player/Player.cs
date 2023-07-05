@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     bool isDead = false;
     private PlayerMovement _playerMovement;
+    private PlayerAudio _playerAudio;
 
     public PlayerCamera PlayerCamera { get => _playerCamera; set => _playerCamera = value; }
     public bool IsDead => isDead;
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
     {
         ApplyHitboxToLimbs();
         _playerMovement = GetComponent<PlayerMovement>();
+        _playerAudio = GetComponent<PlayerAudio>();
     }
 
     public void PlayerDeath()
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
         if (isDead || _enableGodmode)
             return;
         onPlayerGetHit?.Invoke();
+        _playerAudio.PlayPlayerDeathSound();
         _playerMovement.ChangeMovementState(new DeathState());
         isDead = true;
     }
