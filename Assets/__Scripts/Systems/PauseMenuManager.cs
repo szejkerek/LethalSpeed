@@ -11,8 +11,7 @@ public class PauseMenuManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject _pauseMenuCanvas;
-    [SerializeField] private GameObject _pauseMenuPanel;
-    [SerializeField] private GameObject _optionsPanel;
+    [SerializeField] private GameObject _optionsCanvas;
 
     [Header("Butons")]
     [SerializeField] private Button _resetButton;
@@ -29,7 +28,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         _pauseMenuCanvas.SetActive(false);
-        _optionsPanel.SetActive(false);
+        _optionsCanvas.SetActive(false);
     }
 
     private void Start()
@@ -93,14 +92,14 @@ public class PauseMenuManager : MonoBehaviour
 
     public void OnOptionButtonClick()
     {
-        _optionsPanel.SetActive(true);
-        _pauseMenuPanel.SetActive(false);
+        _optionsCanvas.SetActive(true);
+        _pauseMenuCanvas.SetActive(false);
     }
 
     public void OnBackOptionButtonClick()
     {
-        _optionsPanel.SetActive(false);
-        _pauseMenuPanel.SetActive(true);
+        _optionsCanvas.SetActive(false);
+        _pauseMenuCanvas.SetActive(true);
     }
 
     public void OnMainMenuButtonClick()
