@@ -24,13 +24,19 @@ public class CreditsManager : MonoBehaviour
             text.text += creditLine.text;
         }
 
+        Invoke(nameof(LoadMenu), textSpeed + 3f);
         text.transform.DOMove(endPos.position, textSpeed).SetEase(Ease.Linear);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            SceneLoader.Instance.LoadMenu();
+            LoadMenu();
+    }
+
+    private void LoadMenu()
+    {
+        SceneLoader.Instance.LoadMenu();
     }
 
     string PopulateLine(CreditLine line)
