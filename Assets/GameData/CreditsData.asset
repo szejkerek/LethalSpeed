@@ -17,6 +17,10 @@ MonoBehaviour:
     content: Animacje
   - TeamMember: 2
     content: Level design
+  - TeamMember: 4
+    content: Level design
+  - TeamMember: 3
+    content: "D\u017Awi\u0119ki przeciwnik\xF3w"
   - TeamMember: 5
     content: Timer
   - TeamMember: 6
