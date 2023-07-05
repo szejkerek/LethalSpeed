@@ -78,12 +78,12 @@ public class EndOfLevelScreenManager : MonoBehaviour
         else if(timeDifference < 0)
         {
             _bestTimeText.text = "New best time: " + _timeFormater.FormatTime(TimeFormater.TimeFormats.MinutesSecondsMilliseconds, currentTime)
-                + " " + _timeFormater.FormatTime(TimeFormater.TimeFormats.Decimal, timeDifference);
+                + "\n" + _timeFormater.FormatTime(TimeFormater.TimeFormats.Decimal, timeDifference);
         }
         else
         {
             _bestTimeText.text = "Best Time: " + _timeFormater.FormatTime(TimeFormater.TimeFormats.MinutesSecondsMilliseconds, bestTime)
-                + " +" + _timeFormater.FormatTime(TimeFormater.TimeFormats.Decimal, timeDifference);
+                + "\n+" + _timeFormater.FormatTime(TimeFormater.TimeFormats.Decimal, timeDifference);
         }
     }
 }

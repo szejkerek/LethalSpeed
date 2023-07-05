@@ -84,6 +84,7 @@ public class GameManager : Singleton<GameManager>
     private void HandlePlayerDeath()
     {
         _deathScreenManager.ShowDeathScreen();
+        _timerManager.StopTimer();
         _pauseMenuMenager.EnableInputs = false;       
         _enableQuickRestarts = false;
         _crosshairManager.ShowCrosshair(enabled: false);

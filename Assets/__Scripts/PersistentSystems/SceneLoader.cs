@@ -10,7 +10,7 @@ using System;
 public class SceneLoader : Singleton<SceneLoader>
 {
     [Header("Development")]
-    [SerializeField] private bool startUpWithMenu; 
+    [SerializeField] private bool startUpWithChoosenScene; 
     [SerializeField] private SceneBuildIndexes startUpScene; 
     [SerializeField] private int additionalLoadingTime; 
     [SerializeField] private float textFadeTime; 
@@ -43,7 +43,7 @@ public class SceneLoader : Singleton<SceneLoader>
         PopulateImageDataPoolHashTable();
         PopulateTipsList();
 
-        if (startUpWithMenu)
+        if (startUpWithChoosenScene)
         {
             LoadScene(startUpScene);
         }
@@ -162,7 +162,7 @@ public class SceneLoader : Singleton<SceneLoader>
             yield return null;
         }
 
-        yield return new WaitForSeconds(additionalLoadingTime); //TODO: delete this line, it is used only for testing purposes
+        yield return new WaitForSeconds(additionalLoadingTime);
         ResetLoadingScreen();
     }
 

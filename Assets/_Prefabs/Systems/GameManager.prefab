@@ -1688,7 +1688,7 @@ MonoBehaviour:
   _timeOutColor: {r: 0, g: 0, b: 0, a: 0}
   _decimalPlacesWithoutFormating: 0
   _hasFormat: 1
-  _format: 2
+  _format: 3
 --- !u!114 &5398960984550502179
 MonoBehaviour:
   m_ObjectHideFlags: 0

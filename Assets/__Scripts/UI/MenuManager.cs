@@ -56,8 +56,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnStartGameButtonClick()
     {
-        ChooseSaveSlotPanel.SetActive(true);
-        MainMenuPanel.SetActive(false);
+        SceneLoader.Instance.LoadScene(SceneBuildIndexes.PrototypeLevel1);
     }
 
     public void OnQuitChooseSaveSlotButtonClick()
