@@ -67,8 +67,9 @@ public class TrapSpike : MonoBehaviour
     private void PlaySpikeSound()
     {      
         _audio.spatialBlend = 1.0f;
-        _audio.minDistance = 1f;
-        _audio.maxDistance = 15f;
+        _audio.minDistance = 3f;
+        _audio.maxDistance = 10f;
+        _audio.volume = 0.6f;
         _audio.pitch = Random.Range(0.7f, 1.4f);
         _audio.clip = _clip;
         _audio.Play();
