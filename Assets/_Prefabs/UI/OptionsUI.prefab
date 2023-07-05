@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6253283736968726408}
   - component: {fileID: 1605578997565141546}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: OptionsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -750,6 +750,14 @@ PrefabInstance:
     - target: {fileID: 3420235818075561147, guid: 8c37919a9dee0aa4da73d00aa76ce468, type: 3}
       propertyPath: m_text
       value: SAVE
+      objectReference: {fileID: 0}
+    - target: {fileID: 7701870095169179650, guid: 8c37919a9dee0aa4da73d00aa76ce468, type: 3}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7701870095169179650, guid: 8c37919a9dee0aa4da73d00aa76ce468, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c37919a9dee0aa4da73d00aa76ce468, type: 3}
