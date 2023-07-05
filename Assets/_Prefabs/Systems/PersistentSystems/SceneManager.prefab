@@ -789,7 +789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startUpWithChoosenScene: 0
   startUpScene: 0
-  additionalLoadingTime: 5
+  additionalLoadingTime: 0
   textFadeTime: 1
   tipPersistTime: 2
   nextTipGenerationTime: 1
@@ -801,5 +801,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f2e52feb701f09c4db37d3cde0a15142, type: 2}
   - {fileID: 11400000, guid: 5a5786eb13030cf468a972d054d87dd3, type: 2}
   imageDataPool:
-  - {fileID: 11400000, guid: 3d736d6f14c347449b209283000c74a7, type: 2}
-  - {fileID: 11400000, guid: 334978f2b4d93bd4281f9d4c0fa22ff2, type: 2}
+  - {fileID: 11400000, guid: 95ab6c4b4b0fb2044b386c4a19a06abb, type: 2}
+  - {fileID: 11400000, guid: 7b5641d6fcbbf684db4b5ab6bae441db, type: 2}
+  - {fileID: 11400000, guid: e3cb8b186fb9eb24b9f1f74a3a608e94, type: 2}

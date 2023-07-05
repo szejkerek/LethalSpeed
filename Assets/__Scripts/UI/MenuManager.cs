@@ -56,7 +56,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnStartGameButtonClick()
     {
-        SceneLoader.Instance.LoadScene(SceneBuildIndexes.PrototypeLevel1);
+        SceneLoader.Instance.LoadScene(SceneBuildIndexes.Level0);
     }
 
     public void OnQuitChooseSaveSlotButtonClick()
