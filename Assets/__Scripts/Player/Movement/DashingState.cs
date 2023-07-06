@@ -3,6 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public struct DashProperties
 {
+    public float DashCooldown;
     public float DashForce;
     public bool KeepPreviousMomentum;
 }
@@ -22,6 +23,7 @@ public class DashingState : MovementState
     public void Begin(PlayerMovement pm)
     {
         _pm = pm;
+        _pm.JustDashed();
         _pm.Rigidbody.drag = 0.0f;
         _pm.Rigidbody.useGravity = false;
 
@@ -37,7 +39,7 @@ public class DashingState : MovementState
     {
         if(!_dashForceApplied)
         {
-            Vector3 dashDir = normalizedWishDir == Vector3.zero ? _pm.orientation.forward : normalizedWishDir;
+            Vector3 dashDir = normalizedWishDir == Vector3.zero ? _pm.Orientation.forward : normalizedWishDir;
 
             _pm.Velocity = Vector3.zero;
             _pm.Rigidbody.AddForce(dashDir * _pm.DashProps.DashForce, ForceMode.Impulse);

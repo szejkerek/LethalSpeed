@@ -1,7 +1,9 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerWeapon))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("General")]
@@ -72,11 +74,10 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode GrappleKey => _grappleKey;
     public KeyCode SwingKey => _swingKey;
 
-    [HideInInspector]
-    public PlayerCamera _playerCamera;
-
-    [Space]
-    public Transform orientation;
+    [Space(5f)]
+ 
+    [SerializeField] private RopeRenderer _ropeRenderer;
+    [SerializeField] private Transform _orientation;
 
     private MovementState _movementState;
     public MovementState CurrentMovementState => _movementState;
@@ -93,6 +94,10 @@ public class PlayerMovement : MonoBehaviour
     private float _dashCooldown;
     private bool _canDash;
     private Rigidbody _rb;
+    private PlayerCamera _playerCamera;
+    private PlayerVision _playerVision;
+    private PlayerWeapon _playerWeapon;
+
 
     public bool IsGrounded => _isGrounded;
     public bool WasGrounded => _wasGroundedLastFrame;
@@ -105,6 +110,11 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody Rigidbody => _rb;
     public Vector3 Velocity { get { return _rb.velocity; } set { _rb.velocity = value; } }
     public Vector3 FlatVelocity => Vector3.ProjectOnPlane(_rb.velocity, Vector3.up);
+    public RopeRenderer RopeRenderer => _ropeRenderer;
+    public Transform Orientation => _orientation;
+    public PlayerCamera PlayerCamera => _playerCamera;
+    public PlayerVision PlayerVision => _playerVision;
+    public PlayerWeapon PlayerWeapon => _playerWeapon;
 
 
     public void ChangeMovementState(MovementState movementState)
@@ -117,9 +127,9 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _playerCamera = FindObjectOfType<Player>().PlayerCamera;
-        _grappleProps.HookLineRenderer = _playerCamera.GetComponentInChildren<LineRenderer>();
-        _grappleProps.HookGunTip = _grappleProps.HookLineRenderer.transform.GetChild(0).transform;
+        _playerCamera = GetComponent<Player>().PlayerCamera;
+        _playerWeapon = GetComponent<PlayerWeapon>();
+        _playerVision = GetComponent<PlayerVision>();
     }
 
     void Start()
@@ -132,27 +142,19 @@ public class PlayerMovement : MonoBehaviour
         _originalScaleY = transform.localScale.y;
 
         _canDash = true;
-        _dashCooldown = 1.0f;
-
-        _grappleProps.HookLineRenderer.enabled = false;
+        _dashCooldown = DashProps.DashCooldown;
     }
 
     void Update()
     {
+
         _isGrounded = Physics.CheckSphere(transform.position, 0.25f, _groundMask);
         _isStuckCrouched = Physics.Raycast(transform.position, Vector3.up, _playerHeight * 0.8f, _groundMask) 
             && (transform.localScale.y == CrouchProps.ScaleY || transform.localScale.y == SlideProps.ScaleY);
         _justLanded = _isGrounded && !_wasGroundedLastFrame;
-
         GetInput();
-
         _movementState.Update();
         _wasGroundedLastFrame = _isGrounded;
-
-        if(_justLanded && !_canDash)
-        {
-            Invoke(nameof(ResetDash), _dashCooldown);
-        }
     }
 
     void FixedUpdate()
@@ -172,18 +174,19 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
+    public static event Action OnPlayerDash;
+    public static event Action OnPlayerDashRestored;
     public void JustDashed()
     {
+        OnPlayerDash?.Invoke();
         _canDash = false;
 
-        if(_isGrounded)
-        {
-            Invoke(nameof(ResetDash), _dashCooldown);
-        }
+        Invoke(nameof(ResetDash), _dashCooldown);
     }
 
     public void ResetDash()
     {
+        OnPlayerDashRestored?.Invoke();
         _canDash = true;
     }
 
@@ -192,6 +195,6 @@ public class PlayerMovement : MonoBehaviour
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
         
-        _wishDir = orientation.forward * _verticalInput + orientation.right * _horizontalInput;
+        _wishDir = Orientation.forward * _verticalInput + Orientation.right * _horizontalInput;
     }
 }

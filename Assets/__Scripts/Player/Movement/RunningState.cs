@@ -73,8 +73,7 @@ public class RunningState : MovementState
         }
 
         if (Input.GetKeyDown(_pm.DashKey) && _pm.CanDash)
-        {
-            _pm.JustDashed();
+        {          
             _pm.ChangeMovementState(new DashingState(_pm.FlatVelocity.magnitude));
 
             return;

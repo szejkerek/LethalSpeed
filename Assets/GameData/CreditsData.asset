@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2dd40acdde3f384c98ffff898bb1881, type: 3}
+  m_Name: CreditsData
+  m_EditorClassIdentifier: 
+  <CreditList>k__BackingField:
+  - TeamMember: 0
+    content: Animacje
+  - TeamMember: 2
+    content: Level design
+  - TeamMember: 4
+    content: Level design
+  - TeamMember: 3
+    content: "D\u017Awi\u0119ki przeciwnik\xF3w"
+  - TeamMember: 5
+    content: Timer
+  - TeamMember: 6
+    content: "Rafa\u0142 Tomczyk - D\u017Awi\u0119ki gracza"
+  - TeamMember: 0
+    content: AI
+  - TeamMember: 0
+    content: System bicia mieczem
+  - TeamMember: 0
+    content: "D\u017Awi\u0119ki"
+  - TeamMember: 3
+    content: Logika i design UI
+  - TeamMember: 3
+    content: "D\u017Awi\u0119ki przeciwnik\xF3w"

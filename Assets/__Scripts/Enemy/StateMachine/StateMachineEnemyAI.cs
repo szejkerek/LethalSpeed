@@ -127,7 +127,7 @@ public class StateMachineEnemyAI : MonoBehaviour
     {
         bool playerInActivationRange = GetDistanceToPlayer() < ShootingActivationRange;
         bool playerInSight = VisionEnemyAI.TargerInVision;
-        if (playerInActivationRange && playerInSight)
+        if (playerInActivationRange && playerInSight && !_player.IsDead)
         {
             return true;
         }

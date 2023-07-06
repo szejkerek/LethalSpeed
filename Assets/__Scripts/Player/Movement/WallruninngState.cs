@@ -35,7 +35,7 @@ public class WallrunningState : MovementState
 
         _wallrunningTime = _pm.WallrunProps.MaxWallrunningTime;
 
-        _pc = _pm._playerCamera;
+        _pc = _pm.PlayerCamera;
         _pc.SetFOV(70.0f);
 
         if(_pm.WallrunProps.ShouldResetDash)
@@ -43,7 +43,7 @@ public class WallrunningState : MovementState
             _pm.ResetDash();
         }    
 
-        if(Physics.Raycast(_pm.transform.position, _pm.orientation.right, 0.8f, _pm.WallrunProps.WallMask))
+        if(Physics.Raycast(_pm.transform.position, _pm.Orientation.right, 0.8f, _pm.WallrunProps.WallMask))
         {
             _pc.SetTilt(5.0f);
         }
@@ -57,11 +57,11 @@ public class WallrunningState : MovementState
     {
         ClipWallrunSpeed();
 
-        if (Physics.Raycast(_pm.transform.position, _pm.orientation.right, out _wallRayHit, 0.8f, _pm.WallrunProps.WallMask))
+        if (Physics.Raycast(_pm.transform.position, _pm.Orientation.right, out _wallRayHit, 0.8f, _pm.WallrunProps.WallMask))
         {
             _wallNormal = _wallRayHit.normal;
         }
-        else if(Physics.Raycast(_pm.transform.position, -_pm.orientation.right, out _wallRayHit, 0.8f, _pm.WallrunProps.WallMask))
+        else if(Physics.Raycast(_pm.transform.position, -_pm.Orientation.right, out _wallRayHit, 0.8f, _pm.WallrunProps.WallMask))
         {
             _wallNormal = _wallRayHit.normal;
         }
@@ -82,7 +82,7 @@ public class WallrunningState : MovementState
     {
         Vector3 forwardDir = Vector3.Cross(_wallNormal, Vector3.up);
 
-        if((_pm.orientation.forward - forwardDir).magnitude > (_pm.orientation.forward + forwardDir).magnitude)
+        if((_pm.Orientation.forward - forwardDir).magnitude > (_pm.Orientation.forward + forwardDir).magnitude)
         {
             forwardDir = -forwardDir;
         }
@@ -117,7 +117,7 @@ public class WallrunningState : MovementState
         if(Input.GetKeyDown(_pm.JumpKey))
         {
             float velocity = _pm.Velocity.magnitude;
-            Vector3 flatForward = Vector3.ProjectOnPlane(_pm.orientation.forward, Vector3.up);
+            Vector3 flatForward = Vector3.ProjectOnPlane(_pm.Orientation.forward, Vector3.up);
 
             _pm.Velocity = new Vector3(flatForward.x, 0.0f, flatForward.z).normalized * velocity;
             _pm.Rigidbody.AddForce(Vector3.up * _pm.WallrunProps.WallrunJumpForce, ForceMode.Impulse);
@@ -126,8 +126,8 @@ public class WallrunningState : MovementState
             return;
         }
 
-        if(!Physics.Raycast(_pm.transform.position, _pm.orientation.right, 0.8f, _pm.WallrunProps.WallMask) &&
-           !Physics.Raycast(_pm.transform.position, -_pm.orientation.right, 0.8f, _pm.WallrunProps.WallMask) || _wallrunningTime <= 0.0f)
+        if(!Physics.Raycast(_pm.transform.position, _pm.Orientation.right, 0.8f, _pm.WallrunProps.WallMask) &&
+           !Physics.Raycast(_pm.transform.position, -_pm.Orientation.right, 0.8f, _pm.WallrunProps.WallMask) || _wallrunningTime <= 0.0f)
         {
             _pm.ChangeMovementState(new AirState(_pm.FlatVelocity.magnitude));
 

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59de8e96d6e7d2d4fa480c26f34778e3, type: 3}
+  m_Name: PlayerAudioLib
+  m_EditorClassIdentifier: 
+  <SwordWoosh>k__BackingField:
+  - {fileID: 8300000, guid: 811c03a975e412d4fa347fb9296423f0, type: 3}
+  - {fileID: 8300000, guid: 488743cab41bba948a78dcea20f8717f, type: 3}
+  <PlayerDeath>k__BackingField:
+  - {fileID: 8300000, guid: 8843bc7293953a648bd4ef6dc93db442, type: 3}
+  - {fileID: 8300000, guid: 218a0821275e0744d9845b867bb0d84b, type: 3}
+  - {fileID: 8300000, guid: 5e6a2a11431e54d44af2edc25d9299a4, type: 3}
+  - {fileID: 8300000, guid: a9ef253b3bbf65044b230e13abfca9be, type: 3}
+  - {fileID: 8300000, guid: 73a6455de01403945b07bb8ee19d63b3, type: 3}
+  - {fileID: 8300000, guid: 973f925098046bc42965234eaba4d6f0, type: 3}
+  - {fileID: 8300000, guid: 29a6da3a74a6fbd45832ccbb0e1f78dc, type: 3}
+  - {fileID: 8300000, guid: 937eef5aaa9d9044b9c2285c5fd6ede9, type: 3}
+  - {fileID: 8300000, guid: 6d069afd5d65ebf42a1c4b40171d17b4, type: 3}
+  - {fileID: 8300000, guid: 7414a15c91a0df44f932766b95c17aab, type: 3}
+  - {fileID: 8300000, guid: 4fae9be27feb3c74387186d74d2b7e97, type: 3}

@@ -10,19 +10,18 @@ using System;
 public class SceneLoader : Singleton<SceneLoader>
 {
     [Header("Development")]
-    [SerializeField] private bool enableLoadChosenSceneOnGameStart; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private SceneBuildIndexes firstSceneToLoadOnGameStart; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private int additionalTimeOfLoadingScreenBeingActive; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private float timeOfTipTextFading; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private float timeOfTipTextPersists; //TODO: delete this line, it is used only for testing purposes
-    [SerializeField] private float timeBetweenNextTipTextGeneration; //TODO: delete this line, it is used only for testing purposes
+    [SerializeField] private bool startUpWithChoosenScene; 
+    [SerializeField] private SceneBuildIndexes startUpScene; 
+    [SerializeField] private int additionalLoadingTime; 
+    [SerializeField] private float textFadeTime; 
+    [SerializeField] private float tipPersistTime; 
+    [SerializeField] private float nextTipGenerationTime; 
 
     [Header("UI")]
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private TMP_Text progressInfoTextField;
     [SerializeField] private TMP_Text tipTextField;
     [SerializeField] private Image loadingScreenImage;
-
 
     [Header("Loading screen data")]
     [SerializeField] private List<LoadingScreenTipsData> tipsDataPool;
@@ -43,76 +42,53 @@ public class SceneLoader : Singleton<SceneLoader>
         tipTextFieldCanvasGroup = tipTextField.GetComponent<CanvasGroup>();
         PopulateImageDataPoolHashTable();
         PopulateTipsList();
-    }
 
-    private void PopulateImageDataPoolHashTable()
-    {
-        foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
+        if (startUpWithChoosenScene)
         {
-            if (imageDataToCoopy != null && imageDataToCoopy.IsCorrect())
-            {
-                if (!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.GetSceneBuildIndex()))
-                {
-                    imageDataPoolHashTable.Add(imageDataToCoopy.GetSceneBuildIndex(), imageDataToCoopy.LoadinScreenBackgroundImages);
-                }
-                else
-                {
-                    Debug.LogWarning("SceneLoader: You can't have more than one background image data pool for a scene.");
-                }
-            }
+            LoadScene(startUpScene);
         }
     }
 
-    private void PopulateTipsList()
+    public void LoadNextLevel()
     {
-        foreach (LoadingScreenTipsData tipsDataToCopy in tipsDataPool)
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        if (nextIndex < SceneManager.sceneCountInBuildSettings && nextIndex >= 0)
         {
-            if(tipsDataToCopy != null && tipsDataToCopy.IsCorrect())
-            {
-                tipsList.AddRange(tipsDataToCopy.TipsList);
-            }
+            LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
-    }
-    private void Start()
-    {
-        if (enableLoadChosenSceneOnGameStart)
+        else
         {
-            LoadNewSceneByBuildIndex((int)firstSceneToLoadOnGameStart);
-        }
+            LoadMenu();
+        }       
     }
 
-    public void LoadNextSceneInBuilder()
+    public void LoadMenu()
     {
-        int sceneToUnloadBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        int sceneToLoadBuildIndex = sceneToUnloadBuildIndex + 1;
-
-        UnloadSceneAndLoadNewOneByName(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
+        LoadScene(SceneBuildIndexes.Menu);
     }
 
     public void ReloadScene()
     {
-        int sceneToReloadBuildIndex = SceneManager.GetActiveScene().buildIndex;
-
-        UnloadSceneAndLoadNewOneByName(sceneToReloadBuildIndex, sceneToReloadBuildIndex);
+        LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void LoadNewSceneByBuildIndex(int sceneToLoadBuildIndex)
+    public void LoadScene(SceneBuildIndexes scene)
     {
-        int sceneToUnloadBuildIndex = SceneManager.GetActiveScene().buildIndex; 
-
-        UnloadSceneAndLoadNewOneByName(sceneToUnloadBuildIndex, sceneToLoadBuildIndex);
+        int sceneIndex = (int)scene;
+        LoadScene(sceneIndex);
     }
 
-    public void UnloadSceneAndLoadNewOneByName(int sceneToUnloadBuildIndex, int sceneToLoadBuildIndex)
+    public void LoadScene(int sceneIndex)
     {
-        SetBackGroundImage(sceneToLoadBuildIndex);
+        SetBackgroundImage(sceneIndex);
         loadingScreen.gameObject.SetActive(true);
         StartCoroutine(GenerateTipsOnLoadingScreen());
-        sceneLoadingAsyncOperation = SceneManager.LoadSceneAsync(sceneToLoadBuildIndex);
-        StartCoroutine(BasedOnSceneLoadProgresGenerateDataOnLoadingScreen());
+        sceneLoadingAsyncOperation = SceneManager.LoadSceneAsync(sceneIndex);
+        StartCoroutine(StartProgressBar());
     }
 
-    private void SetBackGroundImage(int sceneToLoadBuildIndex)
+    private void SetBackgroundImage(int sceneToLoadBuildIndex)
     {
         if (!IsImageDataPoolCorrect(sceneToLoadBuildIndex))
         {
@@ -151,24 +127,24 @@ public class SceneLoader : Singleton<SceneLoader>
                     Debug.LogWarning("SceneLoader: Loading screen tips data is empty.");
                     yield break;
                 }
-                resetTipList();
+                ResetTipList();
             }
 
-            tipTextFieldCanvasGroup.DOFade(1, timeOfTipTextFading);
-            tipTextField.text = GetRandomTipFromTipsList();
-            yield return new WaitForSeconds(timeOfTipTextPersists);
-            tipTextFieldCanvasGroup.DOFade(0, timeOfTipTextFading);
-            yield return new WaitForSeconds(timeBetweenNextTipTextGeneration);
+            tipTextFieldCanvasGroup.DOFade(1, textFadeTime);
+            tipTextField.text = GetRandomTip();
+            yield return new WaitForSeconds(tipPersistTime);
+            tipTextFieldCanvasGroup.DOFade(0, textFadeTime);
+            yield return new WaitForSeconds(nextTipGenerationTime);
         }
     }
 
-    private void resetTipList()
+    private void ResetTipList()
     {
         tipsList.AddRange(usedTipsList);
         usedTipsList.Clear();
     }
 
-    private string GetRandomTipFromTipsList()
+    private string GetRandomTip()
     {
         int tipStringIndex;
         tipStringIndex = UnityEngine.Random.Range(0, tipsList.Count);
@@ -178,7 +154,7 @@ public class SceneLoader : Singleton<SceneLoader>
         return nextTipToGenerate;
     }
 
-    private IEnumerator BasedOnSceneLoadProgresGenerateDataOnLoadingScreen()
+    private IEnumerator StartProgressBar()
     {
         while (!sceneLoadingAsyncOperation.isDone)
         {
@@ -186,8 +162,8 @@ public class SceneLoader : Singleton<SceneLoader>
             yield return null;
         }
 
-        yield return new WaitForSeconds(additionalTimeOfLoadingScreenBeingActive); //TODO: delete this line, it is used only for testing purposes
-        ResetLoadingScreenToDefaultState();
+        yield return new WaitForSeconds(additionalLoadingTime);
+        ResetLoadingScreen();
     }
 
     private void GenerateProgresBar()
@@ -199,7 +175,7 @@ public class SceneLoader : Singleton<SceneLoader>
         progressInfoTextField.text = string.Format("Loading Map: {0}%", totalSceneProgress * 100f);
     }
 
-    private void ResetLoadingScreenToDefaultState()
+    private void ResetLoadingScreen()
     {
         loadingScreen.gameObject.SetActive(false);
         loadingScreenImage.sprite = null;
@@ -207,6 +183,36 @@ public class SceneLoader : Singleton<SceneLoader>
         progressBar.value = 0;
         tipTextField.text = null;
         tipTextFieldCanvasGroup.alpha = 0f;
-        resetTipList();
+        ResetTipList();
     }
+
+    private void PopulateImageDataPoolHashTable()
+    {
+        foreach (LoadingScreenImageData imageDataToCoopy in imageDataPool)
+        {
+            if (imageDataToCoopy != null && imageDataToCoopy.IsCorrect())
+            {
+                if (!imageDataPoolHashTable.ContainsKey(imageDataToCoopy.GetSceneBuildIndex()))
+                {
+                    imageDataPoolHashTable.Add(imageDataToCoopy.GetSceneBuildIndex(), imageDataToCoopy.LoadinScreenBackgroundImages);
+                }
+                else
+                {
+                    Debug.LogWarning("SceneLoader: You can't have more than one background image data pool for a scene.");
+                }
+            }
+        }
+    }
+
+    private void PopulateTipsList()
+    {
+        foreach (LoadingScreenTipsData tipsDataToCopy in tipsDataPool)
+        {
+            if (tipsDataToCopy != null && tipsDataToCopy.IsCorrect())
+            {
+                tipsList.AddRange(tipsDataToCopy.TipsList);
+            }
+        }
+    }
+
 }

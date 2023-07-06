@@ -1,22 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
 public class Enemy : MonoBehaviour
 {
-    public Player Player => _player;
+    public static event Action OnEnemyDeath;
+    [SerializeField] GameObject bloodEffect;
+
+    bool isDead = false;
+    AudioEnemyAI _audio;
     Player _player;
-
-    RigWeightController _aimAtTargetRigController;
-    public Animator Animator => _animator;
     Animator _animator;
-    public RigWeightController AimAtTargetRigController => _aimAtTargetRigController;
-
+    RigWeightController _aimAtTargetRigController;
     StateMachineEnemyAI _stateMachine;
+
+    public Player Player => _player;
+    public Animator Animator => _animator;
+    public RigWeightController AimAtTargetRigController => _aimAtTargetRigController;
+    public StateMachineEnemyAI StateMachine => _stateMachine;
+
     private void Awake()
     {
         _player = FindObjectOfType<Player>();
+        _audio = GetComponent<AudioEnemyAI>();
         _stateMachine = GetComponent<StateMachineEnemyAI>();
         _animator = GetComponent<Animator>();
         _aimAtTargetRigController = GetComponentInChildren<RigWeightController>();
@@ -24,9 +30,26 @@ public class Enemy : MonoBehaviour
         SetUpRig();
     }
 
-    public void Die()
+    public void Hit(Vector3 direction, Vector3 hitPoint)
     {
+        _stateMachine.Ragdoll.ApplyForce(direction);
+        SpawnBloodSplash(direction, hitPoint);
+
+        if (isDead)
+            return;
+
+        isDead = true;
+        _audio.PlayDeathSound();
         _stateMachine.CurrentState.SwitchState(_stateMachine.StatesFactory.Ragdoll());
+        OnEnemyDeath?.Invoke();
+    }
+
+    private void SpawnBloodSplash(Vector3 direction, Vector3 hitPoint)
+    {
+        Vector3 rotation = Quaternion.LookRotation(-direction, Vector3.up).eulerAngles;
+        rotation.x = 0;
+        GameObject bloodSplash = Instantiate(bloodEffect, hitPoint, Quaternion.Euler(rotation));
+        Destroy(bloodSplash, 3f);
     }
 
     private void ApplyHitboxToLimbs()
