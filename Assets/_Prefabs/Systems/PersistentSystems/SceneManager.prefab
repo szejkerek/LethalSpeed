@@ -789,7 +789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startUpWithChoosenScene: 0
   startUpScene: 0
-  additionalLoadingTime: 3
+  additionalLoadingTime: 0
   textFadeTime: 1
   tipPersistTime: 2
   nextTipGenerationTime: 1
