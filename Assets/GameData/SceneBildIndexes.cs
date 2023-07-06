@@ -4,5 +4,5 @@ public enum SceneBuildIndexes
     Level0,
     Level1,
     Level2,
-    EnemyTest
+    Credits
 }
