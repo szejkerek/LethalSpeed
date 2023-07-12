@@ -1,7 +1,15 @@
 {
-    "RoslynExtensionsOptions": 
-    {
-      "EnableAnalyzersSupport": true,
-      "LocationPaths": ["./NuGet/microsoft.unity.analyzers.1.14.0/analyzers/dotnet/cs"]
-    }
+  "RoslynExtensionsOptions": {
+    "EnableAnalyzersSupport": true,
+    "LocationPaths": [
+      "./NuGet/microsoft.unity.analyzers.1.14.0/analyzers/dotnet/cs"
+    ]
+  },
+  "FormattingOptions": {
+    "newLine": "\n",
+    "useTabs": false,
+    "tabSize": 4,
+    "indentationSize": 4,
+    "organizeImports": false
+  }
 }

@@ -1,10 +1,5 @@
-using DG.Tweening.Plugins.Core.PathCore;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -18,7 +13,6 @@ public class LocomotionEnemyAI : MonoBehaviour
     [SerializeField] float atDestinationDistance = 0.45f;
 
     NavMeshPath _path;
-
     Animator _animator;
 
     public float VelocityModifier = 1;
