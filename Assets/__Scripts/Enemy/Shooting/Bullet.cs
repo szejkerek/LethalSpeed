@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -30,8 +27,8 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        _timeInAir += Time.deltaTime;
         transform.position += _direction * _speed * Time.deltaTime;
+        _timeInAir += Time.deltaTime;
 
         if(_timeInAir > _maxTimeInAir)
         {
@@ -58,8 +55,7 @@ public class Bullet : MonoBehaviour
 
     private Vector3 CalculateNormal()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + transform.TransformDirection(-Vector3.forward) * 0.3f, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, ~gameObject.layer))
+        if (Physics.Raycast(transform.position + transform.TransformDirection(-Vector3.forward) * 0.3f, transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, ~gameObject.layer))
         {
             return hit.normal;
         }
