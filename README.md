@@ -1,4 +1,4 @@
-<p align="center"><h1>Pirate Rush VR</h1></p>
+<p align="center"><h1>Lethal Speed</h1></p>
 <p align="center">
 
   <a>
