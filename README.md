@@ -44,6 +44,8 @@ Engage in a fast-paced game where your adept movement skills are crucial for swi
 
 **Space**: Jump
 
+**Space near wall in air**: Wallrun
+
 **Shift**: Dash
 
 **Ctrl**: Crouch
