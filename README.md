@@ -38,7 +38,7 @@ The gameplay consists of three distinct maps, and players have the flexibility t
 - Time is the primary metric for scoring
 - The non-linear nature of map selection enhances replayability and strategic planning
 
-![becXmr](https://github.com/szejkerek/LethalSpeed/assets/69083596/f383588b-54c3-434f-89d0-6c6972bc7774)
+![zhsxCn](https://github.com/szejkerek/LethalSpeed/assets/69083596/5836f692-ad4d-434e-88b6-99e2efb20644)
 
 ![hy3dif](https://github.com/szejkerek/LethalSpeed/assets/69083596/c4918ac7-1eaf-4e53-9809-b0674851429b)
 
@@ -46,7 +46,6 @@ The gameplay consists of three distinct maps, and players have the flexibility t
 
 ![UT_pMW](https://github.com/szejkerek/LethalSpeed/assets/69083596/8dd71a21-a380-42f9-ac50-500915b6e857)
 
-![zhsxCn](https://github.com/szejkerek/LethalSpeed/assets/69083596/5836f692-ad4d-434e-88b6-99e2efb20644)
 
 # Controls
 
