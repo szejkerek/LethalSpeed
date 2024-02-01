@@ -4,11 +4,7 @@
   <a>
     <a href="https://unity.com/">
     <img alt="Made With Unity" src="https://img.shields.io/badge/made%20with-Unity-57b9d3.svg?logo=Unity">
-  </a>
-  <a>
-    <a href="https://github.com/szejkerek/LethalSpeed/actions">
-    <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/szejkerek/LethalSpeed/UnityCI.yml">
-  </a> 
+    </a>
   <a>
   <img alt="License" src="https://img.shields.io/github/license/szejkerek/LethalSpeed?logo=github">
   </a>
