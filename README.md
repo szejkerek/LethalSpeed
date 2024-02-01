@@ -25,5 +25,24 @@
     <img alt="GitHub user stars" src="https://img.shields.io/github/stars/szejkerek?affiliations=OWNER&branch=main&label=User%20Stars&logo=GitHub&logoColor=ffffff&labelColor=282828&color=informational&style=flat">
   </a>
 </p>
+    
+# Introduction
 
+Engage in a fast-paced game where your adept movement skills are crucial for swiftly dispatching foes with a sword, all while navigating intense parkour challenges to conquer three exhilarating levels.
+    
 [![YTLINK](https://github.com/szejkerek/LethalSpeed/assets/69083596/316fd34e-d6bb-458c-a354-4869b8479c0e)](https://youtu.be/0ZiTxyrfNDY?si=UzJZH7nFuwDes1x3)    
+
+# Controls
+
+**W**: Move forward
+**A**: Move left
+**S**: Move backward
+**D**: Move right
+**Space**: Jump
+**Shift**: Dash
+**Ctrl**: Crouch
+**Q**: Deploy Orange Point Grappling Hook
+**Right Mouse Button (RMB)**: Initiate Blue Point Swing
+**Left Mouse Button (LMB)**: Swing sword
+**R**: Reset level
+
