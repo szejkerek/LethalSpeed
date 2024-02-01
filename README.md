@@ -25,3 +25,5 @@
     <img alt="GitHub user stars" src="https://img.shields.io/github/stars/szejkerek?affiliations=OWNER&branch=main&label=User%20Stars&logo=GitHub&logoColor=ffffff&labelColor=282828&color=informational&style=flat">
   </a>
 </p>
+
+[![YTLINK](https://github.com/szejkerek/LethalSpeed/assets/69083596/316fd34e-d6bb-458c-a354-4869b8479c0e)](https://youtu.be/0ZiTxyrfNDY?si=UzJZH7nFuwDes1x3)    
