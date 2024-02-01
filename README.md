@@ -35,14 +35,24 @@ Engage in a fast-paced game where your adept movement skills are crucial for swi
 # Controls
 
 **W**: Move forward
+
 **A**: Move left
+
 **S**: Move backward
+
 **D**: Move right
+
 **Space**: Jump
+
 **Shift**: Dash
+
 **Ctrl**: Crouch
+
 **Q**: Deploy Orange Point Grappling Hook
+
 **Right Mouse Button (RMB)**: Initiate Blue Point Swing
+
 **Left Mouse Button (LMB)**: Swing sword
+
 **R**: Reset level
 
