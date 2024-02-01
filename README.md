@@ -32,6 +32,22 @@ Engage in a fast-paced game where your adept movement skills are crucial for swi
     
 [![YTLINK](https://github.com/szejkerek/LethalSpeed/assets/69083596/316fd34e-d6bb-458c-a354-4869b8479c0e)](https://youtu.be/0ZiTxyrfNDY?si=UzJZH7nFuwDes1x3)    
 
+# Gameplay
+The gameplay consists of three distinct maps, and players have the flexibility to choose the order in which they engage with each map. The primary goal is to achieve the best possible completion time while eliminating all enemies present on each map.
+- Each map is designed with unique challenges and layouts
+- Time is the primary metric for scoring
+- The non-linear nature of map selection enhances replayability and strategic planning
+
+![becXmr](https://github.com/szejkerek/LethalSpeed/assets/69083596/f383588b-54c3-434f-89d0-6c6972bc7774)
+
+![hy3dif](https://github.com/szejkerek/LethalSpeed/assets/69083596/c4918ac7-1eaf-4e53-9809-b0674851429b)
+
+![MAeeLZ](https://github.com/szejkerek/LethalSpeed/assets/69083596/791b00ba-3aa6-4c82-b104-67b24492ba31)
+
+![UT_pMW](https://github.com/szejkerek/LethalSpeed/assets/69083596/8dd71a21-a380-42f9-ac50-500915b6e857)
+
+![zhsxCn](https://github.com/szejkerek/LethalSpeed/assets/69083596/5836f692-ad4d-434e-88b6-99e2efb20644)
+
 # Controls
 
 **W**: Move forward
