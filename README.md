@@ -46,6 +46,15 @@ The gameplay consists of three distinct maps, and players have the flexibility t
 
 ![UT_pMW](https://github.com/szejkerek/LethalSpeed/assets/69083596/8dd71a21-a380-42f9-ac50-500915b6e857)
 
+# Downloading the Game
+
+To get started and play the game, you can follow these simple steps to download the latest release from GitHub.
+
+- Visit the [Releases](https://github.com/szejkerek/LethalSpeed/releases) page of our GitHub repository.
+- Look for the latest release.
+- Download the appropriate asset for your operating system.
+- Follow the installation instructions for your specific operating system. After installation, you should be able to launch the game and start playing!
+
 
 # Controls
 
