@@ -82,3 +82,137 @@ To get started and play the game, you can follow these simple steps to download 
 
 **R**: Reset level
 
+## Code Highlights
+
+### Multi-Point Occluded Vision System
+
+```csharp
+// Assets/__Scripts/Enemy/VisionEnemyAI.cs
+private void UpdatePlayerBodyPartsPositions(Transform scannedPlayer)
+{
+    float scaledPlayerHeight = playerHeight * playerMovment.transform.localScale.y;
+
+    middlePosition = scannedPlayer.position;
+    topPosition = scannedPlayer.position + Vector3.up * (scaledPlayerHeight / 2 - _topError);
+    bottomPosition = scannedPlayer.position + Vector3.down * (scaledPlayerHeight / 2 - _topError);
+    rightPosition = scannedPlayer.position + -Vector3.Cross(Vector3.up, transform.position - scannedPlayer.position).normalized * _sideError;
+    leftPosition = scannedPlayer.position + Vector3.Cross(Vector3.up, transform.position - scannedPlayer.position).normalized * _sideError;
+
+    Vector3 myForward = -(scannedPlayer.position - transform.position).normalized;
+    myForward.y = 0;
+
+    forwardPosition = scannedPlayer.position + myForward * _sideError;
+    backPosition = scannedPlayer.position + -myForward * _sideError;
+}
+
+private bool IsInVision()
+{
+    isBlockedMiddle = Physics.Linecast(_eyeLevel.position, middlePosition, _blockers);
+    isBlockedTop = Physics.Linecast(_eyeLevel.position, topPosition, _blockers);
+    isBlockedBottom = Physics.Linecast(_eyeLevel.position, bottomPosition, _blockers);
+    isBlockedLeft = Physics.Linecast(_eyeLevel.position, leftPosition, _blockers);
+    isBlockedRight = Physics.Linecast(_eyeLevel.position, rightPosition, _blockers);
+    isBlockedForward = Physics.Linecast(_eyeLevel.position, forwardPosition, _blockers);
+    isBlockedBack = Physics.Linecast(_eyeLevel.position, backPosition, _blockers);
+
+    bool seeCorePart = !isBlockedMiddle || !isBlockedTop || !isBlockedBottom;
+
+    int sidePartsCount = 0;
+    if (!isBlockedLeft) sidePartsCount++;
+    if (!isBlockedRight) sidePartsCount++;
+    if (!isBlockedForward) sidePartsCount++;
+    if (!isBlockedBack) sidePartsCount++;
+
+    return seeCorePart || sidePartsCount > 1;
+}
+```
+
+Rather than a single center-of-mass raycast, the system samples seven distinct body-part positions — top, middle, bottom, left, right, forward, and back. Detection uses a voting rule: the enemy spots the player if any core part is visible, or if at least two side points are simultaneously unoccluded. Body-part positions are computed dynamically and account for the player's current scale, which changes during crouching and sliding. Scanning is throttled with `OverlapSphereNonAlloc` to avoid per-frame heap allocations, and a separate reaction-time timer delays the enemy's awareness after first sighting.
+
+### Wall-Tangent Movement with Tiered Momentum Clipping
+
+```csharp
+// Assets/__Scripts/Player/Movement/WallruninngState.cs
+public void Move(Vector3 normalizedWishDir)
+{
+    Vector3 forwardDir = Vector3.Cross(_wallNormal, Vector3.up);
+
+    if((_pm.Orientation.forward - forwardDir).magnitude > (_pm.Orientation.forward + forwardDir).magnitude)
+    {
+        forwardDir = -forwardDir;
+    }
+
+    float wishedForwardDirMultiplier = Vector3.Dot(normalizedWishDir, forwardDir);
+
+    _pm.Rigidbody.AddForce(wishedForwardDirMultiplier * forwardDir * _pm.Velocity.magnitude * _pm.WallrunProps.Acceleration, ForceMode.Force);
+    _pm.Rigidbody.AddForce(Vector3.down * _pm.AirProps.GravityForce / 3.0f, ForceMode.Force);
+
+    if(Input.GetKey(_pm.JumpKey))
+    {
+        _pm.Rigidbody.AddForce(Vector3.up * _pm.AirProps.JumpForce * 2.0f, ForceMode.Force);
+    }
+}
+
+private void ClipWallrunSpeed()
+{
+    if (_initialSpeed > _pm.CurrentMaxSpeed)
+    {
+        float drop = _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed > 1.0f ? 
+            _pm.GroundProps.Deacceleration * Time.deltaTime / 50.0f : _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed;
+
+        Vector3 newSpeed = _pm.FlatVelocity.normalized * Mathf.Min(_initialSpeed, _pm.FlatVelocity.magnitude - drop);
+
+        _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
+    }
+    else if (_pm.FlatVelocity.magnitude > _pm.CurrentMaxSpeed)
+    {
+        float drop = _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed > 3.0f ? _pm.GroundProps.Deacceleration * Time.deltaTime : _pm.FlatVelocity.magnitude - _pm.CurrentMaxSpeed;
+        Vector3 newSpeed = _pm.FlatVelocity.normalized * (_pm.FlatVelocity.magnitude - drop);
+
+        _pm.Velocity = new Vector3(newSpeed.x, _pm.Velocity.y, newSpeed.z);
+    }
+}
+```
+
+`Move` derives the wall-parallel forward direction via `Vector3.Cross(_wallNormal, Vector3.up)`, then disambiguates its sign by comparing distances to the player's orientation forward — a compact way to pick the correct tangent direction without explicit left/right detection flags. A dot product of wish direction against this forward vector scales the applied force, allowing natural speed modulation when the player steers with or against the wall. `ClipWallrunSpeed` implements tiered deceleration: large overshoots decay gradually while small ones snap immediately to cap, making the speed feel organic rather than abruptly clamped.
+
+### Procedural 3D Spring-Wave Rope Visualization
+
+```csharp
+// Assets/__Scripts/Player/RopeRenderer/RopeRenderer.cs
+public void DrawRope(bool isGrappling, Vector3 end)
+{
+    if (lr.positionCount == 0)
+    {
+        currentGrapplePosition = transform.position;
+        rope.Velocity = velocity;
+        lr.positionCount = quality + 1;
+    }
+
+    rope.Damper = damper;
+    rope.Strength = strength;
+    rope.Update(Time.deltaTime);
+
+    var grapplePoint = end;
+    var gunTipPosition = transform.position;
+    var up = Quaternion.LookRotation((grapplePoint - gunTipPosition).normalized) * Vector3.up;
+
+    currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 12f);
+
+    for (var i = 0; i < quality + 1; i++)
+    {
+        var delta = i / (float)quality;
+        var right = Quaternion.LookRotation((grapplePoint - gunTipPosition).normalized) * Vector3.right;
+
+        var offset = up * waveHeight * Mathf.Sin(delta * waveCount * Mathf.PI) * rope.Value *
+                                 affectCurve.Evaluate(delta) +
+                                 right * waveHeight * Mathf.Cos(delta * waveCount * Mathf.PI) * rope.Value *
+                                 affectCurve.Evaluate(delta);
+
+        lr.SetPosition(i, Vector3.Lerp(gunTipPosition, currentGrapplePosition, delta) + offset);
+    }
+}
+```
+
+Each rope segment is displaced along two perpendicular axes (up and right, derived from the rope's local frame via `Quaternion.LookRotation`) by sine and cosine waves with a 90-degree phase offset, producing a 3D helical undulation rather than a flat 2D swing. Wave amplitude is multiplied by `rope.Value`, the output of a scalar spring-damper simulation that starts high when the grapple fires and decays to zero as the rope settles — giving an organic whip effect without keyframed animation. An `AnimationCurve` further shapes the falloff along the rope's length, concentrating visual energy near the gun tip. The endpoint is Lerped toward the grapple target at a fixed rate to animate the launch extension.
+
